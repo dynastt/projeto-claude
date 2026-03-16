@@ -102,26 +102,96 @@ function tokMins(){
 
 // ═══ SHARED updateWelcome — updates ALL modules ═══════════════
 function updateWelcome(){
-  // ── Descarte
+  // ── Launcher
+  const swN=document.getElementById('sw-name');if(swN&&_userName)swN.textContent=_userName;
+  const swN2=document.getElementById('sw-name2');if(swN2&&_userName)swN2.textContent=_userName;
+  // ── Descarte inline
   const dscN=document.getElementById('dsc-welcome-name');
   if(dscN&&_userName){dscN.textContent=_userName;const av=document.getElementById('dsc-welcome-av');if(av)av.textContent=_userName[0].toUpperCase();}
-  const dscT=document.getElementById('dsc-welcome-toast');
-  if(dscT&&!dscT.dataset.shown&&_userName){dscT.dataset.shown='1';const tn=document.getElementById('dsc-toast-name');if(tn)tn.textContent=_userName;dscT.classList.add('show');setTimeout(()=>dscT.classList.add('hide'),3200);setTimeout(()=>dscT.remove(),3800);}
-  // ── Solicitação
+  // ── Solicitação inline
   const solN=document.getElementById('sol-welcome-name');
   if(solN&&_userName){solN.textContent=_userName;const av=document.getElementById('sol-welcome-av');if(av)av.textContent=_userName[0].toUpperCase();}
-  const solT=document.getElementById('sol-welcome-toast');
-  if(solT&&!solT.dataset.shown&&_userName){solT.dataset.shown='1';const tn=document.getElementById('sol-toast-name');if(tn)tn.textContent=_userName;solT.classList.add('show');setTimeout(()=>solT.classList.add('hide'),3200);setTimeout(()=>solT.remove(),3800);}
-  // ── Expedição
+  // ── Expedição inline
   const expN=document.getElementById('exp-welcome-name');
   if(expN&&_userName){expN.textContent=_userName;const av=document.getElementById('exp-welcome-av');if(av)av.textContent=_userName[0].toUpperCase();}
-  const expT=document.getElementById('exp-welcome-toast');
-  if(expT&&!expT.dataset.shown&&_userName){expT.dataset.shown='1';const tn=document.getElementById('exp-toast-name');if(tn)tn.textContent=_userName;expT.classList.add('show');setTimeout(()=>expT.classList.add('hide'),3200);setTimeout(()=>expT.remove(),3800);}
-  // ── Confirma ABA
+  // ── Confirma ABA inline
   const cabaN=document.getElementById('caba-welcome-name');
   if(cabaN&&_userName){cabaN.textContent=_userName;const av=document.getElementById('caba-welcome-av');if(av)av.textContent=_userName[0].toUpperCase();}
-  const cabaT=document.getElementById('caba-welcome-toast');
-  if(cabaT&&!cabaT.dataset.shown&&_userName){cabaT.dataset.shown='1';const tn=document.getElementById('caba-toast-name');if(tn)tn.textContent=_userName;cabaT.classList.add('show');setTimeout(()=>cabaT.classList.add('hide'),3200);setTimeout(()=>cabaT.remove(),3800);}
+}
+
+// ═══ SUITE LAUNCHER — estado e funções de navegação ══════════
+let _activeModule=null;
+
+const _SUITE_MODS={
+  exp:{id:'__aa__',   name:'Auto Expedição'},
+  dsc:{id:'__dsc__',  name:'Auto Descarte'},
+  sol:{id:'__sol__',  name:'Solicitar Ativos'},
+  caba:{id:'__caba__',name:'Confirma ABA'},
+};
+
+function showModule(mod){
+  _activeModule=mod;
+  Object.entries(_SUITE_MODS).forEach(([k,v])=>{
+    const el=document.getElementById(v.id);
+    if(el)el.classList.toggle('off',k!==mod);
+  });
+  const lnc=document.getElementById('__suite-welcome__');
+  if(lnc){lnc.classList.add('sw-out');setTimeout(()=>{lnc.style.display='none';lnc.classList.remove('sw-out');},300);}
+  document.querySelectorAll('.sw-nav-label[data-mod]').forEach(l=>l.classList.toggle('active',l.dataset.mod===mod));
+}
+
+function showLauncher(){
+  _activeModule=null;
+  Object.values(_SUITE_MODS).forEach(v=>{const el=document.getElementById(v.id);if(el)el.classList.add('off');});
+  const lnc=document.getElementById('__suite-welcome__');
+  if(lnc){lnc.style.display='flex';lnc.style.animation='sw-fade-in .3s ease forwards';}
+  document.querySelectorAll('.sw-nav-label[data-mod]').forEach(l=>l.classList.remove('active'));
+}
+
+function buildWelcome(){
+  if(document.getElementById('__suite-welcome__'))return;
+  if(!document.body)return setTimeout(buildWelcome,50);
+  const n=_userName||'...';
+  const ov=document.createElement('div');
+  ov.id='__suite-welcome__';
+  ov.innerHTML=
+    '<div class="sw-card">'+
+      '<div class="sw-badge">🚀 Suite Magalu · Auto Ativos</div>'+
+      '<div class="sw-greeting">Boas-vindas,</div>'+
+      '<div class="sw-name" id="sw-name">'+n+'</div>'+
+      '<div class="sw-question">e hoje, <strong id="sw-name2" style="color:#d17842">'+n+'</strong>, qual script você quer usar? ✨</div>'+
+      '<div class="sw-opts">'+
+        '<button class="sw-opt" data-mod="exp"><span class="sw-opt-ico">🚚</span><div class="sw-opt-name">Auto Expedição</div><div class="sw-opt-desc">Processo de expedição automático</div></button>'+
+        '<button class="sw-opt" data-mod="dsc"><span class="sw-opt-ico">🗑️</span><div class="sw-opt-name">Auto Descarte</div><div class="sw-opt-desc">Realiza descartes automáticos</div></button>'+
+        '<button class="sw-opt" data-mod="sol"><span class="sw-opt-ico">📋</span><div class="sw-opt-name">Solicitações</div><div class="sw-opt-desc">Cria solicitações de ativos automaticamente</div></button>'+
+        '<button class="sw-opt" data-mod="caba"><span class="sw-opt-ico">✅</span><div class="sw-opt-name">Confirma ABA</div><div class="sw-opt-desc">Confirmação de cargas ABA</div></button>'+
+      '</div>'+
+      '<nav class="sw-nav">'+
+        '<label class="sw-nav-label" data-mod="exp" title="Auto Expedição">'+
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" width="14" height="14"><path fill="inherit" d="M18.9999 6.01002L12.4499 0.770018C11.1699 -0.249982 9.16988 -0.259982 7.89988 0.760018L1.34988 6.01002C0.409885 6.76002 -0.160115 8.26002 0.0398848 9.44002L1.29988 16.98C1.58988 18.67 3.15988 20 4.86988 20H15.4699C17.1599 20 18.7599 18.64 19.0499 16.97L20.3099 9.43002C20.4899 8.26002 19.9199 6.76002 18.9999 6.01002ZM10.9199 16C10.9199 16.41 10.5799 16.75 10.1699 16.75C9.75988 16.75 9.41988 16.41 9.41988 16V13C9.41988 12.59 9.75988 12.25 10.1699 12.25C10.5799 12.25 10.9199 12.59 10.9199 13V16Z"/></svg>'+
+          '<span class="sw-nav-txt">Expedi.</span>'+
+        '</label>'+
+        '<label class="sw-nav-label" data-mod="sol" title="Solicitações">'+
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20" width="14" height="14"><path fill="inherit" d="M16.8035 6.96427C16.1335 6.22427 15.1235 5.79427 13.7235 5.64427V4.88427C13.7235 3.51427 13.1435 2.19427 12.1235 1.27427C11.6202 0.812823 11.025 0.462927 10.3771 0.247511C9.72909 0.032095 9.04292 -0.0439787 8.3635 0.0242742C5.9735 0.254274 3.9635 2.56427 3.9635 5.06427V5.64427C2.5635 5.79427 1.5535 6.22427 0.883496 6.96427C-0.0865043 8.04427 -0.0565042 9.48427 0.0534958 10.4843L0.753496 16.0543C0.963496 18.0043 1.7535 20.0043 6.0535 20.0043H11.6335C15.9335 20.0043 16.7235 18.0043 16.9335 16.0643L17.6335 10.4743C17.7435 9.48427 17.7635 8.04427 16.8035 6.96427ZM8.5035 1.41427C8.98813 1.36559 9.47758 1.41913 9.94023 1.57143C10.4029 1.72372 10.8284 1.97138 11.1894 2.29841C11.5503 2.62544 11.8387 3.02456 12.0357 3.46998C12.2328 3.91539 12.3343 4.39721 12.3335 4.88427V5.58427H5.3535V5.06427C5.3535 3.28427 6.8235 1.57427 8.5035 1.41427ZM5.2635 11.1543H5.2535C4.7035 11.1543 4.2535 10.7043 4.2535 10.1543C4.2535 9.60427 4.7035 9.15427 5.2535 9.15427C5.8135 9.15427 6.2635 9.60427 6.2635 10.1543C6.2635 10.7043 5.8135 11.1543 5.2635 11.1543ZM12.2635 11.1543H12.2535C11.7035 11.1543 11.2535 10.7043 11.2535 10.1543C11.2535 9.60427 11.7035 9.15427 12.2535 9.15427C12.8135 9.15427 13.2635 9.60427 13.2635 10.1543C13.2635 10.7043 12.8135 11.1543 12.2635 11.1543Z"/></svg>'+
+          '<span class="sw-nav-txt">Solicit.</span>'+
+        '</label>'+
+        '<label class="sw-nav-label" data-mod="dsc" title="Auto Descarte">'+
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 18" width="14" height="14"><path fill="inherit" d="M14.44 0C12.63 0 11.01 0.88 10 2.23C9.48413 1.53881 8.81426 0.977391 8.04353 0.590295C7.27281 0.203198 6.42247 0.00108555 5.56 0C2.49 0 0 2.5 0 5.59C0 6.78 0.19 7.88 0.52 8.9C2.1 13.9 6.97 16.89 9.38 17.71C9.72 17.83 10.28 17.83 10.62 17.71C13.03 16.89 17.9 13.9 19.48 8.9C19.81 7.88 20 6.78 20 5.59C20 2.5 17.51 0 14.44 0Z"/></svg>'+
+          '<span class="sw-nav-txt">Descarte</span>'+
+        '</label>'+
+        '<label class="sw-nav-label" data-mod="caba" title="Confirma ABA">'+
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" width="14" height="14"><path fill="inherit" d="M15.0294 12.4902L14.0294 10.8302C13.8194 10.4602 13.6294 9.76016 13.6294 9.35016V6.82016C13.6282 5.70419 13.3111 4.61137 12.7147 3.66813C12.1183 2.72489 11.267 1.96978 10.2594 1.49016C10.0022 1.0335 9.62709 0.654303 9.17324 0.392195C8.71939 0.130087 8.20347 -0.00530784 7.6794 0.000159243C6.5894 0.000159243 5.6094 0.590159 5.0894 1.52016C3.1394 2.49016 1.7894 4.50016 1.7894 6.82016V9.35016C1.7894 9.76016 1.5994 10.4602 1.3894 10.8202L0.379396 12.4902C-0.0206039 13.1602 -0.110604 13.9002 0.139396 14.5802C0.379396 15.2502 0.949396 15.7702 1.6894 16.0202C3.6294 16.6802 5.6694 17.0002 7.7094 17.0002C9.7494 17.0002 11.7894 16.6802 13.7294 16.0302C14.4294 15.8002 14.9694 15.2702 15.2294 14.5802C15.4894 13.8902 15.4194 13.1302 15.0294 12.4902ZM10.5194 18.0102C10.3091 18.5923 9.92467 19.0956 9.41835 19.4516C8.91203 19.8077 8.30837 19.9992 7.6894 20.0002C6.8994 20.0002 6.1194 19.6802 5.5694 19.1102C5.2494 18.8102 5.0094 18.4102 4.8694 18.0002C4.9994 18.0202 5.1294 18.0302 5.2694 18.0502C5.4994 18.0802 5.7394 18.1102 5.9794 18.1302C6.5494 18.1802 7.1294 18.2102 7.7094 18.2102C8.2794 18.2102 8.8494 18.1802 9.4094 18.1302C9.6194 18.1102 9.8294 18.1002 10.0294 18.0702L10.5194 18.0102Z"/></svg>'+
+          '<span class="sw-nav-txt">ABA</span>'+
+        '</label>'+
+      '</nav>'+
+    '</div>';
+  ov.querySelectorAll('.sw-opt[data-mod]').forEach(btn=>{
+    btn.addEventListener('click',()=>showModule(btn.dataset.mod));
+  });
+  ov.querySelectorAll('.sw-nav-label[data-mod]').forEach(lbl=>{
+    lbl.addEventListener('click',()=>showModule(lbl.dataset.mod));
+  });
+  document.body.appendChild(ov);
 }
 
 // ═══ SHARED TOKEN RENEWAL ════════════════════════════════════
@@ -360,6 +430,34 @@ function injectAllCSS(){
 
 /* APPEAR */
 
+/* ─── SUITE WELCOME LAUNCHER ────────────────────────────────── */
+#__suite-welcome__{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:2147483647;background:rgba(10,12,18,0.90);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);animation:sw-fade-in .35s ease forwards;}
+#__suite-welcome__.sw-out{animation:sw-fade-out .28s ease forwards;pointer-events:none;}
+@keyframes sw-fade-in{from{opacity:0}to{opacity:1}}
+@keyframes sw-fade-out{from{opacity:1}to{opacity:0}}
+.sw-card{background:#13151f;border:1px solid rgba(255,255,255,0.09);border-radius:26px;padding:36px 38px 28px;max-width:460px;width:92%;box-shadow:0 40px 120px rgba(0,0,0,0.65);position:relative;overflow:hidden;animation:sw-card-in .45s cubic-bezier(.34,1.56,.64,1);}
+.sw-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--mg-grad);}
+@keyframes sw-card-in{from{opacity:0;transform:translateY(28px) scale(0.95)}to{opacity:1;transform:none}}
+.sw-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(209,120,66,0.12);border:1px solid rgba(209,120,66,0.25);border-radius:20px;padding:4px 12px;font-size:10px;font-weight:700;color:#d17842;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px;}
+.sw-greeting{font-size:13px;color:rgba(255,255,255,0.45);font-weight:500;margin-bottom:5px;}
+.sw-name{font-size:28px;font-weight:800;color:#fff;letter-spacing:-0.5px;margin-bottom:2px;}
+.sw-question{font-size:12px;color:rgba(255,255,255,0.4);font-weight:500;margin-bottom:22px;}
+.sw-opts{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:22px;}
+.sw-opt{background:rgba(255,255,255,0.03);border:1.5px solid rgba(255,255,255,0.07);border-radius:14px;padding:14px 13px 12px;cursor:pointer;transition:all .2s cubic-bezier(.4,0,.2,1);text-align:left;width:100%;font-family:var(--mg-font);}
+.sw-opt:hover{background:rgba(209,120,66,0.07);border-color:rgba(209,120,66,0.45);transform:translateY(-3px);box-shadow:0 10px 30px rgba(209,120,66,0.13);}
+.sw-opt:active{transform:scale(0.96);}
+.sw-opt-ico{font-size:22px;margin-bottom:8px;display:block;}
+.sw-opt-name{font-size:12px;font-weight:700;color:#fff;margin-bottom:3px;}
+.sw-opt-desc{font-size:10.5px;color:rgba(255,255,255,0.37);line-height:1.45;}
+.sw-nav{display:flex;align-items:center;justify-content:space-evenly;background:#0c0f14;border-radius:30px;border:1px solid rgba(255,255,255,0.05);padding:4px 8px;}
+.sw-nav-label{padding:6px 14px;transition:all 200ms;display:inline-flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;position:relative;}
+.sw-nav-label::before{content:'';display:block;width:0%;height:2px;border-radius:5px;position:absolute;left:50%;bottom:2px;background:#d17842;transition:all 200ms;transform:translateX(-50%);}
+.sw-nav-label.active::before{width:60%;}
+.sw-nav-label svg{transition:300ms;fill:#52555a;width:14px;height:14px;}
+.sw-nav-label.active svg{fill:#d17842;transform:scale(1.2) translateY(-3px);}
+.sw-nav-label:not(.active):hover svg{fill:#d17842;opacity:0.6;}
+.sw-nav-txt{font-size:9px;font-weight:600;color:#52555a;letter-spacing:0.5px;transition:200ms;text-transform:uppercase;}
+.sw-nav-label.active .sw-nav-txt{color:#d17842;}
 
 /* ═══════════════════════════════════════════════════════════ */
 /* MODULE: AUTO DESCARTE (__dsc__)                             */
@@ -1841,20 +1939,11 @@ function uiTokenDsc(){
 // ─── DSC buildPanel ──────────────────────────────────────────
 function buildPanel_dsc(){
   if(document.getElementById('__dsc__'))return;
-  if(!document.body)return setTimeout(buildPanel,10);
-
-  const toast=document.createElement('div');
-  toast.id='dsc-welcome-toast';toast.className='dsc-welcome-toast';
-  toast.innerHTML='<div class="dsc-toast-greeting">Bem-vindo de volta,</div><div class="dsc-toast-name" id="dsc-toast-name">'+(_userName||'...')+'</div><div class="dsc-toast-brand">Auto Descarte — Gestão de Ativos</div>';
-  document.body.appendChild(toast);
-  if(_userName){
-    toast.dataset.shown='1';
-    document.getElementById('dsc-toast-name').textContent=_userName;
-    requestAnimationFrame(()=>{toast.classList.add('show');setTimeout(()=>toast.classList.add('hide'),3200);setTimeout(()=>toast.remove(),3800);});
-  }
+  if(!document.body)return setTimeout(buildPanel_dsc,10);
 
   const root=document.createElement('div');
   root.id='__dsc__';
+  root.classList.add('off');
   root.innerHTML=
     '<div class="dsc-header" id="dsc-drag-handle">'+
       '<div class="dsc-header-left">'+
@@ -1865,6 +1954,7 @@ function buildPanel_dsc(){
         '</div>'+
       '</div>'+
       '<div class="dsc-header-btns">'+
+        '<button class="dsc-hbtn" id="dsc-switch" title="Trocar script" style="font-size:11px;">⊞</button>'+
         '<button class="dsc-hbtn" id="dsc-min" title="Minimizar"></button>'+
         '<button class="dsc-hbtn close-btn" id="dsc-close" title="Fechar">✕</button>'+
       '</div>'+
@@ -1973,6 +2063,9 @@ function buildPanel_dsc(){
     root.style.left=x+'px';root.style.top=y+'px';root.style.right='auto';
   });
   document.addEventListener('mouseup',()=>{if(isDragging){isDragging=false;document.body.style.userSelect='';}});
+
+  // SWITCH SCRIPT
+  document.getElementById('dsc-switch').onclick=e=>{e.stopPropagation();showLauncher();};
 
   // CLOSE
   document.getElementById('dsc-close').onclick=e=>{
@@ -2137,31 +2230,12 @@ function uiTokenSol(){
 // ═══ PAINEL ═══════════════════════════════════════════
 function buildPanel_sol(){
   if(document.getElementById('__sol__'))return;
-  if(!document.body)return setTimeout(buildPanel,10);
-
-  // Toast
-  const toast=document.createElement('div');
-  toast.id='sol-welcome-toast';toast.className='sol-welcome-toast';
-  toast.innerHTML=
-    '<div class="sol-toast-greeting">Bem-vindo de volta,</div>'+
-    '<div class="sol-toast-name" id="sol-toast-name">'+(_userName||'...')+'</div>'+
-    '<div class="sol-toast-brand">Gestão de Ativos</div>'+
-    '<div class="sol-toast-logo">'+magaluBrandBlock('lg')+'</div>';
-  document.body.appendChild(toast);
-  if(_userName){
-    toast.dataset.shown='1';
-    document.getElementById('sol-toast-name').textContent=_userName;
-    requestAnimationFrame(()=>{
-      toast.classList.add('show');
-      setTimeout(()=>toast.classList.add('hide'),3200);
-      setTimeout(()=>toast.remove(),3800);
-    });
-  }
+  if(!document.body)return setTimeout(buildPanel_sol,10);
 
   const root=document.createElement('div');
   root.id='__sol__';
+  root.classList.add('off');
   root.innerHTML=
-    // HEADER — spinner CSS + "Solicitar Ativos" + created by
     '<div class="sol-header" id="sol-drag-handle">'+
       '<div class="sol-header-left">'+
         '<div class="sol-spinner-wrap">'+
@@ -2178,6 +2252,7 @@ function buildPanel_sol(){
         '</div>'+
       '</div>'+
       '<div class="sol-header-btns">'+
+        '<button class="sol-hbtn" id="sol-switch" title="Trocar script" style="font-size:11px;">⊞</button>'+
         '<button class="sol-hbtn" id="sol-min" title="Minimizar"></button>'+
         '<button class="sol-hbtn close-btn" id="sol-close" title="Fechar">✕</button>'+
       '</div>'+
@@ -2320,13 +2395,16 @@ function buildPanel_sol(){
   });
   document.addEventListener('mouseup',()=>{if(isDragging){isDragging=false;document.body.style.userSelect='';}});
 
+  // SWITCH SCRIPT
+  document.getElementById('sol-switch').onclick=e=>{e.stopPropagation();showLauncher();};
+
   // CLOSE — com animação de pop no FAB
   document.getElementById('sol-close').onclick=e=>{
     e.stopPropagation();
     root.classList.add('off');
     tab.style.display='flex';
     tab.classList.remove('popping');
-    void tab.offsetWidth; // reflow para reiniciar animação
+    void tab.offsetWidth;
     tab.classList.add('popping');
     setTimeout(()=>tab.classList.remove('popping'),1200);
   };
@@ -2676,29 +2754,11 @@ function uiTokenExp(){
 // ═══ PAINEL ═══════════════════════════════════════════
 function buildPanel_exp(){
   if(document.getElementById('__aa__'))return;
-  if(!document.body)return setTimeout(buildPanel,10);
-
-  // Toast
-  const toast=document.createElement('div');
-  toast.id='exp-welcome-toast';toast.className='sol-welcome-toast';
-  toast.innerHTML=
-    '<div class="sol-toast-greeting">Bem-vindo de volta,</div>'+
-    '<div class="sol-toast-name" id="sol-toast-name">'+(_userName||'...')+'</div>'+
-    '<div class="sol-toast-brand">Auto Ativos · Magalu</div>'+
-    '<div class="sol-toast-logo">'+magaluBrandBlock('lg')+'</div>';
-  document.body.appendChild(toast);
-  if(_userName){
-    toast.dataset.shown='1';
-    document.getElementById('exp-toast-name').textContent=_userName;
-    requestAnimationFrame(()=>{
-      toast.classList.add('show');
-      setTimeout(()=>toast.classList.add('hide'),3200);
-      setTimeout(()=>toast.remove(),3800);
-    });
-  }
+  if(!document.body)return setTimeout(buildPanel_exp,10);
 
   const root=document.createElement('div');
   root.id='__aa__';
+  root.classList.add('off');
   root.innerHTML=
     '<div class="sol-header" id="sol-drag-handle">'+
       '<div class="sol-header-left">'+
@@ -2709,11 +2769,12 @@ function buildPanel_exp(){
           '</div>'+
         '</div>'+
         '<div class="sol-header-info">'+
-          '<div class="sol-header-title">Auto Ativos</div>'+
+          '<div class="sol-header-title">Auto Expedição</div>'+
           '<div class="sol-header-sub">created by joao.gmarques</div>'+
         '</div>'+
       '</div>'+
       '<div class="sol-header-btns">'+
+        '<button class="sol-hbtn" id="exp-switch" title="Trocar script" style="font-size:11px;">⊞</button>'+
         '<button class="sol-hbtn" id="sol-min" title="Minimizar"></button>'+
         '<button class="sol-hbtn close-btn" id="sol-close" title="Fechar">✕</button>'+
       '</div>'+
@@ -2853,8 +2914,11 @@ function buildPanel_exp(){
   });
   document.addEventListener('mouseup',()=>{if(isDragging){isDragging=false;document.body.style.userSelect='';}});
 
+  // SWITCH SCRIPT
+  document.getElementById('exp-switch').onclick=e=>{e.stopPropagation();showLauncher();};
+
   // CLOSE
-  document.getElementById('sol-close').onclick=e=>{
+  root.querySelector('#sol-close').onclick=e=>{
     e.stopPropagation();
     root.classList.add('off');
     tab.style.display='flex';
@@ -2866,7 +2930,7 @@ function buildPanel_exp(){
   tab.onclick=()=>{root.classList.remove('off');tab.style.display='none';};
 
   // MINIMIZE
-  const minBtn=document.getElementById('sol-min');
+  const minBtn=root.querySelector('#sol-min');
   minBtn.setAttribute('data-state','open');
   let mini=false;
   minBtn.onclick=e=>{
@@ -3685,10 +3749,11 @@ function showModal(cfg){return new Promise(resolve=>{const ov=document.createEle
 function showFinalModal(cd,totalFiliais,cargaId){const ov=document.createElement('div');ov.className='caba-ov';const m=document.createElement('div');m.className='caba-final-modal';const nome=_userName||('CD'+cd);const msgs=['','😬 Vamos melhorar!','😐 Pode ser melhor','🙂 Boa experiência!','😀 Muito bom!','🚀 Perfeito!'];m.innerHTML='<div class="caba-final-header"><span class="caba-final-emoji">🎉</span><div class="caba-final-title">Missão cumprida, <span class="caba-final-name">'+nome+'</span>!</div><div class="caba-final-subtitle">'+totalFiliais+' filia'+(totalFiliais===1?'l enviada':'is enviadas')+' com sucesso — Carga #'+cargaId+'</div></div><div class="caba-final-body"><div class="caba-rating-section"><div class="caba-rating-label">Como foi sua experiência?</div><div class="caba-rating" id="caba-stars-'+cargaId+'"><input type="radio" id="caba-s5-'+cargaId+'" name="caba-r-'+cargaId+'" value="5"><label for="caba-s5-'+cargaId+'"></label><input type="radio" id="caba-s4-'+cargaId+'" name="caba-r-'+cargaId+'" value="4"><label for="caba-s4-'+cargaId+'"></label><input type="radio" id="caba-s3-'+cargaId+'" name="caba-r-'+cargaId+'" value="3"><label for="caba-s3-'+cargaId+'"></label><input type="radio" id="caba-s2-'+cargaId+'" name="caba-r-'+cargaId+'" value="2"><label for="caba-s2-'+cargaId+'"></label><input type="radio" id="caba-s1-'+cargaId+'" name="caba-r-'+cargaId+'" value="1"><label for="caba-s1-'+cargaId+'"></label></div><div class="caba-rating-thanks" id="caba-rtk-'+cargaId+'"></div></div><div class="caba-final-btns"><button class="caba-mb g" id="caba-fc-'+cargaId+'">Fechar</button></div></div>';ov.appendChild(m);document.body.appendChild(ov);m.querySelectorAll('[name="caba-r-'+cargaId+'"]').forEach(inp=>{inp.onchange=()=>{const el=document.getElementById('caba-rtk-'+cargaId);if(el)el.textContent=msgs[Number(inp.value)]||'';};});document.getElementById('caba-fc-'+cargaId).onclick=()=>ov.remove();ov.onclick=e=>{if(e.target===ov)ov.remove();};}
 
 // ─── CABA buildPanel ─────────────────────────────────────────
-function buildPanel_caba(){if(document.getElementById('__caba__'))return;if(!document.body)return setTimeout(buildPanel,10);const toast=document.createElement('div');toast.id='caba-welcome-toast';toast.className='caba-welcome-toast';toast.innerHTML='<div style="font-size:13px;color:var(--mg-t2);margin-bottom:4px;font-weight:500;">Bem-vindo,</div><div style="font-size:26px;font-weight:800;color:var(--mg-blue);letter-spacing:-0.5px;" id="caba-toast-name">'+(_userName||'...')+'</div><div style="font-size:10px;color:var(--mg-t3);margin-top:8px;letter-spacing:1px;font-weight:600;">Confirma ABA · Magalu</div>';document.body.appendChild(toast);if(_userName){toast.dataset.shown='1';document.getElementById('caba-toast-name').textContent=_userName;requestAnimationFrame(()=>{toast.classList.add('show');setTimeout(()=>toast.classList.add('hide'),3200);setTimeout(()=>toast.remove(),3800);});}
-const root=document.createElement('div');root.id='__caba__';root.innerHTML='<div class="sol-header" id="caba-drag-handle"><div class="sol-header-left"><div class="sol-spinner-wrap"><div class="sol-spinner"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div><div class="sol-header-info"><div class="sol-header-title">Confirma ABA</div><div class="sol-header-sub">created by joao.gmarques</div></div></div><div class="sol-header-btns"><button class="sol-hbtn" id="caba-switch" title="Alternar Admin/CD50" style="font-size:11px;">\uD83D\uDD04</button><button class="sol-hbtn" id="caba-refresh" title="Atualizar">\u27F3</button><button class="sol-hbtn" id="caba-min" title="Minimizar"></button><button class="sol-hbtn close-btn" id="caba-close" title="Fechar">\u2715</button></div></div><div class="sol-welcome-inline"><div class="sol-welcome-av" id="caba-welcome-av">?</div><div><div class="sol-welcome-txt">Ol\u00e1, <span class="sol-welcome-name" id="caba-welcome-name">usu\u00e1rio</span></div><div class="sol-welcome-sub" id="caba-welcome-sub">Aguardando token...</div></div></div><div class="sol-tok-bar w" id="caba-tok"><div class="sol-tok-dot"></div><span class="sol-tok-label" id="caba-tok-txt">Aguardando token...</span><div class="sol-tok-track"><div class="sol-tok-fill" id="caba-tok-fill" style="width:0%"></div></div></div><div class="caba-body" id="caba-content"><div class="caba-loading"><span>Aguardando token...</span></div></div><div class="caba-log-section"><div class="caba-log-header" id="caba-lh"><span class="caba-log-title">Logs <span class="caba-log-count" id="caba-lc">0</span></span><button class="caba-log-clear" id="caba-lclr">limpar</button></div><div class="caba-log-body" id="caba-lb"><div class="caba-log-entry info">Aguardando...</div></div></div>';document.body.appendChild(root);
+function buildPanel_caba(){if(document.getElementById('__caba__'))return;if(!document.body)return setTimeout(buildPanel_caba,10);
+const root=document.createElement('div');root.id='__caba__';root.classList.add('off');root.innerHTML='<div class="sol-header" id="caba-drag-handle"><div class="sol-header-left"><div class="sol-spinner-wrap"><div class="sol-spinner"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div><div class="sol-header-info"><div class="sol-header-title">Confirma ABA</div><div class="sol-header-sub">created by joao.gmarques</div></div></div><div class="sol-header-btns"><button class="sol-hbtn" id="caba-launcher" title="Trocar script" style="font-size:11px;">\u229E</button><button class="sol-hbtn" id="caba-switch" title="Alternar Admin/CD50" style="font-size:11px;">\uD83D\uDD04</button><button class="sol-hbtn" id="caba-refresh" title="Atualizar">\u27F3</button><button class="sol-hbtn" id="caba-min" title="Minimizar"></button><button class="sol-hbtn close-btn" id="caba-close" title="Fechar">\u2715</button></div></div><div class="sol-welcome-inline"><div class="sol-welcome-av" id="caba-welcome-av">?</div><div><div class="sol-welcome-txt">Ol\u00e1, <span class="sol-welcome-name" id="caba-welcome-name">usu\u00e1rio</span></div><div class="sol-welcome-sub" id="caba-welcome-sub">Aguardando token...</div></div></div><div class="sol-tok-bar w" id="caba-tok"><div class="sol-tok-dot"></div><span class="sol-tok-label" id="caba-tok-txt">Aguardando token...</span><div class="sol-tok-track"><div class="sol-tok-fill" id="caba-tok-fill" style="width:0%"></div></div></div><div class="caba-body" id="caba-content"><div class="caba-loading"><span>Aguardando token...</span></div></div><div class="caba-log-section"><div class="caba-log-header" id="caba-lh"><span class="caba-log-title">Logs <span class="caba-log-count" id="caba-lc">0</span></span><button class="caba-log-clear" id="caba-lclr">limpar</button></div><div class="caba-log-body" id="caba-lb"><div class="caba-log-entry info">Aguardando...</div></div></div>';document.body.appendChild(root);
 const tab=document.createElement('button');tab.id='__caba_tab__';tab.innerHTML='\uD83D\uDCE6';document.body.appendChild(tab);
 let isDragging=false,dx=0,dy=0;document.getElementById('caba-drag-handle').addEventListener('mousedown',e=>{if(e.target.closest('.sol-hbtn'))return;isDragging=true;const r=root.getBoundingClientRect();dx=e.clientX-r.left;dy=e.clientY-r.top;document.body.style.userSelect='none';});document.addEventListener('mousemove',e=>{if(!isDragging)return;let x=e.clientX-dx,y=e.clientY-dy;x=Math.max(0,Math.min(x,window.innerWidth-root.offsetWidth));y=Math.max(0,Math.min(y,window.innerHeight-60));root.style.left=x+'px';root.style.top=y+'px';root.style.right='auto';});document.addEventListener('mouseup',()=>{if(isDragging){isDragging=false;document.body.style.userSelect='';}});
+document.getElementById('caba-launcher').onclick=e=>{e.stopPropagation();showLauncher();};
 document.getElementById('caba-close').onclick=e=>{e.stopPropagation();root.classList.add('off');tab.style.display='flex';tab.classList.remove('popping');void tab.offsetWidth;tab.classList.add('popping');setTimeout(()=>tab.classList.remove('popping'),1200);};tab.onclick=()=>{root.classList.remove('off');tab.style.display='none';};
 const minBtn=document.getElementById('caba-min');minBtn.setAttribute('data-state','open');let mini=false;minBtn.onclick=e=>{e.stopPropagation();mini=!mini;root.classList.toggle('minimized',mini);minBtn.setAttribute('data-state',mini?'closed':'open');};
 document.getElementById('caba-refresh').onclick=e=>{e.stopPropagation();startPolling();};
@@ -3705,22 +3770,11 @@ async function startPolling(){logCaba('Consultando...','info');await detectAndRe
 injectAllCSS();
 
 function _initAll(){
-  setTimeout(()=>{
-    // Descarte panel — positioned top-right
-    buildPanel_dsc();
-  },600);
-  setTimeout(()=>{
-    // Solicitação panel — positioned slightly offset
-    buildPanel_sol();
-  },700);
-  setTimeout(()=>{
-    // Expedição panel — positioned offset
-    buildPanel_exp();
-  },800);
-  setTimeout(()=>{
-    // Confirma ABA panel
-    buildPanel_caba();
-  },900);
+  buildWelcome();
+  setTimeout(()=>{ buildPanel_dsc(); },400);
+  setTimeout(()=>{ buildPanel_sol(); },500);
+  setTimeout(()=>{ buildPanel_exp(); },600);
+  setTimeout(()=>{ buildPanel_caba(); },700);
 }
 
 if(document.readyState==='loading'){
