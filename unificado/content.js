@@ -148,6 +148,27 @@ function showLauncher(){
   document.querySelectorAll('.sw-nav-label[data-mod]').forEach(l=>l.classList.remove('active'));
 }
 
+// ═══ SHARED PANEL NAV ════════════════════════════════════════
+const _SVG_NAV_EXP='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" width="14" height="14"><path fill="inherit" d="M18.9999 6.01002L12.4499 0.770018C11.1699 -0.249982 9.16988 -0.259982 7.89988 0.760018L1.34988 6.01002C0.409885 6.76002 -0.160115 8.26002 0.0398848 9.44002L1.29988 16.98C1.58988 18.67 3.15988 20 4.86988 20H15.4699C17.1599 20 18.7599 18.64 19.0499 16.97L20.3099 9.43002C20.4899 8.26002 19.9199 6.76002 18.9999 6.01002ZM10.9199 16C10.9199 16.41 10.5799 16.75 10.1699 16.75C9.75988 16.75 9.41988 16.41 9.41988 16V13C9.41988 12.59 9.75988 12.25 10.1699 12.25C10.5799 12.25 10.9199 12.59 10.9199 13V16Z"/></svg>';
+const _SVG_NAV_SOL='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20" width="14" height="14"><path fill="inherit" d="M16.8035 6.96427C16.1335 6.22427 15.1235 5.79427 13.7235 5.64427V4.88427C13.7235 3.51427 13.1435 2.19427 12.1235 1.27427C11.6202 0.812823 11.025 0.462927 10.3771 0.247511C9.72909 0.032095 9.04292 -0.0439787 8.3635 0.0242742C5.9735 0.254274 3.9635 2.56427 3.9635 5.06427V5.64427C2.5635 5.79427 1.5535 6.22427 0.883496 6.96427C-0.0865043 8.04427 -0.0565042 9.48427 0.0534958 10.4843L0.753496 16.0543C0.963496 18.0043 1.7535 20.0043 6.0535 20.0043H11.6335C15.9335 20.0043 16.7235 18.0043 16.9335 16.0643L17.6335 10.4743C17.7435 9.48427 17.7635 8.04427 16.8035 6.96427ZM8.5035 1.41427C8.98813 1.36559 9.47758 1.41913 9.94023 1.57143C10.4029 1.72372 10.8284 1.97138 11.1894 2.29841C11.5503 2.62544 11.8387 3.02456 12.0357 3.46998C12.2328 3.91539 12.3343 4.39721 12.3335 4.88427V5.58427H5.3535V5.06427C5.3535 3.28427 6.8235 1.57427 8.5035 1.41427ZM5.2635 11.1543H5.2535C4.7035 11.1543 4.2535 10.7043 4.2535 10.1543C4.2535 9.60427 4.7035 9.15427 5.2535 9.15427C5.8135 9.15427 6.2635 9.60427 6.2635 10.1543C6.2635 10.7043 5.8135 11.1543 5.2635 11.1543ZM12.2635 11.1543H12.2535C11.7035 11.1543 11.2535 10.7043 11.2535 10.1543C11.2535 9.60427 11.7035 9.15427 12.2535 9.15427C12.8135 9.15427 13.2635 9.60427 13.2635 10.1543C13.2635 10.7043 12.8135 11.1543 12.2635 11.1543Z"/></svg>';
+const _SVG_NAV_DSC='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 18" width="14" height="14"><path fill="inherit" d="M14.44 0C12.63 0 11.01 0.88 10 2.23C9.48413 1.53881 8.81426 0.977391 8.04353 0.590295C7.27281 0.203198 6.42247 0.00108555 5.56 0C2.49 0 0 2.5 0 5.59C0 6.78 0.19 7.88 0.52 8.9C2.1 13.9 6.97 16.89 9.38 17.71C9.72 17.83 10.28 17.83 10.62 17.71C13.03 16.89 17.9 13.9 19.48 8.9C19.81 7.88 20 6.78 20 5.59C20 2.5 17.51 0 14.44 0Z"/></svg>';
+const _SVG_NAV_CABA='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" width="14" height="14"><path fill="inherit" d="M15.0294 12.4902L14.0294 10.8302C13.8194 10.4602 13.6294 9.76016 13.6294 9.35016V6.82016C13.6282 5.70419 13.3111 4.61137 12.7147 3.66813C12.1183 2.72489 11.267 1.96978 10.2594 1.49016C10.0022 1.0335 9.62709 0.654303 9.17324 0.392195C8.71939 0.130087 8.20347 -0.00530784 7.6794 0.000159243C6.5894 0.000159243 5.6094 0.590159 5.0894 1.52016C3.1394 2.49016 1.7894 4.50016 1.7894 6.82016V9.35016C1.7894 9.76016 1.5994 10.4602 1.3894 10.8202L0.379396 12.4902C-0.0206039 13.1602 -0.110604 13.9002 0.139396 14.5802C0.379396 15.2502 0.949396 15.7702 1.6894 16.0202C3.6294 16.6802 5.6694 17.0002 7.7094 17.0002C9.7494 17.0002 11.7894 16.6802 13.7294 16.0302C14.4294 15.8002 14.9694 15.2702 15.2294 14.5802C15.4894 13.8902 15.4194 13.1302 15.0294 12.4902ZM10.5194 18.0102C10.3091 18.5923 9.92467 19.0956 9.41835 19.4516C8.91203 19.8077 8.30837 19.9992 7.6894 20.0002C6.8994 20.0002 6.1194 19.6802 5.5694 19.1102C5.2494 18.8102 5.0094 18.4102 4.8694 18.0002C4.9994 18.0202 5.1294 18.0302 5.2694 18.0502C5.4994 18.0802 5.7394 18.1102 5.9794 18.1302C6.5494 18.1802 7.1294 18.2102 7.7094 18.2102C8.2794 18.2102 8.8494 18.1802 9.4094 18.1302C9.6194 18.1102 9.8294 18.1002 10.0294 18.0702L10.5194 18.0102Z"/></svg>';
+function _buildPanelNav(container,activeMod){
+  const nav=document.createElement('nav');
+  nav.className='sw-nav sw-panel-nav';
+  const mods=[['exp','Expedi.',_SVG_NAV_EXP],['sol','Solicit.',_SVG_NAV_SOL],['dsc','Descarte',_SVG_NAV_DSC],['caba','ABA',_SVG_NAV_CABA]];
+  mods.forEach(([mod,txt,svg])=>{
+    const lbl=document.createElement('label');
+    lbl.className='sw-nav-label'+(mod===activeMod?' active':'');
+    lbl.dataset.mod=mod;
+    lbl.title=mod==='exp'?"Expedição":mod==='sol'?"Solicitações":mod==='dsc'?"Descarte":"Confirmação CD’s";
+    lbl.innerHTML=svg+'<span class="sw-nav-txt">'+txt+'</span>';
+    lbl.addEventListener('click',()=>showModule(mod));
+    nav.appendChild(lbl);
+  });
+  container.appendChild(nav);
+}
+
 function buildWelcome(){
   if(document.getElementById('__suite-welcome__'))return;
   if(!document.body)return setTimeout(buildWelcome,50);
@@ -156,18 +177,18 @@ function buildWelcome(){
   ov.id='__suite-welcome__';
   ov.innerHTML=
     '<div class="sw-card">'+
-      '<div class="sw-badge">🚀 Suite Magalu · Auto Ativos</div>'+
+      '<div class="sw-badge">Suite Magalu · Auto Ativos</div>'+
       '<div class="sw-greeting">Boas-vindas,</div>'+
       '<div class="sw-name" id="sw-name">'+n+'</div>'+
-      '<div class="sw-question">e hoje, <strong id="sw-name2" style="color:#d17842">'+n+'</strong>, qual script você quer usar? ✨</div>'+
+      '<div class="sw-question">e hoje, <strong id="sw-name2" style="color:#7c3aed">'+n+'</strong>, qual script você quer usar? ✨</div>'+
       '<div class="sw-opts">'+
-        '<button class="sw-opt" data-mod="exp"><span class="sw-opt-ico">🚚</span><div class="sw-opt-name">Auto Expedição</div><div class="sw-opt-desc">Processo de expedição automático</div></button>'+
-        '<button class="sw-opt" data-mod="dsc"><span class="sw-opt-ico">🗑️</span><div class="sw-opt-name">Auto Descarte</div><div class="sw-opt-desc">Realiza descartes automáticos</div></button>'+
-        '<button class="sw-opt" data-mod="sol"><span class="sw-opt-ico">📋</span><div class="sw-opt-name">Solicitações</div><div class="sw-opt-desc">Cria solicitações de ativos automaticamente</div></button>'+
-        '<button class="sw-opt" data-mod="caba"><span class="sw-opt-ico">✅</span><div class="sw-opt-name">Confirma ABA</div><div class="sw-opt-desc">Confirmação de cargas ABA</div></button>'+
+        '<button class="sw-opt" data-mod="exp"><span class="sw-opt-ico"><span class="sw-ico-exp"><i></i><i></i><i></i></span></span><div class="sw-opt-name">Expedição</div><div class="sw-opt-desc">Automatiza todos os processos de expedição, desde Solicitações até criação de Cargas</div></button>'+
+        '<button class="sw-opt" data-mod="dsc"><span class="sw-opt-ico"><span class="sw-ico-dsc"></span></span><div class="sw-opt-name">Descarte</div><div class="sw-opt-desc">Automatiza o processo de solicitar um descarte</div></button>'+
+        '<button class="sw-opt" data-mod="sol"><span class="sw-opt-ico"><span class="sw-ico-sol"><i></i><i></i><i></i></span></span><div class="sw-opt-name">Solicitações</div><div class="sw-opt-desc">Automatiza o processo de criar uma solicitação</div></button>'+
+        '<button class="sw-opt" data-mod="caba"><span class="sw-opt-ico"><span class="sw-ico-caba"></span></span><div class="sw-opt-name">Confirmação CD’s</div><div class="sw-opt-desc">Confirma se os CD’s de cargas ABA receberam a carga</div></button>'+
       '</div>'+
       '<nav class="sw-nav">'+
-        '<label class="sw-nav-label" data-mod="exp" title="Auto Expedição">'+
+        '<label class="sw-nav-label" data-mod="exp" title="Expedição">'+
           '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" width="14" height="14"><path fill="inherit" d="M18.9999 6.01002L12.4499 0.770018C11.1699 -0.249982 9.16988 -0.259982 7.89988 0.760018L1.34988 6.01002C0.409885 6.76002 -0.160115 8.26002 0.0398848 9.44002L1.29988 16.98C1.58988 18.67 3.15988 20 4.86988 20H15.4699C17.1599 20 18.7599 18.64 19.0499 16.97L20.3099 9.43002C20.4899 8.26002 19.9199 6.76002 18.9999 6.01002ZM10.9199 16C10.9199 16.41 10.5799 16.75 10.1699 16.75C9.75988 16.75 9.41988 16.41 9.41988 16V13C9.41988 12.59 9.75988 12.25 10.1699 12.25C10.5799 12.25 10.9199 12.59 10.9199 13V16Z"/></svg>'+
           '<span class="sw-nav-txt">Expedi.</span>'+
         '</label>'+
@@ -175,11 +196,11 @@ function buildWelcome(){
           '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20" width="14" height="14"><path fill="inherit" d="M16.8035 6.96427C16.1335 6.22427 15.1235 5.79427 13.7235 5.64427V4.88427C13.7235 3.51427 13.1435 2.19427 12.1235 1.27427C11.6202 0.812823 11.025 0.462927 10.3771 0.247511C9.72909 0.032095 9.04292 -0.0439787 8.3635 0.0242742C5.9735 0.254274 3.9635 2.56427 3.9635 5.06427V5.64427C2.5635 5.79427 1.5535 6.22427 0.883496 6.96427C-0.0865043 8.04427 -0.0565042 9.48427 0.0534958 10.4843L0.753496 16.0543C0.963496 18.0043 1.7535 20.0043 6.0535 20.0043H11.6335C15.9335 20.0043 16.7235 18.0043 16.9335 16.0643L17.6335 10.4743C17.7435 9.48427 17.7635 8.04427 16.8035 6.96427ZM8.5035 1.41427C8.98813 1.36559 9.47758 1.41913 9.94023 1.57143C10.4029 1.72372 10.8284 1.97138 11.1894 2.29841C11.5503 2.62544 11.8387 3.02456 12.0357 3.46998C12.2328 3.91539 12.3343 4.39721 12.3335 4.88427V5.58427H5.3535V5.06427C5.3535 3.28427 6.8235 1.57427 8.5035 1.41427ZM5.2635 11.1543H5.2535C4.7035 11.1543 4.2535 10.7043 4.2535 10.1543C4.2535 9.60427 4.7035 9.15427 5.2535 9.15427C5.8135 9.15427 6.2635 9.60427 6.2635 10.1543C6.2635 10.7043 5.8135 11.1543 5.2635 11.1543ZM12.2635 11.1543H12.2535C11.7035 11.1543 11.2535 10.7043 11.2535 10.1543C11.2535 9.60427 11.7035 9.15427 12.2535 9.15427C12.8135 9.15427 13.2635 9.60427 13.2635 10.1543C13.2635 10.7043 12.8135 11.1543 12.2635 11.1543Z"/></svg>'+
           '<span class="sw-nav-txt">Solicit.</span>'+
         '</label>'+
-        '<label class="sw-nav-label" data-mod="dsc" title="Auto Descarte">'+
+        '<label class="sw-nav-label" data-mod="dsc" title="Descarte">'+
           '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 18" width="14" height="14"><path fill="inherit" d="M14.44 0C12.63 0 11.01 0.88 10 2.23C9.48413 1.53881 8.81426 0.977391 8.04353 0.590295C7.27281 0.203198 6.42247 0.00108555 5.56 0C2.49 0 0 2.5 0 5.59C0 6.78 0.19 7.88 0.52 8.9C2.1 13.9 6.97 16.89 9.38 17.71C9.72 17.83 10.28 17.83 10.62 17.71C13.03 16.89 17.9 13.9 19.48 8.9C19.81 7.88 20 6.78 20 5.59C20 2.5 17.51 0 14.44 0Z"/></svg>'+
           '<span class="sw-nav-txt">Descarte</span>'+
         '</label>'+
-        '<label class="sw-nav-label" data-mod="caba" title="Confirma ABA">'+
+        '<label class="sw-nav-label" data-mod="caba" title="Confirmação CD’s">'+
           '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" width="14" height="14"><path fill="inherit" d="M15.0294 12.4902L14.0294 10.8302C13.8194 10.4602 13.6294 9.76016 13.6294 9.35016V6.82016C13.6282 5.70419 13.3111 4.61137 12.7147 3.66813C12.1183 2.72489 11.267 1.96978 10.2594 1.49016C10.0022 1.0335 9.62709 0.654303 9.17324 0.392195C8.71939 0.130087 8.20347 -0.00530784 7.6794 0.000159243C6.5894 0.000159243 5.6094 0.590159 5.0894 1.52016C3.1394 2.49016 1.7894 4.50016 1.7894 6.82016V9.35016C1.7894 9.76016 1.5994 10.4602 1.3894 10.8202L0.379396 12.4902C-0.0206039 13.1602 -0.110604 13.9002 0.139396 14.5802C0.379396 15.2502 0.949396 15.7702 1.6894 16.0202C3.6294 16.6802 5.6694 17.0002 7.7094 17.0002C9.7494 17.0002 11.7894 16.6802 13.7294 16.0302C14.4294 15.8002 14.9694 15.2702 15.2294 14.5802C15.4894 13.8902 15.4194 13.1302 15.0294 12.4902ZM10.5194 18.0102C10.3091 18.5923 9.92467 19.0956 9.41835 19.4516C8.91203 19.8077 8.30837 19.9992 7.6894 20.0002C6.8994 20.0002 6.1194 19.6802 5.5694 19.1102C5.2494 18.8102 5.0094 18.4102 4.8694 18.0002C4.9994 18.0202 5.1294 18.0302 5.2694 18.0502C5.4994 18.0802 5.7394 18.1102 5.9794 18.1302C6.5494 18.1802 7.1294 18.2102 7.7094 18.2102C8.2794 18.2102 8.8494 18.1802 9.4094 18.1302C9.6194 18.1102 9.8294 18.1002 10.0294 18.0702L10.5194 18.0102Z"/></svg>'+
           '<span class="sw-nav-txt">ABA</span>'+
         '</label>'+
@@ -326,28 +347,31 @@ function injectAllCSS(){
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  /* MELHORIA 7: tons mais escuros para contrastar com o portal branco */
-  --mg-bg:       #b8bcc8;
-  --mg-panel:    #c8ccd8;
-  --mg-s1:       #bfc3cf;
-  --mg-s2:       #b2b7c4;
-  --mg-s3:       #a6abb9;
-  --mg-s4:       #9ba0af;
-  --mg-b1:       rgba(0,0,0,0.13);
-  --mg-b2:       rgba(0,0,0,0.20);
-  --mg-t1:       #0f1120;
-  --mg-t2:       #3a4060;
-  --mg-t3:       #6b7290;
-  --mg-blue:     #0078e6;
-  --mg-blue2:    #005bbf;
-  --mg-grad:     linear-gradient(90deg,#f5a623 0%,#e8384f 22%,#c026d3 45%,#7c3aed 62%,#0078e6 78%,#00c896 100%);
-  --mg-green:    #16a34a;
-  --mg-green-lt: rgba(22,163,74,0.15);
-  --mg-red:      #dc2626;
-  --mg-red-lt:   rgba(220,38,38,0.10);
-  --mg-orange:   #d97706;
-  --mg-shadow:   0 2px 12px rgba(0,0,0,0.15);
-  --mg-shadow-lg:0 12px 48px rgba(0,0,0,0.25),0 2px 8px rgba(0,0,0,0.12);
+  --mg-bg:       #0c0e16;
+  --mg-panel:    #111420;
+  --mg-s1:       #181b2b;
+  --mg-s2:       #1e2235;
+  --mg-s3:       #252840;
+  --mg-s4:       #2d3050;
+  --mg-b1:       rgba(255,255,255,0.08);
+  --mg-b2:       rgba(255,255,255,0.14);
+  --mg-t1:       #e8eaf6;
+  --mg-t2:       rgba(200,205,240,0.70);
+  --mg-t3:       rgba(160,168,210,0.45);
+  --mg-blue:     #4da6ff;
+  --mg-blue2:    #3d8fea;
+  --mg-grad:     linear-gradient(90deg,#7c3aed 0%,#c026d3 30%,#e8384f 55%,#0078e6 78%,#00c896 100%);
+  --mg-green:    #34d399;
+  --mg-green-lt: rgba(52,211,153,0.12);
+  --mg-red:      #f87171;
+  --mg-red-lt:   rgba(248,113,113,0.12);
+  --mg-red-btn:  #e05252;
+  --mg-orange:   #fbbf24;
+  --mg-purple:   #7c3aed;
+  --mg-purple2:  #6d28d9;
+  --mg-purple-lt:rgba(124,58,237,0.15);
+  --mg-shadow:   0 2px 14px rgba(0,0,0,0.55);
+  --mg-shadow-lg:0 12px 50px rgba(0,0,0,0.70),0 2px 10px rgba(0,0,0,0.40);
   --mg-radius:   14px;
   --mg-font:     'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
   --mg-mono:     'JetBrains Mono',monospace;
@@ -438,26 +462,68 @@ function injectAllCSS(){
 .sw-card{background:#13151f;border:1px solid rgba(255,255,255,0.09);border-radius:26px;padding:36px 38px 28px;max-width:460px;width:92%;box-shadow:0 40px 120px rgba(0,0,0,0.65);position:relative;overflow:hidden;animation:sw-card-in .45s cubic-bezier(.34,1.56,.64,1);}
 .sw-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--mg-grad);}
 @keyframes sw-card-in{from{opacity:0;transform:translateY(28px) scale(0.95)}to{opacity:1;transform:none}}
-.sw-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(209,120,66,0.12);border:1px solid rgba(209,120,66,0.25);border-radius:20px;padding:4px 12px;font-size:10px;font-weight:700;color:#d17842;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px;}
+.sw-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.25);border-radius:20px;padding:4px 12px;font-size:10px;font-weight:700;color:#7c3aed;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px;}
 .sw-greeting{font-size:13px;color:rgba(255,255,255,0.45);font-weight:500;margin-bottom:5px;}
 .sw-name{font-size:28px;font-weight:800;color:#fff;letter-spacing:-0.5px;margin-bottom:2px;}
 .sw-question{font-size:12px;color:rgba(255,255,255,0.4);font-weight:500;margin-bottom:22px;}
 .sw-opts{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:22px;}
 .sw-opt{background:rgba(255,255,255,0.03);border:1.5px solid rgba(255,255,255,0.07);border-radius:14px;padding:14px 13px 12px;cursor:pointer;transition:all .2s cubic-bezier(.4,0,.2,1);text-align:left;width:100%;font-family:var(--mg-font);}
-.sw-opt:hover{background:rgba(209,120,66,0.07);border-color:rgba(209,120,66,0.45);transform:translateY(-3px);box-shadow:0 10px 30px rgba(209,120,66,0.13);}
+.sw-opt:hover{background:rgba(124,58,237,0.07);border-color:rgba(124,58,237,0.45);transform:translateY(-3px);box-shadow:0 10px 30px rgba(124,58,237,0.13);}
 .sw-opt:active{transform:scale(0.96);}
 .sw-opt-ico{font-size:22px;margin-bottom:8px;display:block;}
+/* ── CSS animated module icons ── */
+.sw-opt-ico{font-size:0;display:flex;align-items:center;justify-content:center;width:36px;height:36px;margin-bottom:10px;}
+.sw-ico-exp,.sw-ico-dsc,.sw-ico-sol,.sw-ico-caba{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;position:relative;}
+.sw-ico-exp{background:rgba(124,58,237,0.14);}
+.sw-ico-exp i{display:block;width:7px;height:7px;border-radius:2px;background:#a78bfa;animation:ico-exp 1.5s ease-in-out infinite;}
+.sw-ico-exp i:nth-child(1){animation-delay:0s;}
+.sw-ico-exp i:nth-child(2){width:6px;height:9px;animation-delay:.2s;}
+.sw-ico-exp i:nth-child(3){width:8px;height:5px;animation-delay:.4s;}
+@keyframes ico-exp{0%,100%{transform:translateY(0);opacity:.7}50%{transform:translateY(-7px);opacity:1}}
+.sw-ico-dsc{background:rgba(248,113,113,0.12);}
+.sw-ico-dsc::before{content:'';width:18px;height:18px;border-radius:50%;border:2.5px solid #f87171;animation:ico-dsc 2s ease-in-out infinite;}
+.sw-ico-dsc::after{content:'';position:absolute;width:8px;height:8px;border-radius:50%;background:#f87171;animation:ico-dsc 2s ease-in-out infinite .4s;}
+@keyframes ico-dsc{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(0.55);opacity:.3}}
+.sw-ico-sol{background:rgba(77,166,255,0.12);flex-direction:column;gap:4px;}
+.sw-ico-sol i{display:block;height:2px;background:#4da6ff;border-radius:2px;animation:ico-sol 2s ease-in-out infinite;}
+.sw-ico-sol i:nth-child(1){width:18px;animation-delay:0s;}
+.sw-ico-sol i:nth-child(2){width:13px;animation-delay:.25s;}
+.sw-ico-sol i:nth-child(3){width:8px;animation-delay:.5s;}
+@keyframes ico-sol{0%,100%{opacity:.3;transform:scaleX(.65);transform-origin:left}60%{opacity:1;transform:scaleX(1)}}
+.sw-ico-caba{background:rgba(52,211,153,0.12);}
+.sw-ico-caba::before{content:'';width:20px;height:20px;border-radius:50%;border:2.5px solid #34d399;animation:ico-caba-ring 2.2s ease-in-out infinite;}
+.sw-ico-caba::after{content:'';position:absolute;width:9px;height:6px;border-left:2.5px solid #34d399;border-bottom:2.5px solid #34d399;transform:rotate(-45deg) translate(1px,1px);animation:ico-caba-chk 2.2s ease-in-out infinite;}
+@keyframes ico-caba-ring{0%{opacity:.25;transform:scale(.75)}45%,65%{opacity:1;transform:scale(1)}100%{opacity:.25;transform:scale(.75)}}
+@keyframes ico-caba-chk{0%{opacity:0;transform:rotate(-45deg) translate(1px,1px) scale(.4)}45%,65%{opacity:1;transform:rotate(-45deg) translate(1px,1px) scale(1)}100%{opacity:0;transform:rotate(-45deg) translate(1px,1px) scale(.4)}}
+/* CSS tab icons */
+.tab-ico-exp,.tab-ico-dsc,.tab-ico-sol,.tab-ico-caba{display:flex;align-items:center;justify-content:center;gap:2px;pointer-events:none;}
+.tab-ico-exp i{display:block;width:5px;height:5px;border-radius:1px;background:currentColor;animation:ico-exp 1.5s ease-in-out infinite;}
+.tab-ico-exp i:nth-child(2){animation-delay:.2s;}
+.tab-ico-exp i:nth-child(3){animation-delay:.4s;}
+.tab-ico-dsc{position:relative;width:18px;height:18px;}
+.tab-ico-dsc::before{content:'';position:absolute;inset:0;border-radius:50%;border:2px solid currentColor;animation:ico-dsc 2s ease-in-out infinite;}
+.tab-ico-sol{flex-direction:column;gap:3px;}
+.tab-ico-sol i{display:block;height:2px;background:currentColor;border-radius:2px;}
+.tab-ico-sol i:nth-child(1){width:14px;animation:ico-sol 2s ease-in-out infinite;}
+.tab-ico-sol i:nth-child(2){width:10px;animation:ico-sol 2s ease-in-out infinite .25s;}
+.tab-ico-caba{position:relative;width:18px;height:18px;}
+.tab-ico-caba::before{content:'';position:absolute;inset:0;border-radius:50%;border:2px solid currentColor;animation:ico-caba-ring 2.2s ease-in-out infinite;}
+.tab-ico-caba::after{content:'';position:absolute;width:7px;height:5px;border-left:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(-45deg) translate(1px,1px);animation:ico-caba-chk 2.2s ease-in-out infinite;}
 .sw-opt-name{font-size:12px;font-weight:700;color:#fff;margin-bottom:3px;}
 .sw-opt-desc{font-size:10.5px;color:rgba(255,255,255,0.37);line-height:1.45;}
 .sw-nav{display:flex;align-items:center;justify-content:space-evenly;background:#0c0f14;border-radius:30px;border:1px solid rgba(255,255,255,0.05);padding:4px 8px;}
 .sw-nav-label{padding:6px 14px;transition:all 200ms;display:inline-flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;position:relative;}
-.sw-nav-label::before{content:'';display:block;width:0%;height:2px;border-radius:5px;position:absolute;left:50%;bottom:2px;background:#d17842;transition:all 200ms;transform:translateX(-50%);}
+.sw-nav-label::before{content:'';display:block;width:0%;height:2px;border-radius:5px;position:absolute;left:50%;bottom:2px;background:#7c3aed;transition:all 200ms;transform:translateX(-50%);}
 .sw-nav-label.active::before{width:60%;}
 .sw-nav-label svg{transition:300ms;fill:#52555a;width:14px;height:14px;}
-.sw-nav-label.active svg{fill:#d17842;transform:scale(1.2) translateY(-3px);}
-.sw-nav-label:not(.active):hover svg{fill:#d17842;opacity:0.6;}
+.sw-nav-label.active svg{fill:#7c3aed;transform:scale(1.2) translateY(-3px);}
+.sw-nav-label:not(.active):hover svg{fill:#7c3aed;opacity:0.6;}
 .sw-nav-txt{font-size:9px;font-weight:600;color:#52555a;letter-spacing:0.5px;transition:200ms;text-transform:uppercase;}
-.sw-nav-label.active .sw-nav-txt{color:#d17842;}
+.sw-nav-label.active .sw-nav-txt{color:#7c3aed;}
+/* ─── PANEL BOTTOM NAV ──────────────────────────────────────── */
+.sw-panel-nav{margin:0 10px 10px;border-radius:30px;flex-shrink:0;}
+.sw-panel-nav .sw-nav-label{padding:5px 10px;}
+
 
 /* ═══════════════════════════════════════════════════════════ */
 /* MODULE: AUTO DESCARTE (__dsc__)                             */
@@ -1949,7 +2015,7 @@ function buildPanel_dsc(){
       '<div class="dsc-header-left">'+
         '<div class="dsc-spinner-wrap"><div class="dsc-spinner"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>'+
         '<div class="dsc-header-info">'+
-          '<div class="dsc-header-title">Auto Descarte</div>'+
+          '<div class="dsc-header-title">Descarte</div>'+
           '<div class="dsc-header-sub">created by joao.gmarques</div>'+
         '</div>'+
       '</div>'+
@@ -2042,9 +2108,10 @@ function buildPanel_dsc(){
     '</div>';
 
   document.body.appendChild(root);
+  _buildPanelNav(root,'dsc');
 
   const tab=document.createElement('button');
-  tab.id='__dsc_tab__';tab.innerHTML='🗑️';
+  tab.id='__dsc_tab__';tab.innerHTML='<span class="tab-ico-dsc"></span>';
   document.body.appendChild(tab);
 
   // DRAG
@@ -2097,7 +2164,7 @@ function buildPanel_dsc(){
   // LOG
   let logOpen=true;
   document.getElementById('dsc-lh').onclick=()=>{logOpen=!logOpen;document.getElementById('dsc-lb').style.display=logOpen?'':'none';};
-  document.getElementById('dsc-lclr').onclick=e=>{e.stopPropagation();document.getElementById('dsc-lb').innerHTML='';_lc=0;document.getElementById('dsc-lc').textContent='0';};
+  document.getElementById('dsc-lclr').onclick=e=>{e.stopPropagation();document.getElementById('dsc-lb').innerHTML='';_lc_dsc=0;document.getElementById('dsc-lc').textContent='0';};
 
   if(_userName)updateWelcome();
   uiTokenDsc();
@@ -2122,10 +2189,10 @@ function showBtns(running){
 
 function setStDsc(t,on){const el=document.getElementById('dsc-st');if(!el)return;el.textContent=t;el.className='dsc-status'+(on!==false?' on':'');}
 function setProgDsc(p){const w=document.getElementById('dsc-pw'),b=document.getElementById('dsc-pb');if(!w||!b)return;if(p===null){w.classList.remove('on');return;}w.classList.add('on');b.style.width=p+'%';}
-let _lc=0;
+let _lc_dsc=0;
 function logDsc(msg,type){
   type=type||'info';const lb=document.getElementById('dsc-lb');if(!lb)return;
-  _lc++;const lc=document.getElementById('dsc-lc');if(lc)lc.textContent=_lc;
+  _lc_dsc++;const lc=document.getElementById('dsc-lc');if(lc)lc.textContent=_lc_dsc;
   const t=new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
   const d=document.createElement('div');d.className='dsc-log-entry '+type;
   d.textContent=t+'  '+msg;lb.appendChild(d);lb.scrollTop=lb.scrollHeight;
@@ -2140,14 +2207,9 @@ function logDsc(msg,type){
 // ═══════════════════════════════════════════════════════════════
 
 // ─── SOL State + API ──────────────────────────────────────────
-// ═══ HELPERS ══════════════════════════════════════════
-const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-const pad=(c,n=4)=>String(c).padStart(n,'0');
-const norm=c=>(c||'').toString().replace(/\D/g,'').replace(/^0+/,'');
 
 // ═══ STATE ════════════════════════════════════════════
-const API='https://gestao-ativos-api.magazineluiza.com.br';
-const S={running:false,stop:false,results:[],startTime:null};
+const S_sol={running:false,stop:false,results:[],startTime:null};
 
 // ═══ API ══════════════════════════════════════════════
 async function _refresh401Sol(){logSol('Token 401 - renovando...','warn');await _renovarTokenSilencioso();}
@@ -2246,7 +2308,7 @@ function buildPanel_sol(){
         '</div>'+
         '<div class="sol-header-info">'+
           '<div class="sol-header-title-row">'+
-            '<div class="sol-header-title">Solicitar Ativos</div>'+
+            '<div class="sol-header-title">Solicitações</div>'+
           '</div>'+
           '<div class="sol-header-sub">created by joao.gmarques</div>'+
         '</div>'+
@@ -2371,9 +2433,10 @@ function buildPanel_sol(){
     '</div>';
 
   document.body.appendChild(root);
+  _buildPanelNav(root,'sol');
 
   const tab=document.createElement('button');
-  tab.id='__sol_tab__';tab.innerHTML='📤';
+  tab.id='__sol_tab__';tab.innerHTML='<span class="tab-ico-sol"><i></i><i></i></span>';
   document.body.appendChild(tab);
 
   // DRAG
@@ -2440,12 +2503,12 @@ function buildPanel_sol(){
   document.getElementById('sol-modo-unico').addEventListener('change',()=>setModo(true));
   document.getElementById('sol-modo-filial').addEventListener('change',()=>setModo(false));
 
-  document.getElementById('sol-run').onclick=start;
-  document.getElementById('sol-stop').onclick=()=>{S.stop=true;setStSol('Parando...');logSol('Interrompido pelo usuário.','warn');};
+  document.getElementById('sol-run').onclick=startSol;
+  document.getElementById('sol-stop').onclick=()=>{S_sol.stop=true;setStSol('Parando...');logSol('Interrompido pelo usuário.','warn');};
 
   let logOpen=true;
   document.getElementById('sol-lh').onclick=()=>{logOpen=!logOpen;document.getElementById('sol-lb').style.display=logOpen?'':'none';};
-  document.getElementById('sol-lclr').onclick=e=>{e.stopPropagation();document.getElementById('sol-lb').innerHTML='';_lc=0;document.getElementById('sol-lc').textContent='0';};
+  document.getElementById('sol-lclr').onclick=e=>{e.stopPropagation();document.getElementById('sol-lb').innerHTML='';_lc_sol=0;document.getElementById('sol-lc').textContent='0';};
   if(_userName)updateWelcome();
   uiTokenSol();
   setInterval(uiTokenSol,5000);
@@ -2459,11 +2522,11 @@ function setProgSol(p){
   if(p===null){w.classList.remove('on');return;}
   w.classList.add('on');b.style.width=p+'%';
 }
-let _lc=0;
+let _lc_sol=0;
 function logSol(msg,type){
   type=type||'info';
   const lb=document.getElementById('sol-lb');if(!lb)return;
-  _lc++;const lc=document.getElementById('sol-lc');if(lc)lc.textContent=_lc;
+  _lc_sol++;const lc=document.getElementById('sol-lc');if(lc)lc.textContent=_lc_sol;
   const t=new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
   const d=document.createElement('div');d.className='sol-log-entry '+type;
   d.textContent=t+'  '+msg;lb.appendChild(d);lb.scrollTop=lb.scrollHeight;
@@ -2493,7 +2556,7 @@ function modalFinal(oks,fails,gemcoLabel,origin){
       '</div>'+
       '<div class="aa-final-body">'+
         '<div class="aa-res-sum">'+
-          '<div class="aa-res-cell"><div class="aa-res-val" style="color:var(--mg-blue)">'+S.results.length+'</div><div class="aa-res-lbl">Total</div></div>'+
+          '<div class="aa-res-cell"><div class="aa-res-val" style="color:var(--mg-blue)">'+S_sol.results.length+'</div><div class="aa-res-lbl">Total</div></div>'+
           '<div class="aa-res-cell"><div class="aa-res-val" style="color:var(--mg-green)">'+oks.length+'</div><div class="aa-res-lbl">Sucesso</div></div>'+
           '<div class="aa-res-cell"><div class="aa-res-val" style="color:'+(fails.length?'var(--mg-red)':'var(--mg-green)')+'">'+fails.length+'</div><div class="aa-res-lbl">Falhas</div></div>'+
         '</div>'+
@@ -2595,7 +2658,7 @@ async function startSol(){
   logSol('Iniciando '+grupos.length+' solicitações','info');
 
   for(let i=0;i<grupos.length;i++){
-    if(S.stop)break;
+    if(S_sol.stop)break;
     const grupo=grupos[i];
     setStSol('Solicitação '+(i+1)+'/'+grupos.length+' — Filial '+grupo.filial);
     setProgSol(5+Math.round(i/grupos.length*88));
@@ -2606,33 +2669,33 @@ async function startSol(){
       const solId=criada.solicitationId;
       await reqSol('POST','/v1/solicitations/branch/'+solId+'/asset',{assets:grupo.assets});
       await reqSol('PATCH','/v1/solicitations/branch/'+solId,{observation:'',origin:origin,status:'CREATED'});
-      S.results.push({filial:grupo.filial,assets:grupo.assets,solId,status:'ok'});
+      S_sol.results.push({filial:grupo.filial,assets:grupo.assets,solId,status:'ok'});
       logSol('OK Filial '+grupo.filial+' — Sol #'+solId,'ok');
     }catch(e){
-      S.results.push({filial:grupo.filial,assets:grupo.assets,solId:null,status:'fail',motivo:e.message});
+      S_sol.results.push({filial:grupo.filial,assets:grupo.assets,solId:null,status:'fail',motivo:e.message});
       logSol('ERRO Filial '+grupo.filial+': '+e.message,'err');
       const d=await modal({tipo:'err',titulo:'Erro — Filial '+grupo.filial,mensagem:e.message+'\n\nO que deseja fazer?',btns:[{t:'Parar',v:'stop',cls:'d'},{t:'Pular',v:'skip',cls:'s'},{t:'Tentar novamente',v:'retry',cls:'p'}]});
-      if(d==='stop'){S.stop=true;break;}
+      if(d==='stop'){S_sol.stop=true;break;}
       if(d==='retry'){i--;continue;}
     }
     await sleep(600);
   }
 
-  S.running=false;
+  S_sol.running=false;
   document.getElementById('sol-run').style.display='';
   document.getElementById('sol-stop-section').classList.remove('active');
   document.getElementById('sol-stop').style.display='none';
   showWorkingSol(false);
   setProgSol(100);setTimeout(()=>setProgSol(null),600);
-  setStSol(S.stop?'Interrompido.':'Concluído! 🎉',false);
+  setStSol(S_sol.stop?'Interrompido.':'Concluído! 🎉',false);
 
-  const oks=S.results.filter(r=>r.status==='ok');
-  const fails=S.results.filter(r=>r.status==='fail');
+  const oks=S_sol.results.filter(r=>r.status==='ok');
+  const fails=S_sol.results.filter(r=>r.status==='fail');
   const gemcoLabel=modoPorFilial?'(por filial)':gemcoUnico;
   const v=await modalFinal(oks,fails,gemcoLabel,origin);
   if(v==='copy'){
-    const lines=['SOLICITAÇÕES — '+new Date().toLocaleString('pt-BR'),'Gemco: '+gemcoLabel+' | Origem: CD'+norm(origin),'Total: '+S.results.length+' | OK: '+oks.length+' | Falhas: '+fails.length,''];
-    S.results.forEach(r=>{
+    const lines=['SOLICITAÇÕES — '+new Date().toLocaleString('pt-BR'),'Gemco: '+gemcoLabel+' | Origem: CD'+norm(origin),'Total: '+S_sol.results.length+' | OK: '+oks.length+' | Falhas: '+fails.length,''];
+    S_sol.results.forEach(r=>{
       const itens=r.assets.map(a=>a.itemCode+' x'+a.amount).join(', ');
       lines.push(r.status==='ok'?'OK Filial '+r.filial+' ['+itens+'] Sol#'+r.solId:'ERRO Filial '+r.filial+' ['+itens+'] '+r.motivo);
     });
@@ -2646,10 +2709,6 @@ async function startSol(){
 // ═══════════════════════════════════════════════════════════════
 
 // ─── EXP Helpers + State ─────────────────────────────────────
-// ═══ HELPERS ══════════════════════════════════════════
-const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-const norm=c=>(c||'').toString().replace(/\D/g,'').replace(/^0+/,'');
-const pad=(c,n=4)=>String(c).padStart(n,'0');
 
 // ═══ PARSE FILIAIS ════════════════════════════════════
 function parseFilaisExp(text){
@@ -2667,11 +2726,11 @@ function parseFilaisExp(text){
 
 // ═══ CONFIG & STATE ═══════════════════════════════════
 const C={API:'https://gestao-ativos-api.magazineluiza.com.br',OC:'0038',OID:'0038',RET:3,RD:1200};
-const S={running:false,stop:false,jobs:[],results:{},sentItems:[],sepFiliais:[],jobsOk:[],sepAssets:[],
+const S_exp={running:false,stop:false,jobs:[],results:{},sentItems:[],sepFiliais:[],jobsOk:[],sepAssets:[],
   cargaId:null,cargaOk:false,freight:null,depDate:null,
   confOk:0,confErr:0,confFilOk:[],confFilErr:[],tracks:{},
   nfeOk:false,nfeSucess:[],nfeFail:[],startTime:null,modo:null};
-function setRes(f,p,status,motivo='',qtd=0){S.results[norm(f)+'::'+p.toUpperCase().trim()]={f:norm(f),p:p.toUpperCase().trim(),status,motivo,qtd};}
+function setRes(f,p,status,motivo='',qtd=0){S_exp.results[norm(f)+'::'+p.toUpperCase().trim()]={f:norm(f),p:p.toUpperCase().trim(),status,motivo,qtd};}
 
 // ─── EXP API ─────────────────────────────────────────────────
 // ═══ API ══════════════════════════════════════════════
@@ -2696,7 +2755,7 @@ async function reqExp(method,ep,body=null,retry=0){
   const e=await res.text().catch(()=>'');throw new Error(`HTTP ${res.status}: ${e.slice(0,120)}`);
 }
 const yr=()=>new Date().getFullYear();
-const A={
+const A_exp={
   sols:bc=>reqExp('GET',`/v1/expedition/solicitations?offset=1&limit=1000&branchCode=${bc}&status=CREATED,CREATING,IN_SEPARATION,PARTIAL_SHIPPING,PENDING&startDate=${yr()}-01-01&endDate=${yr()}-12-31&originCode=${C.OC}`),
   solDet:id=>reqExp('GET',`/v1/solicitations/solicitation-detail/${id}`),
   envSep:(sid,ic,q)=>reqExp('POST','/v1/separation',{solicitationBranchAssetId:sid,itemCode:ic,qntdSolicitation:q}),
@@ -2769,7 +2828,7 @@ function buildPanel_exp(){
           '</div>'+
         '</div>'+
         '<div class="sol-header-info">'+
-          '<div class="sol-header-title">Auto Expedição</div>'+
+          '<div class="sol-header-title">Expedição</div>'+
           '<div class="sol-header-sub">created by joao.gmarques</div>'+
         '</div>'+
       '</div>'+
@@ -2790,8 +2849,8 @@ function buildPanel_exp(){
 
     '<div class="sol-tok-bar w" id="exp-tok">'+
       '<div class="sol-tok-dot"></div>'+
-      '<span class="sol-tok-label" id="aa-tok-txt">Aguardando token...</span>'+
-      '<div class="sol-tok-track"><div class="sol-tok-fill" id="sol-tok-fill" style="width:0%"></div></div>'+
+      '<span class="sol-tok-label" id="exp-tok-txt">Aguardando token...</span>'+
+      '<div class="sol-tok-track"><div class="sol-tok-fill" id="exp-tok-fill" style="width:0%"></div></div>'+
     '</div>'+
 
     '<div class="sol-body">'+
@@ -2890,9 +2949,10 @@ function buildPanel_exp(){
     '</div>';
 
   document.body.appendChild(root);
+  _buildPanelNav(root,'exp');
 
   const tab=document.createElement('button');
-  tab.id='__aa_tab__';tab.innerHTML='📦';
+  tab.id='__aa_tab__';tab.innerHTML='<span class="tab-ico-exp"><i></i><i></i><i></i></span>';
   document.body.appendChild(tab);
 
   // DRAG
@@ -2953,13 +3013,13 @@ function buildPanel_exp(){
     });
   });
 
-  document.getElementById('aa-run').onclick=start;
-  document.getElementById('aa-stop').onclick=()=>{S.stop=true;setStExp('Parada solicitada...');logExp('Interrompido pelo usuário.','warn');};
+  document.getElementById('aa-run').onclick=startExp;
+  document.getElementById('aa-stop').onclick=()=>{S_exp.stop=true;setStExp('Parada solicitada...');logExp('Interrompido pelo usuário.','warn');};
   document.getElementById('aa-email').addEventListener('click',testarEmails);
 
   let logOpen=true;
   document.getElementById('aa-lh').onclick=()=>{logOpen=!logOpen;document.getElementById('aa-lb').style.display=logOpen?'':'none';};
-  document.getElementById('aa-lclr').onclick=e=>{e.stopPropagation();document.getElementById('aa-lb').innerHTML='';_lc=0;document.getElementById('aa-lc').textContent='0';};
+  document.getElementById('aa-lclr').onclick=e=>{e.stopPropagation();document.getElementById('aa-lb').innerHTML='';_lc_exp=0;document.getElementById('aa-lc').textContent='0';};
 
   if(_userName)updateWelcome();
   uiTokenExp();
@@ -2987,11 +3047,11 @@ function setProgExp(p){
   if(p===null){w.classList.remove('on');return;}
   w.classList.add('on');b.style.width=p+'%';
 }
-let _lc=0;
+let _lc_exp=0;
 function logExp(msg,type='info'){
   const lb=document.getElementById('aa-lb');if(!lb)return;
-  _lc++;
-  const lc=document.getElementById('aa-lc');if(lc)lc.textContent=_lc;
+  _lc_exp++;
+  const lc=document.getElementById('aa-lc');if(lc)lc.textContent=_lc_exp;
   const t=new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
   const d=document.createElement('div');d.className='sol-log-entry '+type;
   d.textContent=t+'  '+msg;lb.appendChild(d);lb.scrollTop=lb.scrollHeight;
@@ -3004,7 +3064,7 @@ function logExp(msg,type='info'){
 // ─── EXP Logic (start, steps, NF-e, emails, final) ───────────
 // ═══ MODAL RESUMO SOLICITAÇÃO ══════════════════════════
 async function modalResumoSolicitacao(){
-  const results=Object.values(S.results);
+  const results=Object.values(S_exp.results);
   const oks=results.filter(r=>r.status==='ok');
   const fails=results.filter(r=>r.status==='fail');
   let tabHTML='<table class="aa-rtable"><thead><tr><th>Filial</th><th>Produto</th><th>Qtd</th><th>Status</th></tr></thead><tbody>';
@@ -3046,7 +3106,7 @@ async function startExp(){
     return;
   }
   const mLabel={full:'COMPLETO',sep:'SEPARAÇÃO',carga:'CARGA'};
-  Object.assign(S,{running:true,stop:false,jobs,results:{},sentItems:[],sepFiliais:[],jobsOk:[],sepAssets:[],
+  Object.assign(S_exp,{running:true,stop:false,jobs,results:{},sentItems:[],sepFiliais:[],jobsOk:[],sepAssets:[],
     cargaId:null,cargaOk:false,freight:null,depDate:null,
     confOk:0,confErr:0,confFilOk:[],confFilErr:[],tracks:{},
     nfeOk:false,nfeSucess:[],nfeFail:[],startTime:Date.now(),modo:mLabel[mode]||mode});
@@ -3062,68 +3122,68 @@ async function startExp(){
     if(mode==='full'){
       setStExp('Etapa 1 — Solicitações');setProgExp(10);
       await stepSolicitacao();
-      if(!S.stop){
-        const oks=Object.values(S.results).filter(r=>r.status==='ok');
+      if(!S_exp.stop){
+        const oks=Object.values(S_exp.results).filter(r=>r.status==='ok');
         if(oks.length>0){
           const dec=await modalResumoSolicitacao();
-          if(dec==='stop'||dec===null){S.stop=true;}
+          if(dec==='stop'||dec===null){S_exp.stop=true;}
         }else{
           await modal({tipo:'err',icone:'😔',titulo:'Nenhuma solicitação processada',mensagem:'Nenhuma filial teve itens enviados para separação.\n\nVerifique os dados e tente novamente.',btns:[{t:'Ok',v:'ok',cls:'p'}]});
-          S.stop=true;
+          S_exp.stop=true;
         }
       }
-      if(!S.stop&&S.jobsOk.length){setStExp('Etapa 2 — Separação');setProgExp(28);await stepSeparacao();if(!S.stop)await stepBuscarSep();}
-      if(!S.stop&&S.sepAssets.length){setStExp('Etapa 3 — Carga');setProgExp(50);await stepCarga();}
-      if(!S.stop&&S.cargaId&&S.cargaOk){setStExp('Etapa 4 — Conferência');setProgExp(68);await stepConferencia();}
+      if(!S_exp.stop&&S_exp.jobsOk.length){setStExp('Etapa 2 — Separação');setProgExp(28);await stepSeparacao();if(!S_exp.stop)await stepBuscarSep();}
+      if(!S_exp.stop&&S_exp.sepAssets.length){setStExp('Etapa 3 — Carga');setProgExp(50);await stepCarga();}
+      if(!S_exp.stop&&S_exp.cargaId&&S_exp.cargaOk){setStExp('Etapa 4 — Conferência');setProgExp(68);await stepConferencia();}
     }else if(mode==='sep'){
-      S.jobsOk=[...jobs];S.sepFiliais=[...new Set(jobs.map(j=>j.filial))];
-      await stepSeparacao();if(!S.stop)await stepBuscarSep();
-      if(!S.stop&&S.sepAssets.length)await stepCarga();
-      if(!S.stop&&S.cargaId&&S.cargaOk)await stepConferencia();
+      S_exp.jobsOk=[...jobs];S_exp.sepFiliais=[...new Set(jobs.map(j=>j.filial))];
+      await stepSeparacao();if(!S_exp.stop)await stepBuscarSep();
+      if(!S_exp.stop&&S_exp.sepAssets.length)await stepCarga();
+      if(!S_exp.stop&&S_exp.cargaId&&S_exp.cargaOk)await stepConferencia();
     }else if(mode==='carga'){
-      S.sepFiliais=[...new Set(jobs.map(j=>j.filial))];
+      S_exp.sepFiliais=[...new Set(jobs.map(j=>j.filial))];
       await stepBuscarSep();
-      if(!S.stop&&S.sepAssets.length)await stepCarga();
-      if(!S.stop&&S.cargaId&&S.cargaOk)await stepConferencia();
+      if(!S_exp.stop&&S_exp.sepAssets.length)await stepCarga();
+      if(!S_exp.stop&&S_exp.cargaId&&S_exp.cargaOk)await stepConferencia();
     }
   }catch(e){
     logExp(`Erro fatal: ${e.message}`,'err');
     setStExp(`Erro: ${e.message}`,true);
   }finally{
-    if(S.cargaId&&!S.stop){
+    if(S_exp.cargaId&&!S_exp.stop){
       try{
-        const fils=[...new Set([...S.confFilOk,...S.confFilErr,...S.sepFiliais].map(f=>norm(f)).filter(Boolean))];
+        const fils=[...new Set([...S_exp.confFilOk,...S_exp.confFilErr,...S_exp.sepFiliais].map(f=>norm(f)).filter(Boolean))];
         if(fils.length){const ipf=await _fetchItensCarga(fils);await envEmails(fils,ipf);}
       }catch(e){logExp('Erro ao enviar e-mails finais: '+e.message,'err');}
     }
   }
 
   showWorkingExp(false);
-  S.running=false;
+  S_exp.running=false;
   document.getElementById('aa-run').style.display='';
   document.getElementById('sol-stop-section').classList.remove('active');
   setProgExp(100);setTimeout(()=>setProgExp(null),600);
-  setStExp(S.stop?'Interrompido.':'Processo finalizado ✓',false);
-  if(!S.stop)logExp('Finalizado.','ok');
+  setStExp(S_exp.stop?'Interrompido.':'Processo finalizado ✓',false);
+  if(!S_exp.stop)logExp('Finalizado.','ok');
   await finalModal();
 }
 async function stepSolicitacao(){
   logExp('── SOLICITAÇÕES ──','info');
-  for(let i=0;i<S.jobs.length;i++){
-    if(S.stop)break;
-    const job=S.jobs[i];
+  for(let i=0;i<S_exp.jobs.length;i++){
+    if(S_exp.stop)break;
+    const job=S_exp.jobs[i];
     const pu=job.prod.toUpperCase();
-    setStExp(`Solicitação ${i+1}/${S.jobs.length} — Filial ${job.filial}`);
+    setStExp(`Solicitação ${i+1}/${S_exp.jobs.length} — Filial ${job.filial}`);
     logExp(`Buscando filial ${job.filial} · "${job.prod}"`,'info');
     try{
-      const resp=await A.sols(job.filial);
+      const resp=await A_exp.sols(job.filial);
       const sols=Array.isArray(resp)?resp:(resp?.records||resp?.content||[]);
       if(!sols.length){setRes(job.filial,job.prod,'fail','Nenhuma solicitação encontrada para esta filial');logExp(`Filial ${job.filial}: sem solicitações.`,'warn');continue;}
       let total=0,found=false;
       for(const sol of sols){
-        if(S.stop)break;
+        if(S_exp.stop)break;
         const solId=sol.id||sol.solicitationId;if(!solId)continue;
-        const det=await A.solDet(solId);if(!det)continue;
+        const det=await A_exp.solDet(solId);if(!det)continue;
         const assets=det.solicitationAssets?.pending?.assets||det.assets?.filter(a=>a.status==='PENDING')||det.solicitationBranchAssets?.filter(a=>a.status==='PENDING')||[];
         for(const asset of assets){
           const rn=[asset.itemName,asset.name,asset.description,asset.productDescription,asset.assetName].find(v=>typeof v==='string'&&v.trim());
@@ -3134,15 +3194,15 @@ async function stepSolicitacao(){
           if(!iname.includes(pu))continue;
           found=true;
           try{
-            await A.envSep(sbaid,icode,qtd);total+=qtd;
-            S.sentItems.push({filial:job.filial,product:iname,quantidade:qtd,solicitationBranchAssetId:sbaid,itemCode:icode});
+            await A_exp.envSep(sbaid,icode,qtd);total+=qtd;
+            S_exp.sentItems.push({filial:job.filial,product:iname,quantidade:qtd,solicitationBranchAssetId:sbaid,itemCode:icode});
             logExp(`✓ Filial ${job.filial}: "${iname}" ×${qtd}`,'ok');
           }catch(e){logExp(`Erro asset ${sbaid}: ${e.message}`,'err');}
           await sleep(300);
         }
       }
       if(total>0){
-        S.jobsOk.push(job);if(!S.sepFiliais.includes(job.filial))S.sepFiliais.push(job.filial);
+        S_exp.jobsOk.push(job);if(!S_exp.sepFiliais.includes(job.filial))S_exp.sepFiliais.push(job.filial);
         setRes(job.filial,job.prod,'ok',`${total} item(s) enviados`,total);
         logExp(`✓ Filial ${job.filial}: ${total} item(s) ok.`,'ok');
       }else if(!found){
@@ -3156,7 +3216,7 @@ async function stepSolicitacao(){
       setRes(job.filial,job.prod,'fail',`Erro de API: ${e.message}`);
       logExp(`Erro filial ${job.filial}: ${e.message}`,'err');
       const d=await modal({tipo:'err',titulo:'Erro na Solicitação',mensagem:`Filial ${job.filial} falhou.`,det:e.message,btns:[{t:'🛑 Parar',v:'stop',cls:'d'},{t:'⏭ Pular',v:'skip',cls:'p'}]});
-      if(d==='stop'){S.stop=true;break;}
+      if(d==='stop'){S_exp.stop=true;break;}
     }
     await sleep(500);
   }
@@ -3165,27 +3225,27 @@ async function stepSolicitacao(){
 async function stepSeparacao(){
   logExp('── SEPARAÇÃO ──','info');
   const plan={};
-  for(const d of S.sentItems){
+  for(const d of S_exp.sentItems){
     const fn=norm(d.filial),ic=(d.itemCode||'').toString().trim(),qtd=Number(d.quantidade||1);
     if(!fn||!ic||!qtd)continue;
     plan[fn]=plan[fn]||{};
     if(!plan[fn][ic])plan[fn][ic]={ic,desc:d.product||`Item ${ic}`,qtd:0};
     plan[fn][ic].qtd+=qtd;
   }
-  const flist=(S.sepFiliais.length?S.sepFiliais:Object.keys(plan)).map(f=>norm(f)).filter(Boolean);
+  const flist=(S_exp.sepFiliais.length?S_exp.sepFiliais:Object.keys(plan)).map(f=>norm(f)).filter(Boolean);
   for(let i=0;i<flist.length;i++){
-    if(S.stop)break;
+    if(S_exp.stop)break;
     const fn=flist[i];const fp=plan[fn];
     if(!fp||!Object.keys(fp).length){logExp(`Filial ${fn}: sem plano.`,'warn');continue;}
     setStExp(`Separação ${i+1}/${flist.length} — Filial ${fn}`);
     logExp(`Bipagem — Filial ${fn}`,'warn');
     const used=new Set();
     for(const item of Object.values(fp)){
-      if(S.stop)break;
+      if(S_exp.stop)break;
       const{ic,desc,qtd:total}=item;if(!total)continue;
       logExp(`Filial ${fn}: "${desc}" → bipar ${total}`,'info');
       let bip=0;
-      while(bip<total&&!S.stop){
+      while(bip<total&&!S_exp.stop){
         const inp=await prompt2({icone:'🔍',titulo:`Bipagem — Filial ${fn}`,mensagem:`${desc}\nItemCode: ${ic}\n\nProgresso: ${bip}/${total}\n\nBipe ou cole o assetId:`,ph:'assetId...'});
         if(inp===null){
           const d=await modal({tipo:'err',titulo:'Bipagem cancelada',mensagem:'O que deseja fazer?',btns:[{t:'🛑 Abortar',v:'abort',cls:'d'},{t:'🔄 Continuar',v:'retry',cls:'p'}]});
@@ -3197,12 +3257,12 @@ async function stepSeparacao(){
           if(bip>=total)break;
           if(used.has(aid)){logExp(`Ativo ${aid} já bipado.`,'warn');continue;}
           try{
-            await A.sepAsset(aid,fn);used.add(aid);bip++;
+            await A_exp.sepAsset(aid,fn);used.add(aid);bip++;
             logExp(`✓ Ativo ${aid} (${bip}/${total})`,'ok');
           }catch(e){
             logExp(`Erro bipar ${aid}: ${e.message}`,'err');
             const d=await modal({tipo:'err',titulo:'Erro ao bipar',mensagem:`Ativo ${aid} falhou.`,det:e.message,btns:[{t:'🛑 Parar',v:'stop',cls:'d'},{t:'⏭ Pular',v:'skip'},{t:'🔄 Tentar',v:'retry',cls:'p'}]});
-            if(d==='stop'){S.stop=true;throw new Error('Interrompido');}
+            if(d==='stop'){S_exp.stop=true;throw new Error('Interrompido');}
             if(d==='skip')bip++;
           }
           await sleep(150);
@@ -3216,33 +3276,33 @@ async function stepSeparacao(){
 async function stepBuscarSep(){
   logExp('── BUSCANDO SEPARADOS ──','info');
   setStExp('Buscando ativos separados...');
-  const sep=await A.listSep();
+  const sep=await A_exp.listSep();
   if(!sep?.length){logExp('Nenhum ativo separado.','warn');return;}
   for(const g of sep){
     for(const b of(g.solicitationsBranch||[])){
       const bid=b.branchId,fn=norm(bid);
-      const match=!S.sepFiliais.length||S.sepFiliais.some(f=>norm(f)===fn);
+      const match=!S_exp.sepFiliais.length||S_exp.sepFiliais.some(f=>norm(f)===fn);
       if(!match)continue;
       const ids=(b.solicitationsAssets||[]).map(sa=>sa.id);
       for(const item of(b.items||[])){
         const{itemCode:ic,description:desc}=item;
         if(!ic||!ids.length)continue;
         try{
-          const dets=await A.detSep(ids,ic);
-          if(dets?.length)for(const a of dets){const id=a.separatedAssetId||a.id;if(id)S.sepAssets.push({separatedAssetId:id,branchId:bid,itemCode:ic,description:desc});}
+          const dets=await A_exp.detSep(ids,ic);
+          if(dets?.length)for(const a of dets){const id=a.separatedAssetId||a.id;if(id)S_exp.sepAssets.push({separatedAssetId:id,branchId:bid,itemCode:ic,description:desc});}
           logExp(`Filial ${bid}: ${dets?.length||0} "${desc}" prontos.`,'info');
         }catch(e){logExp(`Erro item ${ic}: ${e.message}`,'err');}
         await sleep(200);
       }
     }
   }
-  logExp(`Total: ${S.sepAssets.length} ativo(s).`,'ok');
+  logExp(`Total: ${S_exp.sepAssets.length} ativo(s).`,'ok');
 }
 
 async function stepCarga(){
   logExp('── CARGA ──','info');
-  if(!S.sepAssets.length)throw new Error('Nenhum ativo para a carga');
-  const la=S.sepAssets.map(a=>({separatedAssetId:a.separatedAssetId}));
+  if(!S_exp.sepAssets.length)throw new Error('Nenhum ativo para a carga');
+  const la=S_exp.sepAssets.map(a=>({separatedAssetId:a.separatedAssetId}));
   const op=await modal({icone:'🚚',titulo:'Opção de Carga',mensagem:`${la.length} ativo(s) prontos.\n\nComo deseja prosseguir?`,btns:[{t:'➕ Nova Carga',v:'new',cls:'p'},{t:'📋 Carga Existente',v:'ex'}]});
   if(!op)return;
   try{
@@ -3251,31 +3311,31 @@ async function stepCarga(){
   }catch(e){
     logExp(`Erro carga: ${e.message}`,'err');
     const id=await prompt2({icone:'⚠️',titulo:'Erro na API',mensagem:'Digite o ID da carga manualmente:',ph:'ID...'});
-    if(id&&!isNaN(parseInt(id))){S.cargaId=parseInt(id);logExp(`Carga ${id} manual.`,'warn');}
+    if(id&&!isNaN(parseInt(id))){S_exp.cargaId=parseInt(id);logExp(`Carga ${id} manual.`,'warn');}
     else throw e;
   }
 }
 
 async function addCargaEx(la){
-  const r=await A.listarCargas();const cs=r?.records||(Array.isArray(r)?r:[]);
+  const r=await A_exp.listarCargas();const cs=r?.records||(Array.isArray(r)?r:[]);
   if(!cs.length)return novaCarga(la);
   const idx=await listaModal({icone:'📋',titulo:'Selecionar Carga',itens:cs.map(c=>({t:`Carga #${c.id}`,s:`${c.freightType||'?'} · ${c.date?c.date.split('T')[0]:'?'}`,d:c.destinationsCode||''}))});
   if(idx===null)return;
   const cargaSel=cs[idx];
-  S.cargaId=cargaSel.id;
+  S_exp.cargaId=cargaSel.id;
   // Pega os dados da carga existente pra usar no e-mail
-  S.freight=cargaSel.freightType||'DEDICATED';
-  S.depDate=cargaSel.departureDate||cargaSel.date||'';
-  await A.addCarga(S.cargaId,C.OC,la);
-  logExp(`✓ ${la.length} ativo(s) → carga #${S.cargaId}`,'ok');
-  const c=await modal({tipo:'ok',titulo:'Ativos adicionados!',mensagem:`Carga #${S.cargaId}\n${la.length} ativos.\n\nConferir agora?`,btns:[{t:'Não',v:'n'},{t:'Sim',v:'s',cls:'p'}]});
-  S.cargaOk=c==='s';
+  S_exp.freight=cargaSel.freightType||'DEDICATED';
+  S_exp.depDate=cargaSel.departureDate||cargaSel.date||'';
+  await A_exp.addCarga(S_exp.cargaId,C.OC,la);
+  logExp(`✓ ${la.length} ativo(s) → carga #${S_exp.cargaId}`,'ok');
+  const c=await modal({tipo:'ok',titulo:'Ativos adicionados!',mensagem:`Carga #${S_exp.cargaId}\n${la.length} ativos.\n\nConferir agora?`,btns:[{t:'Não',v:'n'},{t:'Sim',v:'s',cls:'p'}]});
+  S_exp.cargaOk=c==='s';
 }
 
 async function novaCarga(la){
-  const r=await A.criarCarga(C.OC,la);
-  S.cargaId=r?.loadId||r?.id;if(!S.cargaId)throw new Error('API não retornou loadId');
-  logExp(`✓ Carga #${S.cargaId} criada!`,'ok');
+  const r=await A_exp.criarCarga(C.OC,la);
+  S_exp.cargaId=r?.loadId||r?.id;if(!S_exp.cargaId)throw new Error('API não retornou loadId');
+  logExp(`✓ Carga #${S_exp.cargaId} criada!`,'ok');
   // Tipo de frete — agora com ABA
   const tp=await prompt2({icone:'🚚',titulo:'Tipo de Frete',mensagem:'D = DEDICADO\nC = CORREIOS\nA = ABA',ph:'D, C ou A'});
   if(!tp){logExp('Carga criada, não enviada.','warn');return;}
@@ -3284,39 +3344,39 @@ async function novaCarga(la){
   if(tpu.startsWith('C'))ft='CORREIOS';
   else if(tpu.startsWith('A'))ft='ABA';
   else ft='DEDICATED';
-  S.freight=ft;
+  S_exp.freight=ft;
   const agora=new Date();
   const dh=await prompt2({icone:'📅',titulo:'Data e Hora da Saída',mensagem:'Formato: YYYY-MM-DD HH:MM\n(em branco = amanhã 08:00)',ph:`${agora.toISOString().split('T')[0]} 08:00`});
   let dd;
   if(!dh){const t=new Date();t.setDate(t.getDate()+1);t.setHours(8,0,0,0);dd=t.toISOString().slice(0,19);}
   else{const pts=dh.trim().split(/[\s,]+/);dd=`${pts[0]}T${pts[1]||'08:00'}:00`;}
-  S.depDate=dd;
+  S_exp.depDate=dd;
   const freteLabel=ft==='CORREIOS'?'Correios':ft==='ABA'?'ABA':'Dedicado';
-  const c=await modal({tipo:'info',icone:'📤',titulo:'Confirmar Envio',mensagem:`Carga: #${S.cargaId}\nTipo: ${freteLabel}\nSaída: ${dd.replace('T',' ')}\nAtivos: ${la.length}`,btns:[{t:'Cancelar',v:'n'},{t:'Enviar',v:'s',cls:'p'}]});
+  const c=await modal({tipo:'info',icone:'📤',titulo:'Confirmar Envio',mensagem:`Carga: #${S_exp.cargaId}\nTipo: ${freteLabel}\nSaída: ${dd.replace('T',' ')}\nAtivos: ${la.length}`,btns:[{t:'Cancelar',v:'n'},{t:'Enviar',v:'s',cls:'p'}]});
   if(c!=='s'){logExp('Envio cancelado.','warn');return;}
-  await A.enviarCarga(S.cargaId,ft,dd);S.cargaOk=true;logExp(`✓ Carga #${S.cargaId} enviada!`,'ok');
+  await A_exp.enviarCarga(S_exp.cargaId,ft,dd);S_exp.cargaOk=true;logExp(`✓ Carga #${S_exp.cargaId} enviada!`,'ok');
 }
 
 async function stepConferencia(){
   logExp('── CONFERÊNCIA ──','info');
-  const lid=S.cargaId;
-  const ci=await A.filsCarga(lid);if(!ci){logExp('Sem info da carga.','err');return;}
+  const lid=S_exp.cargaId;
+  const ci=await A_exp.filsCarga(lid);if(!ci){logExp('Sem info da carga.','err');return;}
 
   // Se ainda não temos freight/depDate (modo carga com carga existente), busca da API
-  if(!S.freight||!S.depDate){
+  if(!S_exp.freight||!S_exp.depDate){
     try{
-      const det=await A.detCarga(lid);
+      const det=await A_exp.detCarga(lid);
       if(det){
-        S.freight=S.freight||det.freightType||'DEDICATED';
-        S.depDate=S.depDate||det.departureDate||det.date||'';
+        S_exp.freight=S_exp.freight||det.freightType||'DEDICATED';
+        S_exp.depDate=S_exp.depDate||det.departureDate||det.date||'';
       }
     }catch(e){logExp('Não foi possível buscar dados da carga: '+e.message,'warn');}
   }
 
-  const isCorr=ci.freightType==='CORREIOS'||(S.freight==='CORREIOS');
+  const isCorr=ci.freightType==='CORREIOS'||(S_exp.freight==='CORREIOS');
   const fils=[];const _seen=new Set();
   for(const s of(ci.stockCd||[]))for(const b of(s.branches||[])){const id=b.number||b.branchId;if(id&&b.status==='PENDING'){const _n=String(id).replace(/\D/g,'').replace(/^0+/,'')||'0';if(!_seen.has(_n)){_seen.add(_n);fils.push({branchId:id});}}}
-  const ord=S.jobs.map(j=>norm(j.filial));
+  const ord=S_exp.jobs.map(j=>norm(j.filial));
   fils.sort((a,b)=>{const ia=ord.indexOf(norm(a.branchId)),ib=ord.indexOf(norm(b.branchId));return(ia<0?9999:ia)-(ib<0?9999:ib);});
   if(!fils.length){logExp('Sem filiais pendentes.','info');return;}
   logExp(`${fils.length} filial(is) para conferir.`,'info');
@@ -3329,34 +3389,34 @@ async function stepConferencia(){
       }
       const _raw=String(f.branchId).replace(/\D/g,'');
       const _norm=_raw.replace(/^0+/,'');
-      S.tracks[f.branchId]=tr;
-      S.tracks[_raw]=tr;
-      S.tracks[_norm]=tr;
-      S.tracks[_norm.padStart(3,'0')]=tr;
-      S.tracks[_norm.padStart(4,'0')]=tr;
+      S_exp.tracks[f.branchId]=tr;
+      S_exp.tracks[_raw]=tr;
+      S_exp.tracks[_norm]=tr;
+      S_exp.tracks[_norm.padStart(3,'0')]=tr;
+      S_exp.tracks[_norm.padStart(4,'0')]=tr;
       logExp(`Rastreio filial ${_norm}: ${tr}`,'ok');
     }
   }
   let tot=0,errs=0;
   for(let i=0;i<fils.length;i++){
-    if(S.stop)break;
+    if(S_exp.stop)break;
     const{branchId}=fils[i];
     setStExp(`Conferindo filial ${branchId} (${i+1}/${fils.length})...`);setProgExp(68+Math.round(i/fils.length*25));
     try{
-      const its=await A.itensBranch(lid,branchId);if(!its?.length){logExp(`Filial ${branchId}: sem itens.`,'info');continue;}
+      const its=await A_exp.itensBranch(lid,branchId);if(!its?.length){logExp(`Filial ${branchId}: sem itens.`,'info');continue;}
       let c=0,e=0;
       for(const g of its)for(const item of(g.items||[]))for(const asset of(item.separatedAssets||[])){
-        if(S.stop)break;const aid=asset.assetId;if(!aid)continue;
+        if(S_exp.stop)break;const aid=asset.assetId;if(!aid)continue;
         let rt=0,ok=false;
-        while(rt<C.RET&&!ok){try{await A.conferir(lid,aid,isCorr?(S.tracks[branchId]||''):'');c++;tot++;ok=true;}catch(e2){if(e2.message&&e2.message.includes('409')){logExp(`Ativo ${aid}: ja conferido (ok)`,'info');c++;tot++;ok=true;}else{rt++;if(rt>=C.RET){e++;errs++;logExp(`Erro ativo ${aid}: ${e2.message}`,'err');}else await sleep(C.RD);}}}
+        while(rt<C.RET&&!ok){try{await A_exp.conferir(lid,aid,isCorr?(S_exp.tracks[branchId]||''):'');c++;tot++;ok=true;}catch(e2){if(e2.message&&e2.message.includes('409')){logExp(`Ativo ${aid}: ja conferido (ok)`,'info');c++;tot++;ok=true;}else{rt++;if(rt>=C.RET){e++;errs++;logExp(`Erro ativo ${aid}: ${e2.message}`,'err');}else await sleep(C.RD);}}}
         await sleep(150);
       }
-      e>0?S.confFilErr.push(branchId):S.confFilOk.push(branchId);
+      e>0?S_exp.confFilErr.push(branchId):S_exp.confFilOk.push(branchId);
       logExp(`Filial ${branchId}: ${c} ok${e?` · ${e} erro(s)`:''}`,'ok');
-    }catch(e){logExp(`Erro filial ${branchId}: ${e.message}`,'err');S.confFilErr.push(branchId);}
+    }catch(e){logExp(`Erro filial ${branchId}: ${e.message}`,'err');S_exp.confFilErr.push(branchId);}
     await sleep(300);
   }
-  S.confOk=tot;S.confErr=errs;
+  S_exp.confOk=tot;S_exp.confErr=errs;
   logExp(`Conferência: ${tot} ok · ${errs} erro(s).`,'ok');
   const fc=fils.map(f=>f.branchId);
   if(tot>0){
@@ -3366,7 +3426,7 @@ async function stepConferencia(){
 }
 
 async function stepNFe(lid,fils){
-  logExp('── NF-E ──','info');S.nfeFail=[];S.nfeSucess=[];
+  logExp('── NF-E ──','info');S_exp.nfeFail=[];S_exp.nfeSucess=[];
   const c=await modal({tipo:'info',icone:'📄',titulo:'Emitir NF-e',mensagem:`Carga #${lid}\n${fils.length} filial(is)\n\nEmitir as NF-e agora?`,btns:[{t:'Agora não',v:'n'},{t:'Emitir',v:'s',cls:'p'}]});
   if(c!=='s'){emitirEtiquetas([...new Set(fils.map(f=>norm(f)).filter(Boolean))]);return;}
   for(let i=0;i<fils.length;i++){
@@ -3375,14 +3435,14 @@ async function stepNFe(lid,fils){
     while(t<C.RET&&!ok){
       try{
         t++;
-        await A.nfe(lid,fid);
-        ok=true;S.nfeSucess.push(fid);
+        await A_exp.nfe(lid,fid);
+        ok=true;S_exp.nfeSucess.push(fid);
         logExp(`✓ NF-e filial ${fid}`,'ok');
       }catch(e){
         if(t<C.RET){
           await sleep(C.RD);
         }else{
-          S.nfeFail.push({branchId:fid,erro:e.message});
+          S_exp.nfeFail.push({branchId:fid,erro:e.message});
           logExp(`✗ NF-e filial ${fid}: ${e.message}`,'err');
           // ── DIAGNÓSTICO COMPLETO NO CONSOLE ──
           const diag={
@@ -3397,12 +3457,12 @@ async function stepNFe(lid,fils){
           console.log('Erro:', e.message);
           console.log('Payload enviado:', {loadId:lid,destinyId:fid,originId:C.OID});
           try{
-            const detCarga=await A.detCarga(lid);
+            const detCarga=await A_exp.detCarga(lid);
             console.log('Estado da carga:', detCarga);
             diag.estadoCarga=detCarga;
           }catch(e2){console.warn('Não foi possível buscar estado da carga:',e2.message);}
           try{
-            const itens=await A.itensBranch(lid,fid);
+            const itens=await A_exp.itensBranch(lid,fid);
             console.log(`Itens filial ${fid} na carga:`, itens);
             diag.itensDaFilial=itens;
             // Verifica se todos os assets estão conferidos
@@ -3425,16 +3485,16 @@ async function stepNFe(lid,fils){
     }
     if(i<fils.length-1)await sleep(500);
   }
-  S.nfeOk=S.nfeSucess.length>0;
-  logExp(`NF-e: ${S.nfeSucess.length} ok · ${S.nfeFail.length} erro(s).`,S.nfeFail.length?'warn':'ok');
-  if(S.nfeFail.length){
+  S_exp.nfeOk=S_exp.nfeSucess.length>0;
+  logExp(`NF-e: ${S_exp.nfeSucess.length} ok · ${S_exp.nfeFail.length} erro(s).`,S_exp.nfeFail.length?'warn':'ok');
+  if(S_exp.nfeFail.length){
     console.group('%c[NF-e RESUMO DE FALHAS]','color:#f59e0b;font-weight:bold;font-size:13px');
-    console.table(S.nfeFail);
+    console.table(S_exp.nfeFail);
     console.log('Para retentar todas as falhas de uma vez, cole no console:');
     console.log(`
 // Retentar NF-e das filiais com erro
 const tok = window.__MGT__;
-const fails = ${JSON.stringify(S.nfeFail.map(f=>f.branchId))};
+const fails = ${JSON.stringify(S_exp.nfeFail.map(f=>f.branchId))};
 for(const fid of fails){
   const r = await fetch('${C.API}/v1/expedition/load/invoice', {
     method:'POST',
@@ -3451,9 +3511,9 @@ for(const fid of fails){
 
 async function emitirEtiquetas(fils){
   if(!fils?.length)return;
-  const c=await modal({tipo:'info',icone:'🖨️',titulo:'Emitir Etiquetas',mensagem:`Filiais: ${fils.join(', ')}\nCarga: #${S.cargaId}\n\nAbrir Google Planilhas?`,btns:[{t:'Não',v:'n'},{t:'Abrir',v:'s',cls:'p'}]});
+  const c=await modal({tipo:'info',icone:'🖨️',titulo:'Emitir Etiquetas',mensagem:`Filiais: ${fils.join(', ')}\nCarga: #${S_exp.cargaId}\n\nAbrir Google Planilhas?`,btns:[{t:'Não',v:'n'},{t:'Abrir',v:'s',cls:'p'}]});
   if(c!=='s')return;
-  const pl=encodeURIComponent(JSON.stringify({filiais:fils,carga:S.cargaId,origem:C.OC,timestamp:Date.now()}));
+  const pl=encodeURIComponent(JSON.stringify({filiais:fils,carga:S_exp.cargaId,origem:C.OC,timestamp:Date.now()}));
   window.open(`https://script.google.com/a/macros/magazineluiza.com.br/s/AKfycbwHsUtz3myhdcLh8VdQABCMRhSmmaGRFZjAvEgr57JC2pkMr-bXamqjt5kagdsFqzF7Aw/exec?autoPrint=${pl}`,'_blank');
   const _ipf=await _fetchItensCarga(fils);
   await envEmails(fils,_ipf);
@@ -3462,10 +3522,10 @@ async function emitirEtiquetas(fils){
 // Busca itens por filial da carga atual
 async function _fetchItensCarga(fils){
   const ipf={};
-  if(!S.cargaId)return ipf;
+  if(!S_exp.cargaId)return ipf;
   for(const f of fils){
     try{
-      const its=await A.itensBranch(S.cargaId,f);
+      const its=await A_exp.itensBranch(S_exp.cargaId,f);
       const lst=[];
       if(its?.length)for(const g of its)for(const it of(g.items||[]))lst.push({produto:it.itemName||it.description||'Produto',qtd:(it.separatedAssets||[]).length||1});
       ipf[f]=lst.length?lst:[{produto:'Produto não identificado',qtd:1}];
@@ -3485,13 +3545,13 @@ async function envEmails(fils,itensPorFilial={},rastreiosOverride=null){
     if(rastreiosOverride){
       tr=rastreiosOverride[fn]||rastreiosOverride[f]||null;
     }else{
-      tr=S.tracks[f]||S.tracks[fn]
-        ||S.tracks[fn.padStart(3,'0')]||S.tracks[fn.padStart(4,'0')]
-        ||S.tracks[fn.padStart(5,'0')]||S.tracks['0'+fn]||null;
+      tr=S_exp.tracks[f]||S_exp.tracks[fn]
+        ||S_exp.tracks[fn.padStart(3,'0')]||S_exp.tracks[fn.padStart(4,'0')]
+        ||S_exp.tracks[fn.padStart(5,'0')]||S_exp.tracks['0'+fn]||null;
     }
     if(tr)rastreiosNorm[fn]=tr;
   }
-  const payload=JSON.stringify({acao:'enviarEmails',filiais:fils,carga:S.cargaId,freightType:S.freight||'DEDICATED',departureDate:S.depDate||'',rastreios:rastreiosNorm,itensPorFilial});
+  const payload=JSON.stringify({acao:'enviarEmails',filiais:fils,carga:S_exp.cargaId,freightType:S_exp.freight||'DEDICATED',departureDate:S_exp.depDate||'',rastreios:rastreiosNorm,itensPorFilial});
   return new Promise(resolve=>{
     const xhr=new XMLHttpRequest();
     xhr.open('POST',APPS_URL,true);
@@ -3508,7 +3568,7 @@ async function envEmails(fils,itensPorFilial={},rastreiosOverride=null){
     };
     xhr.onerror=()=>{
       logExp(`Erro de rede ao enviar e-mails. Tentando GET...`,'warn');
-      const params=new URLSearchParams({acao:'enviarEmails',filiais:fils.join(','),carga:String(S.cargaId||''),freightType:S.freight||'DEDICATED',departureDate:S.depDate||''});
+      const params=new URLSearchParams({acao:'enviarEmails',filiais:fils.join(','),carga:String(S_exp.cargaId||''),freightType:S_exp.freight||'DEDICATED',departureDate:S_exp.depDate||''});
       const w=window.open(APPS_URL+'?'+params.toString(),'_blank');
       setTimeout(()=>{try{w&&w.close();}catch(_){}},5000);
       logExp('Fallback GET disparado.','warn');
@@ -3520,12 +3580,12 @@ async function envEmails(fils,itensPorFilial={},rastreiosOverride=null){
 
 async function testarEmails(){
   logExp('Buscando cargas...','info');
-  let cs=[];try{const r=await A.listarCargas();cs=r?.records||(Array.isArray(r)?r:[]);}catch(e){logExp(`Erro: ${e.message}`,'err');return;}
+  let cs=[];try{const r=await A_exp.listarCargas();cs=r?.records||(Array.isArray(r)?r:[]);}catch(e){logExp(`Erro: ${e.message}`,'err');return;}
   if(!cs.length){logExp('Nenhuma carga.','warn');return;}
   const idx=await listaModal({icone:'📧',titulo:'Selecione a Carga',itens:cs.map(c=>({t:`Carga #${c.id}`,s:`${c.freightType||'?'} · ${c.date?c.date.split('T')[0]:'?'}`,d:c.destinationsCode||''}))});
   if(idx===null)return;
-  const ch=cs[idx];S.cargaId=ch.id;S.freight=ch.freightType;S.depDate=ch.departureDate||ch.date||'';
-  const ci=await A.filsCarga(ch.id);
+  const ch=cs[idx];S_exp.cargaId=ch.id;S_exp.freight=ch.freightType;S_exp.depDate=ch.departureDate||ch.date||'';
+  const ci=await A_exp.filsCarga(ch.id);
   let fils=[];for(const s of(ci?.stockCd||[]))for(const b of(s.branches||[])){const id=b.number||b.branchId;if(id){const _n=String(id).replace(/\D/g,'').replace(/^0+/,'')||'0';fils.push(_n);}}fils=[...new Set(fils)];
   if(!fils.length){logExp('Sem filiais.','warn');return;}
   const ipf=await _fetchItensCarga(fils);
@@ -3539,7 +3599,7 @@ async function testarEmails(){
       const fn=String(f).replace(/\D/g,'').replace(/^0+/,'')||'0';
       let trEncontrado=null;
       try{
-        const its=await A.itensBranch(ch.id,f);
+        const its=await A_exp.itensBranch(ch.id,f);
         if(its?.length){
           outer:for(const g of its){
             for(const it of(g.items||[])){
@@ -3574,14 +3634,14 @@ async function testarEmails(){
 
 // ═══ RESUMO FINAL ══════════════════════════════════════
 async function finalModal(){
-  const results=Object.values(S.results);
+  const results=Object.values(S_exp.results);
   const oks=results.filter(r=>r.status==='ok');
   const fails=results.filter(r=>r.status==='fail');
   const allOk=fails.length===0;
-  const dur=S.startTime?Math.round((Date.now()-S.startTime)/1000):0;
+  const dur=S_exp.startTime?Math.round((Date.now()-S_exp.startTime)/1000):0;
   const mm=Math.floor(dur/60),ss=dur%60;
   const nome=_userName||'usuário';
-  const rks=Object.keys(S.tracks||{});
+  const rks=Object.keys(S_exp.tracks||{});
 
   return new Promise(res=>{
     const ov=document.createElement('div');ov.className='aa-ov';
@@ -3603,13 +3663,13 @@ async function finalModal(){
 
     // info da carga
     let cargaInfo='';
-    if(S.cargaId){
-      const freteLabel=S.freight==='CORREIOS'?'Correios':S.freight==='ABA'?'ABA':'Dedicado';
+    if(S_exp.cargaId){
+      const freteLabel=S_exp.freight==='CORREIOS'?'Correios':S_exp.freight==='ABA'?'ABA':'Dedicado';
       cargaInfo='<div class="aa-final-sec">'+
-        '<div class="aa-final-row"><span class="aa-final-k">Carga</span><span class="aa-final-v">#'+S.cargaId+'</span></div>'+
+        '<div class="aa-final-row"><span class="aa-final-k">Carga</span><span class="aa-final-v">#'+S_exp.cargaId+'</span></div>'+
         '<div class="aa-final-row"><span class="aa-final-k">Tipo</span><span class="aa-final-v">'+freteLabel+'</span></div>'+
-        '<div class="aa-final-row"><span class="aa-final-k">Conferidos</span><span class="aa-final-v" style="color:'+(S.confErr?'var(--mg-red)':'var(--mg-green)')+'">'+S.confOk+(S.confErr?' · '+S.confErr+' erros':' ✓')+'</span></div>'+
-        '<div class="aa-final-row"><span class="aa-final-k">NF-e</span><span class="aa-final-v" style="color:'+(S.nfeOk?'var(--mg-green)':'var(--mg-orange)')+'">'+( S.nfeOk?'✓ Solicitada':'⏳ Pendente')+'</span></div>'+
+        '<div class="aa-final-row"><span class="aa-final-k">Conferidos</span><span class="aa-final-v" style="color:'+(S_exp.confErr?'var(--mg-red)':'var(--mg-green)')+'">'+S_exp.confOk+(S_exp.confErr?' · '+S_exp.confErr+' erros':' ✓')+'</span></div>'+
+        '<div class="aa-final-row"><span class="aa-final-k">NF-e</span><span class="aa-final-v" style="color:'+(S_exp.nfeOk?'var(--mg-green)':'var(--mg-orange)')+'">'+( S_exp.nfeOk?'✓ Solicitada':'⏳ Pendente')+'</span></div>'+
         '</div>';
     }
 
@@ -3617,10 +3677,10 @@ async function finalModal(){
     let rast='';
     if(rks.length){
       const seen=new Set();
-      const uniq=rks.filter(k=>{const v=S.tracks[k];if(seen.has(v))return false;seen.add(v);return true;});
+      const uniq=rks.filter(k=>{const v=S_exp.tracks[k];if(seen.has(v))return false;seen.add(v);return true;});
       rast='<div class="aa-final-sec">'+
         '<div style="font-size:9.5px;color:var(--mg-t3);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:1px;">Rastreios</div>'+
-        uniq.map(k=>'<div style="font-family:var(--mg-mono);font-size:11px;color:var(--mg-blue);margin-bottom:2px">'+k+' → '+S.tracks[k]+'</div>').join('')+
+        uniq.map(k=>'<div style="font-family:var(--mg-mono);font-size:11px;color:var(--mg-blue);margin-bottom:2px">'+k+' → '+S_exp.tracks[k]+'</div>').join('')+
         '</div>';
     }
 
@@ -3628,11 +3688,11 @@ async function finalModal(){
       '<div class="aa-final-header">'+
         '<span class="aa-final-emoji">'+(allOk?'🎉':'⚠️')+'</span>'+
         '<div class="aa-final-title">Finalizamos, '+nome+'! '+(allOk?'🎉':'')+'</div>'+
-        '<div class="aa-final-subtitle">'+new Date().toLocaleString('pt-BR')+' · '+(mm>0?mm+'m ':'')+ss+'s · '+(S.modo||'')+'</div>'+
+        '<div class="aa-final-subtitle">'+new Date().toLocaleString('pt-BR')+' · '+(mm>0?mm+'m ':'')+ss+'s · '+(S_exp.modo||'')+'</div>'+
       '</div>'+
       '<div class="aa-final-body">'+
         '<div class="aa-res-sum">'+
-          '<div class="aa-res-cell"><div class="aa-res-val" style="color:var(--mg-blue)">'+S.jobs.length+'</div><div class="aa-res-lbl">Filiais</div></div>'+
+          '<div class="aa-res-cell"><div class="aa-res-val" style="color:var(--mg-blue)">'+S_exp.jobs.length+'</div><div class="aa-res-lbl">Filiais</div></div>'+
           '<div class="aa-res-cell"><div class="aa-res-val" style="color:var(--mg-green)">'+oks.length+'</div><div class="aa-res-lbl">OK</div></div>'+
           '<div class="aa-res-cell"><div class="aa-res-val" style="color:'+(fails.length?'var(--mg-red)':'var(--mg-green)')+'">'+fails.length+'</div><div class="aa-res-lbl">Falhas</div></div>'+
         '</div>'+
@@ -3666,10 +3726,10 @@ async function finalModal(){
     m.querySelectorAll('[data-v]').forEach(btn=>{
       btn.addEventListener('click',()=>{
         if(btn.dataset.v==='copy'){
-          const lines=['AUTO ATIVOS — '+new Date().toLocaleString('pt-BR'),'Modo: '+S.modo+' · '+mm+'m'+ss+'s','','=== RESULTADO ==='];
+          const lines=['AUTO ATIVOS — '+new Date().toLocaleString('pt-BR'),'Modo: '+S_exp.modo+' · '+mm+'m'+ss+'s','','=== RESULTADO ==='];
           for(const r of results){lines.push('  '+r.f.padEnd(6)+' '+r.p.padEnd(20)+' '+(r.status==='ok'?'✓ OK (×'+r.qtd+')':'✗ FALHOU'));if(r.status==='fail')lines.push('         '+r.motivo);}
-          if(S.cargaId){lines.push('','=== CARGA #'+S.cargaId+' ===','Tipo: '+(S.freight||'N/A'),'Conferidos: '+S.confOk+' | Erros: '+S.confErr,'NF-e: '+(S.nfeOk?'Solicitada':'Pendente'));}
-          if(rks.length){lines.push('','=== RASTREIOS ===');rks.forEach(k=>lines.push('  '+k+': '+S.tracks[k]));}
+          if(S_exp.cargaId){lines.push('','=== CARGA #'+S_exp.cargaId+' ===','Tipo: '+(S_exp.freight||'N/A'),'Conferidos: '+S_exp.confOk+' | Erros: '+S_exp.confErr,'NF-e: '+(S_exp.nfeOk?'Solicitada':'Pendente'));}
+          if(rks.length){lines.push('','=== RASTREIOS ===');rks.forEach(k=>lines.push('  '+k+': '+S_exp.tracks[k]));}
           navigator.clipboard.writeText(lines.join('\n'));
           return;
         }
@@ -3709,8 +3769,7 @@ const ICO={warehouse:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none
 
 async function _refresh401Caba(){logCaba('Token 401','warn');await _renovarTokenSilencioso();}
 async function cabaReq(method,ep,body,retry){retry=retry||0;await ensureToken();const auth=getTok();if(!auth)throw new Error('Token não capturado.');const opts={method,headers:{'Content-Type':'application/json','Authorization':auth}};if(body)opts.body=JSON.stringify(body);const res=await fetch(CFG.API+ep,opts);if(res.status>=200&&res.status<300){const t=await res.text();try{return JSON.parse(t);}catch{return t;}}if(res.status===401&&retry<3){await _refresh401Caba();return cabaReq(method,ep,body,retry+1);}const txt=await res.text().catch(()=>'');throw new Error('HTTP '+res.status+': '+txt.slice(0,120));}
-const yr=()=>new Date().getFullYear();
-const A={listarCargas:()=>cabaReq('GET','/v1/expedition/loads?offset=1&limit=100&status=PENDING,CREATED,HAS_NF,NF_ERROR&startDate='+yr()+'-01-01&endDate='+yr()+'-12-31&originCode='+CFG.ORIGIN),filsCarga:id=>cabaReq('GET','/v1/expedition/load/'+id+'/conference/branches'),itensBranch:(lid,bid)=>cabaReq('GET','/v1/expedition/load/'+lid+'/conference/branch/'+bid+'/items?originId='+CFG.ORIGIN)};
+const A_caba={listarCargas:()=>cabaReq('GET','/v1/expedition/loads?offset=1&limit=100&status=PENDING,CREATED,HAS_NF,NF_ERROR&startDate='+yr()+'-01-01&endDate='+yr()+'-12-31&originCode='+CFG.ORIGIN),filsCarga:id=>cabaReq('GET','/v1/expedition/load/'+id+'/conference/branches'),itensBranch:(lid,bid)=>cabaReq('GET','/v1/expedition/load/'+lid+'/conference/branch/'+bid+'/items?originId='+CFG.ORIGIN)};
 async function SH(acao,dados){
   const WRITES=['registrarCarga','confirmarRecebimento','confirmarEnvioFilial','arquivarCarga'];
   const key=acao+'|'+JSON.stringify(dados||{});
@@ -3722,8 +3781,8 @@ async function SH(acao,dados){
   return result;
 }
 
-async function detectAndRegister(){try{const r=await A.listarCargas();const all=r?.records||(Array.isArray(r)?r:[]);_cargasABA=all.filter(c=>c.freightType==='ABA');if(!_cargasABA.length){logCaba('Nenhuma carga ABA ativa','info');return;}logCaba(_cargasABA.length+' ABA ativa(s)','info');for(const c of _cargasABA){const cid=String(c.id);if(_cargasRegistradas.has(cid))continue;try{const br=await A.filsCarga(c.id);const cds=[];for(const cd of(br.stockCd||[]))cds.push({cd:cd.number,filiais:(cd.branches||[]).map(b=>b.number)});await SH('registrarCarga',{cargaId:c.id,cds});_cargasRegistradas.add(cid);logCaba('Carga #'+cid+' registrada','ok');}catch(_){}}}catch(e){logCaba('Erro: '+e.message,'err');}}
-async function fetchItensFilial(cargaId,filial){try{const raw=await A.itensBranch(cargaId,filial);const itens=[];for(const grp of(raw||[]))for(const item of(grp.items||[]))for(const asset of(item.separatedAssets||[]))itens.push({desc:item.description||item.itemCode,category:grp.category||item.category||'',plate:asset.plateNumber||'',serial:asset.serialNumber||'',assetId:asset.assetId,tracking:asset.tracking||''});return itens;}catch{return[];}}
+async function detectAndRegister(){try{const r=await A_caba.listarCargas();const all=r?.records||(Array.isArray(r)?r:[]);_cargasABA=all.filter(c=>c.freightType==='ABA');if(!_cargasABA.length){logCaba('Nenhuma carga ABA ativa','info');return;}logCaba(_cargasABA.length+' ABA ativa(s)','info');for(const c of _cargasABA){const cid=String(c.id);if(_cargasRegistradas.has(cid))continue;try{const br=await A_caba.filsCarga(c.id);const cds=[];for(const cd of(br.stockCd||[]))cds.push({cd:cd.number,filiais:(cd.branches||[]).map(b=>b.number)});await SH('registrarCarga',{cargaId:c.id,cds});_cargasRegistradas.add(cid);logCaba('Carga #'+cid+' registrada','ok');}catch(_){}}}catch(e){logCaba('Erro: '+e.message,'err');}}
+async function fetchItensFilial(cargaId,filial){try{const raw=await A_caba.itensBranch(cargaId,filial);const itens=[];for(const grp of(raw||[]))for(const item of(grp.items||[]))for(const asset of(item.separatedAssets||[]))itens.push({desc:item.description||item.itemCode,category:grp.category||item.category||'',plate:asset.plateNumber||'',serial:asset.serialNumber||'',assetId:asset.assetId,tracking:asset.tracking||''});return itens;}catch{return[];}}
 
 function renderFilBadge(conf){if(!conf)return '<span class="caba-fil-badge pendente"><span class="caba-ico">'+ICO.clock+'</span> Pendente</span>';if(conf.statusEnvio==='ENVIADO')return '<span class="caba-fil-badge enviado"><span class="caba-ico">'+ICO.check+'</span> Enviado</span>';if(conf.statusRecebimento==='RECEBIDO')return '<span class="caba-fil-badge recebido"><span class="caba-ico">'+ICO.clock+'</span> Aguard. envio</span>';return '<span class="caba-fil-badge pendente"><span class="caba-ico">'+ICO.clock+'</span> Pendente</span>';}
 function renderUserLine(label,u,d){if(!u&&!d)return '';return '<div class="caba-fil-user"><span class="caba-ico muted">'+ICO.user+'</span> '+label+': '+u+' · '+fmtDate(d)+'</div>';}
@@ -3750,15 +3809,16 @@ function showFinalModal(cd,totalFiliais,cargaId){const ov=document.createElement
 
 // ─── CABA buildPanel ─────────────────────────────────────────
 function buildPanel_caba(){if(document.getElementById('__caba__'))return;if(!document.body)return setTimeout(buildPanel_caba,10);
-const root=document.createElement('div');root.id='__caba__';root.classList.add('off');root.innerHTML='<div class="sol-header" id="caba-drag-handle"><div class="sol-header-left"><div class="sol-spinner-wrap"><div class="sol-spinner"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div><div class="sol-header-info"><div class="sol-header-title">Confirma ABA</div><div class="sol-header-sub">created by joao.gmarques</div></div></div><div class="sol-header-btns"><button class="sol-hbtn" id="caba-launcher" title="Trocar script" style="font-size:11px;">\u229E</button><button class="sol-hbtn" id="caba-switch" title="Alternar Admin/CD50" style="font-size:11px;">\uD83D\uDD04</button><button class="sol-hbtn" id="caba-refresh" title="Atualizar">\u27F3</button><button class="sol-hbtn" id="caba-min" title="Minimizar"></button><button class="sol-hbtn close-btn" id="caba-close" title="Fechar">\u2715</button></div></div><div class="sol-welcome-inline"><div class="sol-welcome-av" id="caba-welcome-av">?</div><div><div class="sol-welcome-txt">Ol\u00e1, <span class="sol-welcome-name" id="caba-welcome-name">usu\u00e1rio</span></div><div class="sol-welcome-sub" id="caba-welcome-sub">Aguardando token...</div></div></div><div class="sol-tok-bar w" id="caba-tok"><div class="sol-tok-dot"></div><span class="sol-tok-label" id="caba-tok-txt">Aguardando token...</span><div class="sol-tok-track"><div class="sol-tok-fill" id="caba-tok-fill" style="width:0%"></div></div></div><div class="caba-body" id="caba-content"><div class="caba-loading"><span>Aguardando token...</span></div></div><div class="caba-log-section"><div class="caba-log-header" id="caba-lh"><span class="caba-log-title">Logs <span class="caba-log-count" id="caba-lc">0</span></span><button class="caba-log-clear" id="caba-lclr">limpar</button></div><div class="caba-log-body" id="caba-lb"><div class="caba-log-entry info">Aguardando...</div></div></div>';document.body.appendChild(root);
-const tab=document.createElement('button');tab.id='__caba_tab__';tab.innerHTML='\uD83D\uDCE6';document.body.appendChild(tab);
+const root=document.createElement('div');root.id='__caba__';root.classList.add('off');root.innerHTML='<div class="sol-header" id="caba-drag-handle"><div class="sol-header-left"><div class="sol-spinner-wrap"><div class="sol-spinner"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div><div class="sol-header-info"><div class="sol-header-title">Confirmação CD’s</div><div class="sol-header-sub">created by joao.gmarques</div></div></div><div class="sol-header-btns"><button class="sol-hbtn" id="caba-launcher" title="Trocar script" style="font-size:11px;">\u229E</button><button class="sol-hbtn" id="caba-switch" title="Alternar Admin/CD50" style="font-size:11px;">\uD83D\uDD04</button><button class="sol-hbtn" id="caba-refresh" title="Atualizar">\u27F3</button><button class="sol-hbtn" id="caba-min" title="Minimizar"></button><button class="sol-hbtn close-btn" id="caba-close" title="Fechar">\u2715</button></div></div><div class="sol-welcome-inline"><div class="sol-welcome-av" id="caba-welcome-av">?</div><div><div class="sol-welcome-txt">Ol\u00e1, <span class="sol-welcome-name" id="caba-welcome-name">usu\u00e1rio</span></div><div class="sol-welcome-sub" id="caba-welcome-sub">Aguardando token...</div></div></div><div class="sol-tok-bar w" id="caba-tok"><div class="sol-tok-dot"></div><span class="sol-tok-label" id="caba-tok-txt">Aguardando token...</span><div class="sol-tok-track"><div class="sol-tok-fill" id="caba-tok-fill" style="width:0%"></div></div></div><div class="caba-body" id="caba-content"><div class="caba-loading"><span>Aguardando token...</span></div></div><div class="caba-log-section"><div class="caba-log-header" id="caba-lh"><span class="caba-log-title">Logs <span class="caba-log-count" id="caba-lc">0</span></span><button class="caba-log-clear" id="caba-lclr">limpar</button></div><div class="caba-log-body" id="caba-lb"><div class="caba-log-entry info">Aguardando...</div></div></div>';document.body.appendChild(root);
+_buildPanelNav(root,'caba');
+const tab=document.createElement('button');tab.id='__caba_tab__';tab.innerHTML='<span class="tab-ico-caba"></span>';document.body.appendChild(tab);
 let isDragging=false,dx=0,dy=0;document.getElementById('caba-drag-handle').addEventListener('mousedown',e=>{if(e.target.closest('.sol-hbtn'))return;isDragging=true;const r=root.getBoundingClientRect();dx=e.clientX-r.left;dy=e.clientY-r.top;document.body.style.userSelect='none';});document.addEventListener('mousemove',e=>{if(!isDragging)return;let x=e.clientX-dx,y=e.clientY-dy;x=Math.max(0,Math.min(x,window.innerWidth-root.offsetWidth));y=Math.max(0,Math.min(y,window.innerHeight-60));root.style.left=x+'px';root.style.top=y+'px';root.style.right='auto';});document.addEventListener('mouseup',()=>{if(isDragging){isDragging=false;document.body.style.userSelect='';}});
 document.getElementById('caba-launcher').onclick=e=>{e.stopPropagation();showLauncher();};
 document.getElementById('caba-close').onclick=e=>{e.stopPropagation();root.classList.add('off');tab.style.display='flex';tab.classList.remove('popping');void tab.offsetWidth;tab.classList.add('popping');setTimeout(()=>tab.classList.remove('popping'),1200);};tab.onclick=()=>{root.classList.remove('off');tab.style.display='none';};
 const minBtn=document.getElementById('caba-min');minBtn.setAttribute('data-state','open');let mini=false;minBtn.onclick=e=>{e.stopPropagation();mini=!mini;root.classList.toggle('minimized',mini);minBtn.setAttribute('data-state',mini?'closed':'open');};
 document.getElementById('caba-refresh').onclick=e=>{e.stopPropagation();startPolling();};
 document.getElementById('caba-switch').onclick=e=>{e.stopPropagation();if(CFG.SIMULAR_CD){CFG.SIMULAR_CD=false;logCaba('Modo: Admin','info');}else{CFG.SIMULAR_CD=50;logCaba('Modo: CD50','info');}updateWelcome();startPolling();};
-let logOpen=true;document.getElementById('caba-lh').onclick=()=>{logOpen=!logOpen;document.getElementById('caba-lb').style.display=logOpen?'':'none';};document.getElementById('caba-lclr').onclick=e=>{e.stopPropagation();document.getElementById('caba-lb').innerHTML='';_lc=0;document.getElementById('caba-lc').textContent='0';};
+let logOpen=true;document.getElementById('caba-lh').onclick=()=>{logOpen=!logOpen;document.getElementById('caba-lb').style.display=logOpen?'':'none';};document.getElementById('caba-lclr').onclick=e=>{e.stopPropagation();document.getElementById('caba-lb').innerHTML='';_lc_caba=0;document.getElementById('caba-lc').textContent='0';};
 if(_userName)updateWelcome();uiTokenCaba();setInterval(uiTokenCaba,5000);const check=setInterval(()=>{if(getTok()){clearInterval(check);logCaba('Token capturado','ok');startPolling();}},1000);}
 
 // ─── CABA startPolling ───────────────────────────────────────
