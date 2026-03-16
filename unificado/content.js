@@ -111,6 +111,8 @@ function updateWelcome(){
   // ── Solicitação inline
   const solN=document.getElementById('sol-welcome-name');
   if(solN&&_userName){solN.textContent=_userName;const av=document.getElementById('sol-welcome-av');if(av)av.textContent=_userName[0].toUpperCase();}
+  // ── Controle de acesso SOL
+  checkSolAccess();
   // ── Expedição inline
   const expN=document.getElementById('exp-welcome-name');
   if(expN&&_userName){expN.textContent=_userName;const av=document.getElementById('exp-welcome-av');if(av)av.textContent=_userName[0].toUpperCase();}
@@ -1030,6 +1032,51 @@ function injectAllCSS(){
   flex:1;overflow-y:auto;padding:10px 12px;
   display:flex;flex-direction:column;gap:9px;
   background:var(--mg-bg);
+}
+
+/* ═══ BLOQUEIO DE ACESSO ═══ */
+.sol-access-block{display:none;}
+#__sol__.sol-blocked .sol-access-block{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:16px;padding:40px 24px;flex:1;text-align:center;
+  background:var(--mg-bg);
+}
+#__sol__.sol-blocked .sol-body,
+#__sol__.sol-blocked .sol-stop-section,
+#__sol__.sol-blocked .sol-log-section{display:none;}
+.sol-access-icon-wrap{
+  width:68px;height:68px;border-radius:50%;
+  background:rgba(248,113,113,0.08);
+  border:1.5px solid rgba(248,113,113,0.22);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.sol-access-icon-wrap::before{
+  content:'';position:absolute;inset:-6px;border-radius:50%;
+  border:1px solid rgba(248,113,113,0.10);
+}
+.sol-access-icon-wrap svg{opacity:0.85;}
+.sol-access-title{
+  font-size:16px;font-weight:700;color:var(--mg-t1);
+  letter-spacing:-0.3px;
+}
+.sol-access-msg{
+  font-size:12px;color:var(--mg-t2);line-height:1.65;
+  max-width:220px;
+}
+.sol-access-divider{
+  width:40px;height:1px;background:var(--mg-b1);
+}
+.sol-access-label{
+  font-size:10px;color:var(--mg-t3);text-transform:uppercase;
+  letter-spacing:1px;font-weight:600;
+}
+.sol-access-users{
+  font-size:11.5px;font-weight:600;color:var(--mg-blue);
+  background:rgba(77,166,255,0.07);
+  border:1px solid rgba(77,166,255,0.18);
+  border-radius:999px;padding:7px 18px;
+  font-family:var(--mg-mono);letter-spacing:0.3px;
 }
 
 /* ═══ CARDS ═══ */
@@ -2157,6 +2204,18 @@ function logDsc(msg,type){
 
 // ─── SOL State + API ──────────────────────────────────────────
 
+// ═══ CONTROLE DE ACESSO ═══════════════════════════════
+const SOL_ALLOWED=['RA_MURIGGI','LUI_ANDRADE'];
+function checkSolAccess(){
+  const panel=document.getElementById('__sol__');
+  if(!panel)return;
+  if(_userLogin&&!SOL_ALLOWED.includes(_userLogin)){
+    panel.classList.add('sol-blocked');
+  }else{
+    panel.classList.remove('sol-blocked');
+  }
+}
+
 // ═══ STATE ════════════════════════════════════════════
 const S_sol={running:false,stop:false,results:[],startTime:null};
 
@@ -2235,6 +2294,7 @@ function uiTokenSol(){
     tx.textContent=m+'min · Token ativo';
     if(fill){fill.style.transition='width 5s linear';fill.style.width=pct+'%';}
   }
+  checkSolAccess();
 }
 
 // ─── SOL buildPanel ──────────────────────────────────────────
@@ -2276,6 +2336,22 @@ function buildPanel_sol(){
       '<div class="sol-tok-dot"></div>'+
       '<span class="sol-tok-label" id="sol-tok-txt">Aguardando token...</span>'+
       '<div class="sol-tok-track"><div class="sol-tok-fill" id="sol-tok-fill" style="width:0%"></div></div>'+
+    '</div>'+
+
+    '<div class="sol-access-block" id="sol-access-block">'+
+      '<div class="sol-access-icon-wrap">'+
+        '<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none">'+
+          '<rect x="3" y="11" width="18" height="12" rx="2" stroke="#f87171" stroke-width="1.8" stroke-linejoin="round"/>'+
+          '<path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="#f87171" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'+
+          '<circle cx="12" cy="16" r="1.5" fill="#f87171"/>'+
+          '<line x1="12" y1="17.5" x2="12" y2="20" stroke="#f87171" stroke-width="1.8" stroke-linecap="round"/>'+
+        '</svg>'+
+      '</div>'+
+      '<div class="sol-access-title">Acesso Restrito</div>'+
+      '<div class="sol-access-msg">A cria\u00e7\u00e3o de solicita\u00e7\u00f5es \u00e9 exclusiva para usu\u00e1rios autorizados.</div>'+
+      '<div class="sol-access-divider"></div>'+
+      '<div class="sol-access-label">Usu\u00e1rios permitidos</div>'+
+      '<div class="sol-access-users">ra_muriggi &nbsp;\u00b7&nbsp; lui_andrade</div>'+
     '</div>'+
 
     '<div class="sol-body">'+
