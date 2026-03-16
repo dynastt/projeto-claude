@@ -2840,9 +2840,9 @@ function buildPanel_exp(){
     '</div>'+
 
     '<div class="sol-welcome-inline">'+
-      '<div class="sol-welcome-av" id="sol-welcome-av">?</div>'+
+      '<div class="sol-welcome-av" id="exp-welcome-av">?</div>'+
       '<div>'+
-        '<div class="sol-welcome-txt">Olá, <span class="sol-welcome-name" id="sol-welcome-name">usuário</span></div>'+
+        '<div class="sol-welcome-txt">Olá, <span class="sol-welcome-name" id="exp-welcome-name">usuário</span></div>'+
         '<div class="sol-welcome-sub">Automação de ativos ativa</div>'+
       '</div>'+
     '</div>'+
