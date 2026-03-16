@@ -2435,7 +2435,7 @@ function buildPanel_sol(){
   document.getElementById('sol-modo-unico').addEventListener('change',()=>setModo(true));
   document.getElementById('sol-modo-filial').addEventListener('change',()=>setModo(false));
 
-  document.getElementById('sol-run').onclick=start;
+  document.getElementById('sol-run').onclick=startSol;
   document.getElementById('sol-stop').onclick=()=>{S_sol.stop=true;setStSol('Parando...');logSol('Interrompido pelo usuário.','warn');};
 
   let logOpen=true;
@@ -2944,7 +2944,7 @@ function buildPanel_exp(){
     });
   });
 
-  document.getElementById('aa-run').onclick=start;
+  document.getElementById('aa-run').onclick=startExp;
   document.getElementById('aa-stop').onclick=()=>{S_exp.stop=true;setStExp('Parada solicitada...');logExp('Interrompido pelo usuário.','warn');};
   document.getElementById('aa-email').addEventListener('click',testarEmails);
 
