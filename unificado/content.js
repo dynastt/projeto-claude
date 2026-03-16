@@ -2140,10 +2140,6 @@ function logDsc(msg,type){
 // ═══════════════════════════════════════════════════════════════
 
 // ─── SOL State + API ──────────────────────────────────────────
-// ═══ HELPERS ══════════════════════════════════════════
-const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-const pad=(c,n=4)=>String(c).padStart(n,'0');
-const norm=c=>(c||'').toString().replace(/\D/g,'').replace(/^0+/,'');
 
 // ═══ STATE ════════════════════════════════════════════
 const API='https://gestao-ativos-api.magazineluiza.com.br';
@@ -2646,10 +2642,6 @@ async function startSol(){
 // ═══════════════════════════════════════════════════════════════
 
 // ─── EXP Helpers + State ─────────────────────────────────────
-// ═══ HELPERS ══════════════════════════════════════════
-const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-const norm=c=>(c||'').toString().replace(/\D/g,'').replace(/^0+/,'');
-const pad=(c,n=4)=>String(c).padStart(n,'0');
 
 // ═══ PARSE FILIAIS ════════════════════════════════════
 function parseFilaisExp(text){
