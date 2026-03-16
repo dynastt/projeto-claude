@@ -148,6 +148,27 @@ function showLauncher(){
   document.querySelectorAll('.sw-nav-label[data-mod]').forEach(l=>l.classList.remove('active'));
 }
 
+// ═══ SHARED PANEL NAV ════════════════════════════════════════
+const _SVG_NAV_EXP='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" width="14" height="14"><path fill="inherit" d="M18.9999 6.01002L12.4499 0.770018C11.1699 -0.249982 9.16988 -0.259982 7.89988 0.760018L1.34988 6.01002C0.409885 6.76002 -0.160115 8.26002 0.0398848 9.44002L1.29988 16.98C1.58988 18.67 3.15988 20 4.86988 20H15.4699C17.1599 20 18.7599 18.64 19.0499 16.97L20.3099 9.43002C20.4899 8.26002 19.9199 6.76002 18.9999 6.01002ZM10.9199 16C10.9199 16.41 10.5799 16.75 10.1699 16.75C9.75988 16.75 9.41988 16.41 9.41988 16V13C9.41988 12.59 9.75988 12.25 10.1699 12.25C10.5799 12.25 10.9199 12.59 10.9199 13V16Z"/></svg>';
+const _SVG_NAV_SOL='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20" width="14" height="14"><path fill="inherit" d="M16.8035 6.96427C16.1335 6.22427 15.1235 5.79427 13.7235 5.64427V4.88427C13.7235 3.51427 13.1435 2.19427 12.1235 1.27427C11.6202 0.812823 11.025 0.462927 10.3771 0.247511C9.72909 0.032095 9.04292 -0.0439787 8.3635 0.0242742C5.9735 0.254274 3.9635 2.56427 3.9635 5.06427V5.64427C2.5635 5.79427 1.5535 6.22427 0.883496 6.96427C-0.0865043 8.04427 -0.0565042 9.48427 0.0534958 10.4843L0.753496 16.0543C0.963496 18.0043 1.7535 20.0043 6.0535 20.0043H11.6335C15.9335 20.0043 16.7235 18.0043 16.9335 16.0643L17.6335 10.4743C17.7435 9.48427 17.7635 8.04427 16.8035 6.96427ZM8.5035 1.41427C8.98813 1.36559 9.47758 1.41913 9.94023 1.57143C10.4029 1.72372 10.8284 1.97138 11.1894 2.29841C11.5503 2.62544 11.8387 3.02456 12.0357 3.46998C12.2328 3.91539 12.3343 4.39721 12.3335 4.88427V5.58427H5.3535V5.06427C5.3535 3.28427 6.8235 1.57427 8.5035 1.41427ZM5.2635 11.1543H5.2535C4.7035 11.1543 4.2535 10.7043 4.2535 10.1543C4.2535 9.60427 4.7035 9.15427 5.2535 9.15427C5.8135 9.15427 6.2635 9.60427 6.2635 10.1543C6.2635 10.7043 5.8135 11.1543 5.2635 11.1543ZM12.2635 11.1543H12.2535C11.7035 11.1543 11.2535 10.7043 11.2535 10.1543C11.2535 9.60427 11.7035 9.15427 12.2535 9.15427C12.8135 9.15427 13.2635 9.60427 13.2635 10.1543C13.2635 10.7043 12.8135 11.1543 12.2635 11.1543Z"/></svg>';
+const _SVG_NAV_DSC='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 18" width="14" height="14"><path fill="inherit" d="M14.44 0C12.63 0 11.01 0.88 10 2.23C9.48413 1.53881 8.81426 0.977391 8.04353 0.590295C7.27281 0.203198 6.42247 0.00108555 5.56 0C2.49 0 0 2.5 0 5.59C0 6.78 0.19 7.88 0.52 8.9C2.1 13.9 6.97 16.89 9.38 17.71C9.72 17.83 10.28 17.83 10.62 17.71C13.03 16.89 17.9 13.9 19.48 8.9C19.81 7.88 20 6.78 20 5.59C20 2.5 17.51 0 14.44 0Z"/></svg>';
+const _SVG_NAV_CABA='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" width="14" height="14"><path fill="inherit" d="M15.0294 12.4902L14.0294 10.8302C13.8194 10.4602 13.6294 9.76016 13.6294 9.35016V6.82016C13.6282 5.70419 13.3111 4.61137 12.7147 3.66813C12.1183 2.72489 11.267 1.96978 10.2594 1.49016C10.0022 1.0335 9.62709 0.654303 9.17324 0.392195C8.71939 0.130087 8.20347 -0.00530784 7.6794 0.000159243C6.5894 0.000159243 5.6094 0.590159 5.0894 1.52016C3.1394 2.49016 1.7894 4.50016 1.7894 6.82016V9.35016C1.7894 9.76016 1.5994 10.4602 1.3894 10.8202L0.379396 12.4902C-0.0206039 13.1602 -0.110604 13.9002 0.139396 14.5802C0.379396 15.2502 0.949396 15.7702 1.6894 16.0202C3.6294 16.6802 5.6694 17.0002 7.7094 17.0002C9.7494 17.0002 11.7894 16.6802 13.7294 16.0302C14.4294 15.8002 14.9694 15.2702 15.2294 14.5802C15.4894 13.8902 15.4194 13.1302 15.0294 12.4902ZM10.5194 18.0102C10.3091 18.5923 9.92467 19.0956 9.41835 19.4516C8.91203 19.8077 8.30837 19.9992 7.6894 20.0002C6.8994 20.0002 6.1194 19.6802 5.5694 19.1102C5.2494 18.8102 5.0094 18.4102 4.8694 18.0002C4.9994 18.0202 5.1294 18.0302 5.2694 18.0502C5.4994 18.0802 5.7394 18.1102 5.9794 18.1302C6.5494 18.1802 7.1294 18.2102 7.7094 18.2102C8.2794 18.2102 8.8494 18.1802 9.4094 18.1302C9.6194 18.1102 9.8294 18.1002 10.0294 18.0702L10.5194 18.0102Z"/></svg>';
+function _buildPanelNav(container,activeMod){
+  const nav=document.createElement('nav');
+  nav.className='sw-nav sw-panel-nav';
+  const mods=[['exp','Expedi.',_SVG_NAV_EXP],['sol','Solicit.',_SVG_NAV_SOL],['dsc','Descarte',_SVG_NAV_DSC],['caba','ABA',_SVG_NAV_CABA]];
+  mods.forEach(([mod,txt,svg])=>{
+    const lbl=document.createElement('label');
+    lbl.className='sw-nav-label'+(mod===activeMod?' active':'');
+    lbl.dataset.mod=mod;
+    lbl.title=mod==='exp'?"Expedição":mod==='sol'?"Solicitações":mod==='dsc'?"Descarte":"Confirmação CD’s";
+    lbl.innerHTML=svg+'<span class="sw-nav-txt">'+txt+'</span>';
+    lbl.addEventListener('click',()=>showModule(mod));
+    nav.appendChild(lbl);
+  });
+  container.appendChild(nav);
+}
+
 function buildWelcome(){
   if(document.getElementById('__suite-welcome__'))return;
   if(!document.body)return setTimeout(buildWelcome,50);
@@ -156,18 +177,18 @@ function buildWelcome(){
   ov.id='__suite-welcome__';
   ov.innerHTML=
     '<div class="sw-card">'+
-      '<div class="sw-badge">🚀 Suite Magalu · Auto Ativos</div>'+
+      '<div class="sw-badge">Suite Magalu · Auto Ativos</div>'+
       '<div class="sw-greeting">Boas-vindas,</div>'+
       '<div class="sw-name" id="sw-name">'+n+'</div>'+
-      '<div class="sw-question">e hoje, <strong id="sw-name2" style="color:#d17842">'+n+'</strong>, qual script você quer usar? ✨</div>'+
+      '<div class="sw-question">e hoje, <strong id="sw-name2" style="color:#7c3aed">'+n+'</strong>, qual script você quer usar? ✨</div>'+
       '<div class="sw-opts">'+
-        '<button class="sw-opt" data-mod="exp"><span class="sw-opt-ico">🚚</span><div class="sw-opt-name">Auto Expedição</div><div class="sw-opt-desc">Processo de expedição automático</div></button>'+
-        '<button class="sw-opt" data-mod="dsc"><span class="sw-opt-ico">🗑️</span><div class="sw-opt-name">Auto Descarte</div><div class="sw-opt-desc">Realiza descartes automáticos</div></button>'+
-        '<button class="sw-opt" data-mod="sol"><span class="sw-opt-ico">📋</span><div class="sw-opt-name">Solicitações</div><div class="sw-opt-desc">Cria solicitações de ativos automaticamente</div></button>'+
-        '<button class="sw-opt" data-mod="caba"><span class="sw-opt-ico">✅</span><div class="sw-opt-name">Confirma ABA</div><div class="sw-opt-desc">Confirmação de cargas ABA</div></button>'+
+        '<button class="sw-opt" data-mod="exp"><span class="sw-opt-ico"><span class="sw-ico-exp"><i></i><i></i><i></i></span></span><div class="sw-opt-name">Expedição</div><div class="sw-opt-desc">Automatiza todos os processos de expedição, desde Solicitações até criação de Cargas</div></button>'+
+        '<button class="sw-opt" data-mod="dsc"><span class="sw-opt-ico"><span class="sw-ico-dsc"></span></span><div class="sw-opt-name">Descarte</div><div class="sw-opt-desc">Automatiza o processo de solicitar um descarte</div></button>'+
+        '<button class="sw-opt" data-mod="sol"><span class="sw-opt-ico"><span class="sw-ico-sol"><i></i><i></i><i></i></span></span><div class="sw-opt-name">Solicitações</div><div class="sw-opt-desc">Automatiza o processo de criar uma solicitação</div></button>'+
+        '<button class="sw-opt" data-mod="caba"><span class="sw-opt-ico"><span class="sw-ico-caba"></span></span><div class="sw-opt-name">Confirmação CD’s</div><div class="sw-opt-desc">Confirma se os CD’s de cargas ABA receberam a carga</div></button>'+
       '</div>'+
       '<nav class="sw-nav">'+
-        '<label class="sw-nav-label" data-mod="exp" title="Auto Expedição">'+
+        '<label class="sw-nav-label" data-mod="exp" title="Expedição">'+
           '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" width="14" height="14"><path fill="inherit" d="M18.9999 6.01002L12.4499 0.770018C11.1699 -0.249982 9.16988 -0.259982 7.89988 0.760018L1.34988 6.01002C0.409885 6.76002 -0.160115 8.26002 0.0398848 9.44002L1.29988 16.98C1.58988 18.67 3.15988 20 4.86988 20H15.4699C17.1599 20 18.7599 18.64 19.0499 16.97L20.3099 9.43002C20.4899 8.26002 19.9199 6.76002 18.9999 6.01002ZM10.9199 16C10.9199 16.41 10.5799 16.75 10.1699 16.75C9.75988 16.75 9.41988 16.41 9.41988 16V13C9.41988 12.59 9.75988 12.25 10.1699 12.25C10.5799 12.25 10.9199 12.59 10.9199 13V16Z"/></svg>'+
           '<span class="sw-nav-txt">Expedi.</span>'+
         '</label>'+
@@ -175,11 +196,11 @@ function buildWelcome(){
           '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20" width="14" height="14"><path fill="inherit" d="M16.8035 6.96427C16.1335 6.22427 15.1235 5.79427 13.7235 5.64427V4.88427C13.7235 3.51427 13.1435 2.19427 12.1235 1.27427C11.6202 0.812823 11.025 0.462927 10.3771 0.247511C9.72909 0.032095 9.04292 -0.0439787 8.3635 0.0242742C5.9735 0.254274 3.9635 2.56427 3.9635 5.06427V5.64427C2.5635 5.79427 1.5535 6.22427 0.883496 6.96427C-0.0865043 8.04427 -0.0565042 9.48427 0.0534958 10.4843L0.753496 16.0543C0.963496 18.0043 1.7535 20.0043 6.0535 20.0043H11.6335C15.9335 20.0043 16.7235 18.0043 16.9335 16.0643L17.6335 10.4743C17.7435 9.48427 17.7635 8.04427 16.8035 6.96427ZM8.5035 1.41427C8.98813 1.36559 9.47758 1.41913 9.94023 1.57143C10.4029 1.72372 10.8284 1.97138 11.1894 2.29841C11.5503 2.62544 11.8387 3.02456 12.0357 3.46998C12.2328 3.91539 12.3343 4.39721 12.3335 4.88427V5.58427H5.3535V5.06427C5.3535 3.28427 6.8235 1.57427 8.5035 1.41427ZM5.2635 11.1543H5.2535C4.7035 11.1543 4.2535 10.7043 4.2535 10.1543C4.2535 9.60427 4.7035 9.15427 5.2535 9.15427C5.8135 9.15427 6.2635 9.60427 6.2635 10.1543C6.2635 10.7043 5.8135 11.1543 5.2635 11.1543ZM12.2635 11.1543H12.2535C11.7035 11.1543 11.2535 10.7043 11.2535 10.1543C11.2535 9.60427 11.7035 9.15427 12.2535 9.15427C12.8135 9.15427 13.2635 9.60427 13.2635 10.1543C13.2635 10.7043 12.8135 11.1543 12.2635 11.1543Z"/></svg>'+
           '<span class="sw-nav-txt">Solicit.</span>'+
         '</label>'+
-        '<label class="sw-nav-label" data-mod="dsc" title="Auto Descarte">'+
+        '<label class="sw-nav-label" data-mod="dsc" title="Descarte">'+
           '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 18" width="14" height="14"><path fill="inherit" d="M14.44 0C12.63 0 11.01 0.88 10 2.23C9.48413 1.53881 8.81426 0.977391 8.04353 0.590295C7.27281 0.203198 6.42247 0.00108555 5.56 0C2.49 0 0 2.5 0 5.59C0 6.78 0.19 7.88 0.52 8.9C2.1 13.9 6.97 16.89 9.38 17.71C9.72 17.83 10.28 17.83 10.62 17.71C13.03 16.89 17.9 13.9 19.48 8.9C19.81 7.88 20 6.78 20 5.59C20 2.5 17.51 0 14.44 0Z"/></svg>'+
           '<span class="sw-nav-txt">Descarte</span>'+
         '</label>'+
-        '<label class="sw-nav-label" data-mod="caba" title="Confirma ABA">'+
+        '<label class="sw-nav-label" data-mod="caba" title="Confirmação CD’s">'+
           '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" width="14" height="14"><path fill="inherit" d="M15.0294 12.4902L14.0294 10.8302C13.8194 10.4602 13.6294 9.76016 13.6294 9.35016V6.82016C13.6282 5.70419 13.3111 4.61137 12.7147 3.66813C12.1183 2.72489 11.267 1.96978 10.2594 1.49016C10.0022 1.0335 9.62709 0.654303 9.17324 0.392195C8.71939 0.130087 8.20347 -0.00530784 7.6794 0.000159243C6.5894 0.000159243 5.6094 0.590159 5.0894 1.52016C3.1394 2.49016 1.7894 4.50016 1.7894 6.82016V9.35016C1.7894 9.76016 1.5994 10.4602 1.3894 10.8202L0.379396 12.4902C-0.0206039 13.1602 -0.110604 13.9002 0.139396 14.5802C0.379396 15.2502 0.949396 15.7702 1.6894 16.0202C3.6294 16.6802 5.6694 17.0002 7.7094 17.0002C9.7494 17.0002 11.7894 16.6802 13.7294 16.0302C14.4294 15.8002 14.9694 15.2702 15.2294 14.5802C15.4894 13.8902 15.4194 13.1302 15.0294 12.4902ZM10.5194 18.0102C10.3091 18.5923 9.92467 19.0956 9.41835 19.4516C8.91203 19.8077 8.30837 19.9992 7.6894 20.0002C6.8994 20.0002 6.1194 19.6802 5.5694 19.1102C5.2494 18.8102 5.0094 18.4102 4.8694 18.0002C4.9994 18.0202 5.1294 18.0302 5.2694 18.0502C5.4994 18.0802 5.7394 18.1102 5.9794 18.1302C6.5494 18.1802 7.1294 18.2102 7.7094 18.2102C8.2794 18.2102 8.8494 18.1802 9.4094 18.1302C9.6194 18.1102 9.8294 18.1002 10.0294 18.0702L10.5194 18.0102Z"/></svg>'+
           '<span class="sw-nav-txt">ABA</span>'+
         '</label>'+
@@ -326,28 +347,31 @@ function injectAllCSS(){
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  /* MELHORIA 7: tons mais escuros para contrastar com o portal branco */
-  --mg-bg:       #b8bcc8;
-  --mg-panel:    #c8ccd8;
-  --mg-s1:       #bfc3cf;
-  --mg-s2:       #b2b7c4;
-  --mg-s3:       #a6abb9;
-  --mg-s4:       #9ba0af;
-  --mg-b1:       rgba(0,0,0,0.13);
-  --mg-b2:       rgba(0,0,0,0.20);
-  --mg-t1:       #0f1120;
-  --mg-t2:       #3a4060;
-  --mg-t3:       #6b7290;
-  --mg-blue:     #0078e6;
-  --mg-blue2:    #005bbf;
-  --mg-grad:     linear-gradient(90deg,#f5a623 0%,#e8384f 22%,#c026d3 45%,#7c3aed 62%,#0078e6 78%,#00c896 100%);
-  --mg-green:    #16a34a;
-  --mg-green-lt: rgba(22,163,74,0.15);
-  --mg-red:      #dc2626;
-  --mg-red-lt:   rgba(220,38,38,0.10);
-  --mg-orange:   #d97706;
-  --mg-shadow:   0 2px 12px rgba(0,0,0,0.15);
-  --mg-shadow-lg:0 12px 48px rgba(0,0,0,0.25),0 2px 8px rgba(0,0,0,0.12);
+  --mg-bg:       #0c0e16;
+  --mg-panel:    #111420;
+  --mg-s1:       #181b2b;
+  --mg-s2:       #1e2235;
+  --mg-s3:       #252840;
+  --mg-s4:       #2d3050;
+  --mg-b1:       rgba(255,255,255,0.08);
+  --mg-b2:       rgba(255,255,255,0.14);
+  --mg-t1:       #e8eaf6;
+  --mg-t2:       rgba(200,205,240,0.70);
+  --mg-t3:       rgba(160,168,210,0.45);
+  --mg-blue:     #4da6ff;
+  --mg-blue2:    #3d8fea;
+  --mg-grad:     linear-gradient(90deg,#7c3aed 0%,#c026d3 30%,#e8384f 55%,#0078e6 78%,#00c896 100%);
+  --mg-green:    #34d399;
+  --mg-green-lt: rgba(52,211,153,0.12);
+  --mg-red:      #f87171;
+  --mg-red-lt:   rgba(248,113,113,0.12);
+  --mg-red-btn:  #e05252;
+  --mg-orange:   #fbbf24;
+  --mg-purple:   #7c3aed;
+  --mg-purple2:  #6d28d9;
+  --mg-purple-lt:rgba(124,58,237,0.15);
+  --mg-shadow:   0 2px 14px rgba(0,0,0,0.55);
+  --mg-shadow-lg:0 12px 50px rgba(0,0,0,0.70),0 2px 10px rgba(0,0,0,0.40);
   --mg-radius:   14px;
   --mg-font:     'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
   --mg-mono:     'JetBrains Mono',monospace;
@@ -438,26 +462,68 @@ function injectAllCSS(){
 .sw-card{background:#13151f;border:1px solid rgba(255,255,255,0.09);border-radius:26px;padding:36px 38px 28px;max-width:460px;width:92%;box-shadow:0 40px 120px rgba(0,0,0,0.65);position:relative;overflow:hidden;animation:sw-card-in .45s cubic-bezier(.34,1.56,.64,1);}
 .sw-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--mg-grad);}
 @keyframes sw-card-in{from{opacity:0;transform:translateY(28px) scale(0.95)}to{opacity:1;transform:none}}
-.sw-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(209,120,66,0.12);border:1px solid rgba(209,120,66,0.25);border-radius:20px;padding:4px 12px;font-size:10px;font-weight:700;color:#d17842;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px;}
+.sw-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.25);border-radius:20px;padding:4px 12px;font-size:10px;font-weight:700;color:#7c3aed;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px;}
 .sw-greeting{font-size:13px;color:rgba(255,255,255,0.45);font-weight:500;margin-bottom:5px;}
 .sw-name{font-size:28px;font-weight:800;color:#fff;letter-spacing:-0.5px;margin-bottom:2px;}
 .sw-question{font-size:12px;color:rgba(255,255,255,0.4);font-weight:500;margin-bottom:22px;}
 .sw-opts{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:22px;}
 .sw-opt{background:rgba(255,255,255,0.03);border:1.5px solid rgba(255,255,255,0.07);border-radius:14px;padding:14px 13px 12px;cursor:pointer;transition:all .2s cubic-bezier(.4,0,.2,1);text-align:left;width:100%;font-family:var(--mg-font);}
-.sw-opt:hover{background:rgba(209,120,66,0.07);border-color:rgba(209,120,66,0.45);transform:translateY(-3px);box-shadow:0 10px 30px rgba(209,120,66,0.13);}
+.sw-opt:hover{background:rgba(124,58,237,0.07);border-color:rgba(124,58,237,0.45);transform:translateY(-3px);box-shadow:0 10px 30px rgba(124,58,237,0.13);}
 .sw-opt:active{transform:scale(0.96);}
 .sw-opt-ico{font-size:22px;margin-bottom:8px;display:block;}
+/* ── CSS animated module icons ── */
+.sw-opt-ico{font-size:0;display:flex;align-items:center;justify-content:center;width:36px;height:36px;margin-bottom:10px;}
+.sw-ico-exp,.sw-ico-dsc,.sw-ico-sol,.sw-ico-caba{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;position:relative;}
+.sw-ico-exp{background:rgba(124,58,237,0.14);}
+.sw-ico-exp i{display:block;width:7px;height:7px;border-radius:2px;background:#a78bfa;animation:ico-exp 1.5s ease-in-out infinite;}
+.sw-ico-exp i:nth-child(1){animation-delay:0s;}
+.sw-ico-exp i:nth-child(2){width:6px;height:9px;animation-delay:.2s;}
+.sw-ico-exp i:nth-child(3){width:8px;height:5px;animation-delay:.4s;}
+@keyframes ico-exp{0%,100%{transform:translateY(0);opacity:.7}50%{transform:translateY(-7px);opacity:1}}
+.sw-ico-dsc{background:rgba(248,113,113,0.12);}
+.sw-ico-dsc::before{content:'';width:18px;height:18px;border-radius:50%;border:2.5px solid #f87171;animation:ico-dsc 2s ease-in-out infinite;}
+.sw-ico-dsc::after{content:'';position:absolute;width:8px;height:8px;border-radius:50%;background:#f87171;animation:ico-dsc 2s ease-in-out infinite .4s;}
+@keyframes ico-dsc{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(0.55);opacity:.3}}
+.sw-ico-sol{background:rgba(77,166,255,0.12);flex-direction:column;gap:4px;}
+.sw-ico-sol i{display:block;height:2px;background:#4da6ff;border-radius:2px;animation:ico-sol 2s ease-in-out infinite;}
+.sw-ico-sol i:nth-child(1){width:18px;animation-delay:0s;}
+.sw-ico-sol i:nth-child(2){width:13px;animation-delay:.25s;}
+.sw-ico-sol i:nth-child(3){width:8px;animation-delay:.5s;}
+@keyframes ico-sol{0%,100%{opacity:.3;transform:scaleX(.65);transform-origin:left}60%{opacity:1;transform:scaleX(1)}}
+.sw-ico-caba{background:rgba(52,211,153,0.12);}
+.sw-ico-caba::before{content:'';width:20px;height:20px;border-radius:50%;border:2.5px solid #34d399;animation:ico-caba-ring 2.2s ease-in-out infinite;}
+.sw-ico-caba::after{content:'';position:absolute;width:9px;height:6px;border-left:2.5px solid #34d399;border-bottom:2.5px solid #34d399;transform:rotate(-45deg) translate(1px,1px);animation:ico-caba-chk 2.2s ease-in-out infinite;}
+@keyframes ico-caba-ring{0%{opacity:.25;transform:scale(.75)}45%,65%{opacity:1;transform:scale(1)}100%{opacity:.25;transform:scale(.75)}}
+@keyframes ico-caba-chk{0%{opacity:0;transform:rotate(-45deg) translate(1px,1px) scale(.4)}45%,65%{opacity:1;transform:rotate(-45deg) translate(1px,1px) scale(1)}100%{opacity:0;transform:rotate(-45deg) translate(1px,1px) scale(.4)}}
+/* CSS tab icons */
+.tab-ico-exp,.tab-ico-dsc,.tab-ico-sol,.tab-ico-caba{display:flex;align-items:center;justify-content:center;gap:2px;pointer-events:none;}
+.tab-ico-exp i{display:block;width:5px;height:5px;border-radius:1px;background:currentColor;animation:ico-exp 1.5s ease-in-out infinite;}
+.tab-ico-exp i:nth-child(2){animation-delay:.2s;}
+.tab-ico-exp i:nth-child(3){animation-delay:.4s;}
+.tab-ico-dsc{position:relative;width:18px;height:18px;}
+.tab-ico-dsc::before{content:'';position:absolute;inset:0;border-radius:50%;border:2px solid currentColor;animation:ico-dsc 2s ease-in-out infinite;}
+.tab-ico-sol{flex-direction:column;gap:3px;}
+.tab-ico-sol i{display:block;height:2px;background:currentColor;border-radius:2px;}
+.tab-ico-sol i:nth-child(1){width:14px;animation:ico-sol 2s ease-in-out infinite;}
+.tab-ico-sol i:nth-child(2){width:10px;animation:ico-sol 2s ease-in-out infinite .25s;}
+.tab-ico-caba{position:relative;width:18px;height:18px;}
+.tab-ico-caba::before{content:'';position:absolute;inset:0;border-radius:50%;border:2px solid currentColor;animation:ico-caba-ring 2.2s ease-in-out infinite;}
+.tab-ico-caba::after{content:'';position:absolute;width:7px;height:5px;border-left:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(-45deg) translate(1px,1px);animation:ico-caba-chk 2.2s ease-in-out infinite;}
 .sw-opt-name{font-size:12px;font-weight:700;color:#fff;margin-bottom:3px;}
 .sw-opt-desc{font-size:10.5px;color:rgba(255,255,255,0.37);line-height:1.45;}
 .sw-nav{display:flex;align-items:center;justify-content:space-evenly;background:#0c0f14;border-radius:30px;border:1px solid rgba(255,255,255,0.05);padding:4px 8px;}
 .sw-nav-label{padding:6px 14px;transition:all 200ms;display:inline-flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;position:relative;}
-.sw-nav-label::before{content:'';display:block;width:0%;height:2px;border-radius:5px;position:absolute;left:50%;bottom:2px;background:#d17842;transition:all 200ms;transform:translateX(-50%);}
+.sw-nav-label::before{content:'';display:block;width:0%;height:2px;border-radius:5px;position:absolute;left:50%;bottom:2px;background:#7c3aed;transition:all 200ms;transform:translateX(-50%);}
 .sw-nav-label.active::before{width:60%;}
 .sw-nav-label svg{transition:300ms;fill:#52555a;width:14px;height:14px;}
-.sw-nav-label.active svg{fill:#d17842;transform:scale(1.2) translateY(-3px);}
-.sw-nav-label:not(.active):hover svg{fill:#d17842;opacity:0.6;}
+.sw-nav-label.active svg{fill:#7c3aed;transform:scale(1.2) translateY(-3px);}
+.sw-nav-label:not(.active):hover svg{fill:#7c3aed;opacity:0.6;}
 .sw-nav-txt{font-size:9px;font-weight:600;color:#52555a;letter-spacing:0.5px;transition:200ms;text-transform:uppercase;}
-.sw-nav-label.active .sw-nav-txt{color:#d17842;}
+.sw-nav-label.active .sw-nav-txt{color:#7c3aed;}
+/* ─── PANEL BOTTOM NAV ──────────────────────────────────────── */
+.sw-panel-nav{margin:0 10px 10px;border-radius:30px;flex-shrink:0;}
+.sw-panel-nav .sw-nav-label{padding:5px 10px;}
+
 
 /* ═══════════════════════════════════════════════════════════ */
 /* MODULE: AUTO DESCARTE (__dsc__)                             */
@@ -1949,7 +2015,7 @@ function buildPanel_dsc(){
       '<div class="dsc-header-left">'+
         '<div class="dsc-spinner-wrap"><div class="dsc-spinner"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>'+
         '<div class="dsc-header-info">'+
-          '<div class="dsc-header-title">Auto Descarte</div>'+
+          '<div class="dsc-header-title">Descarte</div>'+
           '<div class="dsc-header-sub">created by joao.gmarques</div>'+
         '</div>'+
       '</div>'+
@@ -2042,9 +2108,10 @@ function buildPanel_dsc(){
     '</div>';
 
   document.body.appendChild(root);
+  _buildPanelNav(root,'dsc');
 
   const tab=document.createElement('button');
-  tab.id='__dsc_tab__';tab.innerHTML='🗑️';
+  tab.id='__dsc_tab__';tab.innerHTML='<span class="tab-ico-dsc"></span>';
   document.body.appendChild(tab);
 
   // DRAG
@@ -2241,7 +2308,7 @@ function buildPanel_sol(){
         '</div>'+
         '<div class="sol-header-info">'+
           '<div class="sol-header-title-row">'+
-            '<div class="sol-header-title">Solicitar Ativos</div>'+
+            '<div class="sol-header-title">Solicitações</div>'+
           '</div>'+
           '<div class="sol-header-sub">created by joao.gmarques</div>'+
         '</div>'+
@@ -2366,9 +2433,10 @@ function buildPanel_sol(){
     '</div>';
 
   document.body.appendChild(root);
+  _buildPanelNav(root,'sol');
 
   const tab=document.createElement('button');
-  tab.id='__sol_tab__';tab.innerHTML='📤';
+  tab.id='__sol_tab__';tab.innerHTML='<span class="tab-ico-sol"><i></i><i></i></span>';
   document.body.appendChild(tab);
 
   // DRAG
@@ -2760,7 +2828,7 @@ function buildPanel_exp(){
           '</div>'+
         '</div>'+
         '<div class="sol-header-info">'+
-          '<div class="sol-header-title">Auto Expedição</div>'+
+          '<div class="sol-header-title">Expedição</div>'+
           '<div class="sol-header-sub">created by joao.gmarques</div>'+
         '</div>'+
       '</div>'+
@@ -2781,8 +2849,8 @@ function buildPanel_exp(){
 
     '<div class="sol-tok-bar w" id="exp-tok">'+
       '<div class="sol-tok-dot"></div>'+
-      '<span class="sol-tok-label" id="aa-tok-txt">Aguardando token...</span>'+
-      '<div class="sol-tok-track"><div class="sol-tok-fill" id="sol-tok-fill" style="width:0%"></div></div>'+
+      '<span class="sol-tok-label" id="exp-tok-txt">Aguardando token...</span>'+
+      '<div class="sol-tok-track"><div class="sol-tok-fill" id="exp-tok-fill" style="width:0%"></div></div>'+
     '</div>'+
 
     '<div class="sol-body">'+
@@ -2881,9 +2949,10 @@ function buildPanel_exp(){
     '</div>';
 
   document.body.appendChild(root);
+  _buildPanelNav(root,'exp');
 
   const tab=document.createElement('button');
-  tab.id='__aa_tab__';tab.innerHTML='📦';
+  tab.id='__aa_tab__';tab.innerHTML='<span class="tab-ico-exp"><i></i><i></i><i></i></span>';
   document.body.appendChild(tab);
 
   // DRAG
@@ -3037,7 +3106,7 @@ async function startExp(){
     return;
   }
   const mLabel={full:'COMPLETO',sep:'SEPARAÇÃO',carga:'CARGA'};
-  Object.assign(S,{running:true,stop:false,jobs,results:{},sentItems:[],sepFiliais:[],jobsOk:[],sepAssets:[],
+  Object.assign(S_exp,{running:true,stop:false,jobs,results:{},sentItems:[],sepFiliais:[],jobsOk:[],sepAssets:[],
     cargaId:null,cargaOk:false,freight:null,depDate:null,
     confOk:0,confErr:0,confFilOk:[],confFilErr:[],tracks:{},
     nfeOk:false,nfeSucess:[],nfeFail:[],startTime:Date.now(),modo:mLabel[mode]||mode});
@@ -3740,8 +3809,9 @@ function showFinalModal(cd,totalFiliais,cargaId){const ov=document.createElement
 
 // ─── CABA buildPanel ─────────────────────────────────────────
 function buildPanel_caba(){if(document.getElementById('__caba__'))return;if(!document.body)return setTimeout(buildPanel_caba,10);
-const root=document.createElement('div');root.id='__caba__';root.classList.add('off');root.innerHTML='<div class="sol-header" id="caba-drag-handle"><div class="sol-header-left"><div class="sol-spinner-wrap"><div class="sol-spinner"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div><div class="sol-header-info"><div class="sol-header-title">Confirma ABA</div><div class="sol-header-sub">created by joao.gmarques</div></div></div><div class="sol-header-btns"><button class="sol-hbtn" id="caba-launcher" title="Trocar script" style="font-size:11px;">\u229E</button><button class="sol-hbtn" id="caba-switch" title="Alternar Admin/CD50" style="font-size:11px;">\uD83D\uDD04</button><button class="sol-hbtn" id="caba-refresh" title="Atualizar">\u27F3</button><button class="sol-hbtn" id="caba-min" title="Minimizar"></button><button class="sol-hbtn close-btn" id="caba-close" title="Fechar">\u2715</button></div></div><div class="sol-welcome-inline"><div class="sol-welcome-av" id="caba-welcome-av">?</div><div><div class="sol-welcome-txt">Ol\u00e1, <span class="sol-welcome-name" id="caba-welcome-name">usu\u00e1rio</span></div><div class="sol-welcome-sub" id="caba-welcome-sub">Aguardando token...</div></div></div><div class="sol-tok-bar w" id="caba-tok"><div class="sol-tok-dot"></div><span class="sol-tok-label" id="caba-tok-txt">Aguardando token...</span><div class="sol-tok-track"><div class="sol-tok-fill" id="caba-tok-fill" style="width:0%"></div></div></div><div class="caba-body" id="caba-content"><div class="caba-loading"><span>Aguardando token...</span></div></div><div class="caba-log-section"><div class="caba-log-header" id="caba-lh"><span class="caba-log-title">Logs <span class="caba-log-count" id="caba-lc">0</span></span><button class="caba-log-clear" id="caba-lclr">limpar</button></div><div class="caba-log-body" id="caba-lb"><div class="caba-log-entry info">Aguardando...</div></div></div>';document.body.appendChild(root);
-const tab=document.createElement('button');tab.id='__caba_tab__';tab.innerHTML='\uD83D\uDCE6';document.body.appendChild(tab);
+const root=document.createElement('div');root.id='__caba__';root.classList.add('off');root.innerHTML='<div class="sol-header" id="caba-drag-handle"><div class="sol-header-left"><div class="sol-spinner-wrap"><div class="sol-spinner"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div><div class="sol-header-info"><div class="sol-header-title">Confirmação CD’s</div><div class="sol-header-sub">created by joao.gmarques</div></div></div><div class="sol-header-btns"><button class="sol-hbtn" id="caba-launcher" title="Trocar script" style="font-size:11px;">\u229E</button><button class="sol-hbtn" id="caba-switch" title="Alternar Admin/CD50" style="font-size:11px;">\uD83D\uDD04</button><button class="sol-hbtn" id="caba-refresh" title="Atualizar">\u27F3</button><button class="sol-hbtn" id="caba-min" title="Minimizar"></button><button class="sol-hbtn close-btn" id="caba-close" title="Fechar">\u2715</button></div></div><div class="sol-welcome-inline"><div class="sol-welcome-av" id="caba-welcome-av">?</div><div><div class="sol-welcome-txt">Ol\u00e1, <span class="sol-welcome-name" id="caba-welcome-name">usu\u00e1rio</span></div><div class="sol-welcome-sub" id="caba-welcome-sub">Aguardando token...</div></div></div><div class="sol-tok-bar w" id="caba-tok"><div class="sol-tok-dot"></div><span class="sol-tok-label" id="caba-tok-txt">Aguardando token...</span><div class="sol-tok-track"><div class="sol-tok-fill" id="caba-tok-fill" style="width:0%"></div></div></div><div class="caba-body" id="caba-content"><div class="caba-loading"><span>Aguardando token...</span></div></div><div class="caba-log-section"><div class="caba-log-header" id="caba-lh"><span class="caba-log-title">Logs <span class="caba-log-count" id="caba-lc">0</span></span><button class="caba-log-clear" id="caba-lclr">limpar</button></div><div class="caba-log-body" id="caba-lb"><div class="caba-log-entry info">Aguardando...</div></div></div>';document.body.appendChild(root);
+_buildPanelNav(root,'caba');
+const tab=document.createElement('button');tab.id='__caba_tab__';tab.innerHTML='<span class="tab-ico-caba"></span>';document.body.appendChild(tab);
 let isDragging=false,dx=0,dy=0;document.getElementById('caba-drag-handle').addEventListener('mousedown',e=>{if(e.target.closest('.sol-hbtn'))return;isDragging=true;const r=root.getBoundingClientRect();dx=e.clientX-r.left;dy=e.clientY-r.top;document.body.style.userSelect='none';});document.addEventListener('mousemove',e=>{if(!isDragging)return;let x=e.clientX-dx,y=e.clientY-dy;x=Math.max(0,Math.min(x,window.innerWidth-root.offsetWidth));y=Math.max(0,Math.min(y,window.innerHeight-60));root.style.left=x+'px';root.style.top=y+'px';root.style.right='auto';});document.addEventListener('mouseup',()=>{if(isDragging){isDragging=false;document.body.style.userSelect='';}});
 document.getElementById('caba-launcher').onclick=e=>{e.stopPropagation();showLauncher();};
 document.getElementById('caba-close').onclick=e=>{e.stopPropagation();root.classList.add('off');tab.style.display='flex';tab.classList.remove('popping');void tab.offsetWidth;tab.classList.add('popping');setTimeout(()=>tab.classList.remove('popping'),1200);};tab.onclick=()=>{root.classList.remove('off');tab.style.display='none';};
