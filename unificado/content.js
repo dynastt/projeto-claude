@@ -356,8 +356,8 @@ function injectAllCSS(){
   --mg-b1:       rgba(255,255,255,0.08);
   --mg-b2:       rgba(255,255,255,0.14);
   --mg-t1:       #e8eaf6;
-  --mg-t2:       rgba(200,205,240,0.70);
-  --mg-t3:       rgba(160,168,210,0.45);
+  --mg-t2:       rgba(210,215,245,0.90);
+  --mg-t3:       rgba(175,182,220,0.70);
   --mg-blue:     #4da6ff;
   --mg-blue2:    #3d8fea;
   --mg-grad:     linear-gradient(90deg,#7c3aed 0%,#c026d3 30%,#e8384f 55%,#0078e6 78%,#00c896 100%);
@@ -376,6 +376,18 @@ function injectAllCSS(){
   --mg-font:     'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
   --mg-mono:     'JetBrains Mono',monospace;
 }
+
+/* ═══ SHARED SPINNER (pl) ═════════════════════════════════════ */
+.pl{width:32px;height:32px;flex-shrink:0;overflow:visible;}
+.pl__ring{animation:ringA 2s linear infinite;}
+.pl__ring--a{stroke:#f42f25;}
+.pl__ring--b{animation-name:ringB;stroke:#f49725;}
+.pl__ring--c{animation-name:ringC;stroke:#255ff4;}
+.pl__ring--d{animation-name:ringD;stroke:#f42582;}
+@keyframes ringA{from,4%{stroke-dasharray:0 660;stroke-width:20;stroke-dashoffset:-330;}12%{stroke-dasharray:60 600;stroke-width:30;stroke-dashoffset:-335;}32%{stroke-dasharray:60 600;stroke-width:30;stroke-dashoffset:-595;}40%,54%{stroke-dasharray:0 660;stroke-width:20;stroke-dashoffset:-660;}62%{stroke-dasharray:60 600;stroke-width:30;stroke-dashoffset:-665;}82%{stroke-dasharray:60 600;stroke-width:30;stroke-dashoffset:-925;}90%,to{stroke-dasharray:0 660;stroke-width:20;stroke-dashoffset:-990;}}
+@keyframes ringB{from,12%{stroke-dasharray:0 220;stroke-width:20;stroke-dashoffset:-110;}20%{stroke-dasharray:20 200;stroke-width:30;stroke-dashoffset:-115;}40%{stroke-dasharray:20 200;stroke-width:30;stroke-dashoffset:-195;}48%,62%{stroke-dasharray:0 220;stroke-width:20;stroke-dashoffset:-220;}70%{stroke-dasharray:20 200;stroke-width:30;stroke-dashoffset:-225;}90%{stroke-dasharray:20 200;stroke-width:30;stroke-dashoffset:-305;}98%,to{stroke-dasharray:0 220;stroke-width:20;stroke-dashoffset:-330;}}
+@keyframes ringC{from{stroke-dasharray:0 440;stroke-width:20;stroke-dashoffset:0;}8%{stroke-dasharray:40 400;stroke-width:30;stroke-dashoffset:-5;}28%{stroke-dasharray:40 400;stroke-width:30;stroke-dashoffset:-175;}36%,58%{stroke-dasharray:0 440;stroke-width:20;stroke-dashoffset:-220;}66%{stroke-dasharray:40 400;stroke-width:30;stroke-dashoffset:-225;}86%{stroke-dasharray:40 400;stroke-width:30;stroke-dashoffset:-395;}94%,to{stroke-dasharray:0 440;stroke-width:20;stroke-dashoffset:-440;}}
+@keyframes ringD{from,8%{stroke-dasharray:0 440;stroke-width:20;stroke-dashoffset:0;}16%{stroke-dasharray:40 400;stroke-width:30;stroke-dashoffset:-5;}36%{stroke-dasharray:40 400;stroke-width:30;stroke-dashoffset:-175;}44%,50%{stroke-dasharray:0 440;stroke-width:20;stroke-dashoffset:-220;}58%{stroke-dasharray:40 400;stroke-width:30;stroke-dashoffset:-225;}78%{stroke-dasharray:40 400;stroke-width:30;stroke-dashoffset:-395;}86%,to{stroke-dasharray:0 440;stroke-width:20;stroke-dashoffset:-440;}}
 
 /* ═══ SHARED MODAL CSS ═══════════════════════════════════════ */
 .aa-ov{
@@ -568,19 +580,6 @@ function injectAllCSS(){
 #__dsc_tab__.popping{animation:tab-pop 1.1s cubic-bezier(.34,1.56,.64,1) forwards;}
 
 /* SPINNER */
-.dsc-spinner-wrap{width:32px;height:32px;flex-shrink:0;display:flex;align-items:center;justify-content:center;overflow:hidden;}
-.dsc-spinner{position:relative;width:60px;height:60px;display:flex;justify-content:center;align-items:center;border-radius:50%;transform:translateX(-38px) scale(0.55);}
-.dsc-spinner span{position:absolute;top:50%;left:var(--dsc-left);width:35px;height:7px;background:var(--mg-red-btn);animation:dsc-dominos 1s ease infinite;box-shadow:2px 2px 3px 0px rgba(0,0,0,0.3);}
-.dsc-spinner span:nth-child(1){--dsc-left:80px;animation-delay:0.125s;}
-.dsc-spinner span:nth-child(2){--dsc-left:70px;animation-delay:0.3s;}
-.dsc-spinner span:nth-child(3){left:60px;animation-delay:0.425s;}
-.dsc-spinner span:nth-child(4){animation-delay:0.54s;left:50px;}
-.dsc-spinner span:nth-child(5){animation-delay:0.665s;left:40px;}
-.dsc-spinner span:nth-child(6){animation-delay:0.79s;left:30px;}
-.dsc-spinner span:nth-child(7){animation-delay:0.915s;left:20px;}
-.dsc-spinner span:nth-child(8){left:10px;}
-@keyframes dsc-dominos{50%{opacity:0.7;}75%{transform:rotate(90deg);}80%{opacity:1;}}
-
 /* HEADER */
 .dsc-header{
   display:flex;align-items:center;justify-content:space-between;
@@ -594,7 +593,7 @@ function injectAllCSS(){
 .dsc-header-title{font-size:15px;font-weight:700;letter-spacing:-0.2px;color:var(--mg-t1);line-height:1.2;white-space:nowrap;}
 .dsc-header-sub{font-size:10px;color:var(--mg-t3);font-weight:500;line-height:1;}
 .dsc-header-btns{display:flex;gap:3px;margin-left:8px;flex-shrink:0;}
-.dsc-hbtn{background:none;border:none;color:var(--mg-t3);cursor:pointer;width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .18s;font-weight:600;}
+.dsc-hbtn{background:none;border:none;color:var(--mg-t2);cursor:pointer;width:34px;height:34px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .18s;font-weight:600;}
 .dsc-hbtn:hover{background:var(--mg-s2);color:var(--mg-t1);}
 .dsc-hbtn.close-btn:hover{background:var(--mg-red-lt);color:var(--mg-red);}
 #dsc-min{position:relative;}
@@ -884,41 +883,6 @@ function injectAllCSS(){
 #__sol_tab__.popping{animation:tab-pop 1.1s cubic-bezier(.34,1.56,.64,1) forwards;}
 
 /* ═══ HEADER SPINNER — Uiverse.io by satyamchaudharydev (exato, só prefixado) ═══ */
-.sol-spinner-wrap{
-  width:32px;height:32px;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;
-  overflow:hidden;
-}
-.sol-spinner{
-  position:relative;
-  width:60px;height:60px;
-  display:flex;justify-content:center;align-items:center;
-  border-radius:50%;
-  transform:translateX(-38px) scale(0.55);
-}
-.sol-spinner span{
-  position:absolute;
-  top:50%;
-  left:var(--sol-left);
-  width:35px;height:7px;
-  background:var(--mg-blue);
-  animation:sol-dominos 1s ease infinite;
-  box-shadow:2px 2px 3px 0px rgba(0,0,0,0.3);
-}
-.sol-spinner span:nth-child(1){--sol-left:80px;animation-delay:0.125s;}
-.sol-spinner span:nth-child(2){--sol-left:70px;animation-delay:0.3s;}
-.sol-spinner span:nth-child(3){left:60px;animation-delay:0.425s;}
-.sol-spinner span:nth-child(4){animation-delay:0.54s;left:50px;}
-.sol-spinner span:nth-child(5){animation-delay:0.665s;left:40px;}
-.sol-spinner span:nth-child(6){animation-delay:0.79s;left:30px;}
-.sol-spinner span:nth-child(7){animation-delay:0.915s;left:20px;}
-.sol-spinner span:nth-child(8){left:10px;}
-@keyframes sol-dominos{
-  50%{opacity:0.7;}
-  75%{transform:rotate(90deg);}
-  80%{opacity:1;}
-}
-
 /* ═══ HEADER — estrutura com spinner ═══ */
 .sol-header{
   display:flex;align-items:center;justify-content:space-between;
@@ -958,10 +922,10 @@ function injectAllCSS(){
 .sol-header-sub{font-size:10px;color:var(--mg-t3);font-weight:500;line-height:1;}
 .sol-header-btns{display:flex;gap:3px;margin-left:8px;flex-shrink:0;}
 .sol-hbtn{
-  background:none;border:none;color:var(--mg-t3);cursor:pointer;
-  width:30px;height:30px;border-radius:7px;
+  background:none;border:none;color:var(--mg-t2);cursor:pointer;
+  width:34px;height:34px;border-radius:7px;
   display:flex;align-items:center;justify-content:center;
-  font-size:14px;transition:all .18s;font-weight:600;
+  font-size:16px;transition:all .18s;font-weight:600;
 }
 .sol-hbtn:hover{background:var(--mg-s2);color:var(--mg-t1);}
 .sol-hbtn.close-btn:hover{background:var(--mg-red-lt);color:var(--mg-red);}
@@ -1450,20 +1414,6 @@ function injectAllCSS(){
 
 #__aa_tab__.popping{animation:tab-pop 1.1s cubic-bezier(.34,1.56,.64,1) forwards;}
 
-/* ═══ SPINNER DOMINO ═══ */
-.sol-spinner-wrap{width:32px;height:32px;flex-shrink:0;display:flex;align-items:center;justify-content:center;overflow:hidden;}
-.sol-spinner{position:relative;width:60px;height:60px;display:flex;justify-content:center;align-items:center;border-radius:50%;transform:translateX(-38px) scale(0.55);}
-.sol-spinner span{position:absolute;top:50%;left:var(--sol-left);width:35px;height:7px;background:var(--mg-blue);animation:sol-dominos 1s ease infinite;box-shadow:2px 2px 3px 0px rgba(0,0,0,0.3);}
-.sol-spinner span:nth-child(1){--sol-left:80px;animation-delay:0.125s;}
-.sol-spinner span:nth-child(2){--sol-left:70px;animation-delay:0.3s;}
-.sol-spinner span:nth-child(3){left:60px;animation-delay:0.425s;}
-.sol-spinner span:nth-child(4){animation-delay:0.54s;left:50px;}
-.sol-spinner span:nth-child(5){animation-delay:0.665s;left:40px;}
-.sol-spinner span:nth-child(6){animation-delay:0.79s;left:30px;}
-.sol-spinner span:nth-child(7){animation-delay:0.915s;left:20px;}
-.sol-spinner span:nth-child(8){left:10px;}
-@keyframes sol-dominos{50%{opacity:0.7;}75%{transform:rotate(90deg);}80%{opacity:1;}}
-
 /* ═══ HEADER ═══ */
 .sol-header{
   display:flex;align-items:center;justify-content:space-between;
@@ -1480,7 +1430,7 @@ function injectAllCSS(){
 .sol-header-title{font-size:15px;font-weight:700;letter-spacing:-0.2px;color:var(--mg-t1);line-height:1.2;white-space:nowrap;}
 .sol-header-sub{font-size:10px;color:var(--mg-t3);font-weight:500;line-height:1;}
 .sol-header-btns{display:flex;gap:3px;margin-left:8px;flex-shrink:0;}
-.sol-hbtn{background:none;border:none;color:var(--mg-t3);cursor:pointer;width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .18s;font-weight:600;}
+.sol-hbtn{background:none;border:none;color:var(--mg-t2);cursor:pointer;width:34px;height:34px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .18s;font-weight:600;}
 .sol-hbtn:hover{background:var(--mg-s2);color:var(--mg-t1);}
 .sol-hbtn.close-btn:hover{background:var(--mg-red-lt);color:var(--mg-red);}
 #sol-min{position:relative;}
@@ -1712,8 +1662,7 @@ function injectAllCSS(){
 #__caba__.minimized{max-height:64px!important;border-radius:26px!important;}#__caba__.minimized .caba-body,#__caba__.minimized .caba-log-section,#__caba__.minimized .sol-tok-bar,#__caba__.minimized .sol-welcome-inline{opacity:0;pointer-events:none;}#__caba__.minimized .sol-header{border-bottom:none!important;border-radius:26px!important;}
 #__caba__ .caba-body,#__caba__ .caba-log-section,#__caba__ .sol-tok-bar,#__caba__ .sol-welcome-inline{transition:opacity .18s ease;}
 #__caba_tab__{position:fixed;bottom:24px;right:24px;width:48px;height:48px;background:var(--mg-blue);border:none;border-radius:50%;cursor:pointer;z-index:2147483645;display:none;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,120,230,0.38);transition:transform .22s,box-shadow .22s;color:#fff;font-size:18px;}#__caba_tab__:hover{transform:scale(1.1);}#__caba_tab__.popping{animation:tab-pop 1.1s cubic-bezier(.34,1.56,.64,1) forwards;}
-.sol-spinner-wrap{width:32px;height:32px;flex-shrink:0;display:flex;align-items:center;justify-content:center;overflow:hidden;}.sol-spinner{position:relative;width:60px;height:60px;display:flex;justify-content:center;align-items:center;border-radius:50%;transform:translateX(-38px) scale(0.55);}.sol-spinner span{position:absolute;top:50%;left:var(--sol-left);width:35px;height:7px;background:var(--mg-blue);animation:sol-dominos 1s ease infinite;box-shadow:2px 2px 3px 0px rgba(0,0,0,0.3);}.sol-spinner span:nth-child(1){--sol-left:80px;animation-delay:0.125s;}.sol-spinner span:nth-child(2){--sol-left:70px;animation-delay:0.3s;}.sol-spinner span:nth-child(3){left:60px;animation-delay:0.425s;}.sol-spinner span:nth-child(4){animation-delay:0.54s;left:50px;}.sol-spinner span:nth-child(5){animation-delay:0.665s;left:40px;}.sol-spinner span:nth-child(6){animation-delay:0.79s;left:30px;}.sol-spinner span:nth-child(7){animation-delay:0.915s;left:20px;}.sol-spinner span:nth-child(8){left:10px;}@keyframes sol-dominos{50%{opacity:0.7;}75%{transform:rotate(90deg);}80%{opacity:1;}}
-.sol-header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--mg-b1);flex-shrink:0;cursor:grab;user-select:none;border-radius:16px 16px 0 0;position:relative;background:radial-gradient(ellipse at 0% 0%,rgba(0,120,230,0.07) 0%,transparent 60%),radial-gradient(ellipse at 100% 100%,rgba(0,200,150,0.05) 0%,transparent 55%),var(--mg-panel);}.sol-header:active{cursor:grabbing;}.sol-header-left{display:flex;align-items:center;gap:10px;flex:1;}.sol-header-info{display:flex;flex-direction:column;gap:3px;}.sol-header-title{font-size:15px;font-weight:700;letter-spacing:-0.2px;}.sol-header-sub{font-size:10px;color:var(--mg-t3);font-weight:500;}.sol-header-btns{display:flex;gap:3px;margin-left:8px;flex-shrink:0;}.sol-hbtn{background:none;border:none;color:var(--mg-t3);cursor:pointer;width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .18s;font-weight:600;}.sol-hbtn:hover{background:var(--mg-s2);color:var(--mg-t1);}.sol-hbtn.close-btn:hover{background:var(--mg-red-lt);color:var(--mg-red);}#caba-min{position:relative;}#caba-min::before,#caba-min::after{content:'';position:absolute;left:50%;top:50%;border-radius:2px;transition:all .18s ease;}#caba-min[data-state='open']::before{width:10px;height:2px;background:currentColor;transform:translate(-50%,-50%);}#caba-min[data-state='open']::after{display:none;}#caba-min[data-state='closed']::before{width:9px;height:9px;background:transparent;border:1.8px solid currentColor;border-radius:2px;transform:translate(-50%,-50%);}#caba-min[data-state='closed']::after{display:none;}
+.sol-header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--mg-b1);flex-shrink:0;cursor:grab;user-select:none;border-radius:16px 16px 0 0;position:relative;background:radial-gradient(ellipse at 0% 0%,rgba(0,120,230,0.07) 0%,transparent 60%),radial-gradient(ellipse at 100% 100%,rgba(0,200,150,0.05) 0%,transparent 55%),var(--mg-panel);}.sol-header:active{cursor:grabbing;}.sol-header-left{display:flex;align-items:center;gap:10px;flex:1;}.sol-header-info{display:flex;flex-direction:column;gap:3px;}.sol-header-title{font-size:15px;font-weight:700;letter-spacing:-0.2px;}.sol-header-sub{font-size:10px;color:var(--mg-t3);font-weight:500;}.sol-header-btns{display:flex;gap:3px;margin-left:8px;flex-shrink:0;}.sol-hbtn{background:none;border:none;color:var(--mg-t2);cursor:pointer;width:34px;height:34px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .18s;font-weight:600;}.sol-hbtn:hover{background:var(--mg-s2);color:var(--mg-t1);}.sol-hbtn.close-btn:hover{background:var(--mg-red-lt);color:var(--mg-red);}#caba-min{position:relative;}#caba-min::before,#caba-min::after{content:'';position:absolute;left:50%;top:50%;border-radius:2px;transition:all .18s ease;}#caba-min[data-state='open']::before{width:10px;height:2px;background:currentColor;transform:translate(-50%,-50%);}#caba-min[data-state='open']::after{display:none;}#caba-min[data-state='closed']::before{width:9px;height:9px;background:transparent;border:1.8px solid currentColor;border-radius:2px;transform:translate(-50%,-50%);}#caba-min[data-state='closed']::after{display:none;}
 .sol-welcome-inline{padding:9px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--mg-b1);flex-shrink:0;background:var(--mg-s1);}.sol-welcome-av{width:32px;height:32px;border-radius:50%;background:var(--mg-blue);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;}.sol-welcome-txt{font-size:13px;color:var(--mg-t2);font-weight:500;}.sol-welcome-name{font-weight:700;color:var(--mg-blue);}.sol-welcome-sub{font-size:10px;color:var(--mg-t3);margin-top:1px;}
 .caba-welcome-toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.82) translateY(24px);background:var(--mg-panel);border:1px solid var(--mg-b1);border-radius:20px;padding:28px 44px;text-align:center;z-index:2147483647;opacity:0;pointer-events:none;box-shadow:var(--mg-shadow-lg);overflow:hidden;}.caba-welcome-toast::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--mg-grad);}.caba-welcome-toast.show{animation:toast-enter .55s cubic-bezier(.34,1.56,.64,1) forwards;}.caba-welcome-toast.hide{animation:toast-exit .4s ease-in forwards;}
 .sol-tok-bar{display:flex;align-items:center;gap:8px;padding:7px 16px;font-size:11.5px;border-bottom:1px solid var(--mg-b1);flex-shrink:0;background:var(--mg-s1);font-weight:600;transition:color .3s;}.sol-tok-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;transition:background .3s,box-shadow .3s;}.sol-tok-label{flex-shrink:0;white-space:nowrap;font-size:11px;}.sol-tok-track{flex:1;height:4px;background:var(--mg-s3);border-radius:4px;overflow:hidden;min-width:30px;}.sol-tok-fill{height:100%;border-radius:4px;width:100%;transition:width 1s linear,background-color .4s;}.sol-tok-bar.ok .sol-tok-dot{background:var(--mg-green);box-shadow:0 0 0 3px rgba(22,163,74,0.22);}.sol-tok-bar.ok .sol-tok-fill{background:var(--mg-green);}.sol-tok-bar.ok{color:var(--mg-t2);}.sol-tok-bar.w .sol-tok-dot{background:var(--mg-orange);animation:tok-blink 1.2s infinite;}.sol-tok-bar.w .sol-tok-fill{background:var(--mg-orange);}.sol-tok-bar.w{color:var(--mg-orange);}.sol-tok-bar.ex .sol-tok-dot{background:var(--mg-red);animation:tok-blink .7s infinite;}.sol-tok-bar.ex .sol-tok-fill{background:var(--mg-red);}.sol-tok-bar.ex{color:var(--mg-red);}
@@ -2013,7 +1962,7 @@ function buildPanel_dsc(){
   root.innerHTML=
     '<div class="dsc-header" id="dsc-drag-handle">'+
       '<div class="dsc-header-left">'+
-        '<div class="dsc-spinner-wrap"><div class="dsc-spinner"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>'+
+        '<svg class="pl" viewBox="0 0 240 240"><circle class="pl__ring pl__ring--a" cx="120" cy="120" r="105" fill="none" stroke-width="20" stroke-dasharray="0 660" stroke-dashoffset="-330" stroke-linecap="round"></circle><circle class="pl__ring pl__ring--b" cx="120" cy="120" r="35" fill="none" stroke-width="20" stroke-dasharray="0 220" stroke-dashoffset="-110" stroke-linecap="round"></circle><circle class="pl__ring pl__ring--c" cx="85" cy="120" r="70" fill="none" stroke-width="20" stroke-dasharray="0 440" stroke-linecap="round"></circle><circle class="pl__ring pl__ring--d" cx="155" cy="120" r="70" fill="none" stroke-width="20" stroke-dasharray="0 440" stroke-linecap="round"></circle></svg>'+
         '<div class="dsc-header-info">'+
           '<div class="dsc-header-title">Descarte</div>'+
           '<div class="dsc-header-sub">created by joao.gmarques</div>'+
@@ -2300,12 +2249,7 @@ function buildPanel_sol(){
   root.innerHTML=
     '<div class="sol-header" id="sol-drag-handle">'+
       '<div class="sol-header-left">'+
-        '<div class="sol-spinner-wrap">'+
-          '<div class="sol-spinner">'+
-            '<span></span><span></span><span></span><span></span>'+
-            '<span></span><span></span><span></span><span></span>'+
-          '</div>'+
-        '</div>'+
+        '<svg class="pl" viewBox="0 0 240 240"><circle class="pl__ring pl__ring--a" cx="120" cy="120" r="105" fill="none" stroke-width="20" stroke-dasharray="0 660" stroke-dashoffset="-330" stroke-linecap="round"></circle><circle class="pl__ring pl__ring--b" cx="120" cy="120" r="35" fill="none" stroke-width="20" stroke-dasharray="0 220" stroke-dashoffset="-110" stroke-linecap="round"></circle><circle class="pl__ring pl__ring--c" cx="85" cy="120" r="70" fill="none" stroke-width="20" stroke-dasharray="0 440" stroke-linecap="round"></circle><circle class="pl__ring pl__ring--d" cx="155" cy="120" r="70" fill="none" stroke-width="20" stroke-dasharray="0 440" stroke-linecap="round"></circle></svg>'+
         '<div class="sol-header-info">'+
           '<div class="sol-header-title-row">'+
             '<div class="sol-header-title">Solicitações</div>'+
@@ -2819,14 +2763,14 @@ function buildPanel_exp(){
   root.id='__aa__';
   root.classList.add('off');
   root.innerHTML=
-    '<div class="sol-header" id="sol-drag-handle">'+
+    '<div class="sol-header" id="exp-drag-handle">'+
       '<div class="sol-header-left">'+
-        '<div class="sol-spinner-wrap">'+
-          '<div class="sol-spinner">'+
-            '<span></span><span></span><span></span><span></span>'+
-            '<span></span><span></span><span></span><span></span>'+
-          '</div>'+
-        '</div>'+
+        '<svg class="pl" viewBox="0 0 240 240">'+
+          '<circle class="pl__ring pl__ring--a" cx="120" cy="120" r="105" fill="none" stroke-width="20" stroke-dasharray="0 660" stroke-dashoffset="-330" stroke-linecap="round"></circle>'+
+          '<circle class="pl__ring pl__ring--b" cx="120" cy="120" r="35" fill="none" stroke-width="20" stroke-dasharray="0 220" stroke-dashoffset="-110" stroke-linecap="round"></circle>'+
+          '<circle class="pl__ring pl__ring--c" cx="85" cy="120" r="70" fill="none" stroke-width="20" stroke-dasharray="0 440" stroke-linecap="round"></circle>'+
+          '<circle class="pl__ring pl__ring--d" cx="155" cy="120" r="70" fill="none" stroke-width="20" stroke-dasharray="0 440" stroke-linecap="round"></circle>'+
+        '</svg>'+
         '<div class="sol-header-info">'+
           '<div class="sol-header-title">Expedição</div>'+
           '<div class="sol-header-sub">created by joao.gmarques</div>'+
@@ -2834,8 +2778,8 @@ function buildPanel_exp(){
       '</div>'+
       '<div class="sol-header-btns">'+
         '<button class="sol-hbtn" id="exp-switch" title="Trocar script" style="font-size:11px;">⊞</button>'+
-        '<button class="sol-hbtn" id="sol-min" title="Minimizar"></button>'+
-        '<button class="sol-hbtn close-btn" id="sol-close" title="Fechar">✕</button>'+
+        '<button class="sol-hbtn" id="exp-min" title="Minimizar"></button>'+
+        '<button class="sol-hbtn close-btn" id="exp-close" title="Fechar">✕</button>'+
       '</div>'+
     '</div>'+
 
@@ -2957,7 +2901,7 @@ function buildPanel_exp(){
 
   // DRAG
   let isDragging=false,dragOffX=0,dragOffY=0;
-  const handle=document.getElementById('sol-drag-handle');
+  const handle=document.getElementById('exp-drag-handle');
   handle.addEventListener('mousedown',e=>{
     if(e.target.closest('.sol-hbtn'))return;
     isDragging=true;
@@ -2978,7 +2922,7 @@ function buildPanel_exp(){
   document.getElementById('exp-switch').onclick=e=>{e.stopPropagation();showLauncher();};
 
   // CLOSE
-  root.querySelector('#sol-close').onclick=e=>{
+  root.querySelector('#exp-close').onclick=e=>{
     e.stopPropagation();
     root.classList.add('off');
     tab.style.display='flex';
@@ -2990,7 +2934,7 @@ function buildPanel_exp(){
   tab.onclick=()=>{root.classList.remove('off');tab.style.display='none';};
 
   // MINIMIZE
-  const minBtn=root.querySelector('#sol-min');
+  const minBtn=root.querySelector('#exp-min');
   minBtn.setAttribute('data-state','open');
   let mini=false;
   minBtn.onclick=e=>{
@@ -3790,7 +3734,7 @@ function renderAsset(it){const id=it.plate?'Patrimônio: '+it.plate:'Ativo #'+it
 function cargaSummary(confs,total){const env=confs.filter(c=>c.statusEnvio==='ENVIADO').length;const rec=confs.filter(c=>c.statusRecebimento==='RECEBIDO').length;if(env>=total&&total>0)return{cls:'complete',txt:env+'/'+total+' enviadas'};if(rec>0)return{cls:'partial',txt:env+'/'+total+' enviadas'};return{cls:'pending',txt:'Aguardando'};}
 
 // ─── CABA uiToken ────────────────────────────────────────────
-function uiTokenCaba(){const el=document.getElementById('caba-tok'),tx=document.getElementById('caba-tok-txt'),fill=document.getElementById('caba-tok-fill');if(!el||!tx)return;if(!getTok()){el.className='sol-tok-bar w';tx.textContent='Aguardando token...';if(fill){fill.style.transition='none';fill.style.width='0%';}return;}if(_tokenSessaoExpirou){el.className='sol-tok-bar ex';tx.textContent='Sessão expirou';if(fill){fill.style.transition='none';fill.style.width='0%';}return;}const s=tokSecs(),mx=300,pct=s!==null?Math.min(100,Math.max(0,(s/mx)*100)):100;if(s!==null&&s<=60){el.className='sol-tok-bar ex';tx.textContent=s<=0?'Renovando...':s+'s';if(fill){fill.style.transition='width 1s linear';fill.style.width=pct+'%';}}else if(s!==null&&s<=180){el.className='sol-tok-bar w';tx.textContent=Math.ceil(s/60)+'min';if(fill){fill.style.transition='width 5s linear';fill.style.width=pct+'%';}}else{el.className='sol-tok-bar ok';tx.textContent=(s!==null?Math.ceil(s/60):5)+'min · Token ativo';if(fill){fill.style.transition='width 5s linear';fill.style.width=pct+'%';}}}
+function uiTokenCaba(){const el=document.getElementById('caba-tok'),tx=document.getElementById('caba-tok-txt'),fill=document.getElementById('caba-tok-fill'),ws=document.getElementById('caba-welcome-sub');if(!el||!tx)return;if(!getTok()){el.className='sol-tok-bar w';tx.textContent='Aguardando token...';if(ws)ws.textContent='Aguardando token...';if(fill){fill.style.transition='none';fill.style.width='0%';}return;}if(_tokenSessaoExpirou){el.className='sol-tok-bar ex';tx.textContent='Sessão expirou';if(ws)ws.textContent='Sessão expirada';if(fill){fill.style.transition='none';fill.style.width='0%';}return;}if(ws)ws.textContent='Confirmação CD\'s ativa';const s=tokSecs(),mx=300,pct=s!==null?Math.min(100,Math.max(0,(s/mx)*100)):100;if(s!==null&&s<=60){el.className='sol-tok-bar ex';tx.textContent=s<=0?'Renovando...':s+'s';if(fill){fill.style.transition='width 1s linear';fill.style.width=pct+'%';}}else if(s!==null&&s<=180){el.className='sol-tok-bar w';tx.textContent=Math.ceil(s/60)+'min';if(fill){fill.style.transition='width 5s linear';fill.style.width=pct+'%';}}else{el.className='sol-tok-bar ok';tx.textContent=(s!==null?Math.ceil(s/60):5)+'min · Token ativo';if(fill){fill.style.transition='width 5s linear';fill.style.width=pct+'%';}}}
 
 // ─── CABA render functions ────────────────────────────────────
 async function renderAdminCDList(){const body=document.getElementById('caba-content');if(!body)return;body.innerHTML='<div class="caba-loading"><span>Carregando...</span></div>';let allConfs=[];try{const r=await SH('listarStatus',{});if(r?.ok)allConfs=r.dados||[];}catch(e){logCaba('Sheets: '+e.message,'warn');}const cdMap={};for(const cd of CFG.CDS_PADRAO)cdMap[cd]=[];for(const c of allConfs){if(!cdMap[c.cd])cdMap[c.cd]=[];cdMap[c.cd].push(c);}for(const c of _cargasABA){for(const cd of(c.stockCd||'').split(',').map(s=>s.trim()).filter(Boolean)){if(!cdMap[cd])cdMap[cd]=[];}}let html='<div class="caba-card"><div class="caba-card-label"><span class="caba-ico blue">'+ICO.warehouse+'</span> CDs Intermediários</div><div class="caba-cd-list">';const sorted=Object.keys(cdMap).sort((a,b)=>Number(a)-Number(b));for(const cd of sorted){const confs=cdMap[cd];const ids=[...new Set(confs.map(c=>c.cargaId))];const pend=ids.filter(id=>confs.filter(c=>c.cargaId===id).some(c=>c.statusEnvio!=='ENVIADO'));const bc=pend.length>0?'pending':ids.length>0?'ok':'none';const bt=pend.length>0?pend.length+' pendente'+(pend.length>1?'s':''):ids.length>0?ids.length+' concluída'+(ids.length>1?'s':''):'—';html+='<div class="caba-cd-item" data-cd="'+cd+'"><span class="caba-cd-name"><span class="caba-ico blue">'+ICO.warehouse+'</span> CD'+cd+'</span><span class="caba-cd-badge '+bc+'">'+bt+'</span></div>';}html+='</div></div><button class="caba-btn ghost" id="caba-show-archived" style="display:flex;align-items:center;justify-content:center;gap:6px;"><span class="caba-ico muted">'+ICO.archive+'</span> Cargas Arquivadas</button>';body.innerHTML=html;body.querySelectorAll('.caba-cd-item').forEach(el=>{el.onclick=()=>{_selectedCD=el.dataset.cd;renderAdminCDDetail();};});document.getElementById('caba-show-archived').onclick=()=>renderArchivedView();}
@@ -3809,7 +3753,7 @@ function showFinalModal(cd,totalFiliais,cargaId){const ov=document.createElement
 
 // ─── CABA buildPanel ─────────────────────────────────────────
 function buildPanel_caba(){if(document.getElementById('__caba__'))return;if(!document.body)return setTimeout(buildPanel_caba,10);
-const root=document.createElement('div');root.id='__caba__';root.classList.add('off');root.innerHTML='<div class="sol-header" id="caba-drag-handle"><div class="sol-header-left"><div class="sol-spinner-wrap"><div class="sol-spinner"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div><div class="sol-header-info"><div class="sol-header-title">Confirmação CD’s</div><div class="sol-header-sub">created by joao.gmarques</div></div></div><div class="sol-header-btns"><button class="sol-hbtn" id="caba-launcher" title="Trocar script" style="font-size:11px;">\u229E</button><button class="sol-hbtn" id="caba-switch" title="Alternar Admin/CD50" style="font-size:11px;">\uD83D\uDD04</button><button class="sol-hbtn" id="caba-refresh" title="Atualizar">\u27F3</button><button class="sol-hbtn" id="caba-min" title="Minimizar"></button><button class="sol-hbtn close-btn" id="caba-close" title="Fechar">\u2715</button></div></div><div class="sol-welcome-inline"><div class="sol-welcome-av" id="caba-welcome-av">?</div><div><div class="sol-welcome-txt">Ol\u00e1, <span class="sol-welcome-name" id="caba-welcome-name">usu\u00e1rio</span></div><div class="sol-welcome-sub" id="caba-welcome-sub">Aguardando token...</div></div></div><div class="sol-tok-bar w" id="caba-tok"><div class="sol-tok-dot"></div><span class="sol-tok-label" id="caba-tok-txt">Aguardando token...</span><div class="sol-tok-track"><div class="sol-tok-fill" id="caba-tok-fill" style="width:0%"></div></div></div><div class="caba-body" id="caba-content"><div class="caba-loading"><span>Aguardando token...</span></div></div><div class="caba-log-section"><div class="caba-log-header" id="caba-lh"><span class="caba-log-title">Logs <span class="caba-log-count" id="caba-lc">0</span></span><button class="caba-log-clear" id="caba-lclr">limpar</button></div><div class="caba-log-body" id="caba-lb"><div class="caba-log-entry info">Aguardando...</div></div></div>';document.body.appendChild(root);
+const root=document.createElement('div');root.id='__caba__';root.classList.add('off');root.innerHTML='<div class="sol-header" id="caba-drag-handle"><div class="sol-header-left"><svg class="pl" viewBox="0 0 240 240"><circle class="pl__ring pl__ring--a" cx="120" cy="120" r="105" fill="none" stroke-width="20" stroke-dasharray="0 660" stroke-dashoffset="-330" stroke-linecap="round"></circle><circle class="pl__ring pl__ring--b" cx="120" cy="120" r="35" fill="none" stroke-width="20" stroke-dasharray="0 220" stroke-dashoffset="-110" stroke-linecap="round"></circle><circle class="pl__ring pl__ring--c" cx="85" cy="120" r="70" fill="none" stroke-width="20" stroke-dasharray="0 440" stroke-linecap="round"></circle><circle class="pl__ring pl__ring--d" cx="155" cy="120" r="70" fill="none" stroke-width="20" stroke-dasharray="0 440" stroke-linecap="round"></circle></svg><div class="sol-header-info"><div class="sol-header-title">Confirmação CD’s</div><div class="sol-header-sub">created by joao.gmarques</div></div></div><div class="sol-header-btns"><button class="sol-hbtn" id="caba-launcher" title="Trocar script" style="font-size:11px;">\u229E</button><button class="sol-hbtn" id="caba-switch" title="Alternar Admin/CD50" style="font-size:11px;">\uD83D\uDD04</button><button class="sol-hbtn" id="caba-refresh" title="Atualizar">\u27F3</button><button class="sol-hbtn" id="caba-min" title="Minimizar"></button><button class="sol-hbtn close-btn" id="caba-close" title="Fechar">\u2715</button></div></div><div class="sol-welcome-inline"><div class="sol-welcome-av" id="caba-welcome-av">?</div><div><div class="sol-welcome-txt">Ol\u00e1, <span class="sol-welcome-name" id="caba-welcome-name">usu\u00e1rio</span></div><div class="sol-welcome-sub" id="caba-welcome-sub">Aguardando token...</div></div></div><div class="sol-tok-bar w" id="caba-tok"><div class="sol-tok-dot"></div><span class="sol-tok-label" id="caba-tok-txt">Aguardando token...</span><div class="sol-tok-track"><div class="sol-tok-fill" id="caba-tok-fill" style="width:0%"></div></div></div><div class="caba-body" id="caba-content"><div class="caba-loading"><span>Aguardando token...</span></div></div><div class="caba-log-section"><div class="caba-log-header" id="caba-lh"><span class="caba-log-title">Logs <span class="caba-log-count" id="caba-lc">0</span></span><button class="caba-log-clear" id="caba-lclr">limpar</button></div><div class="caba-log-body" id="caba-lb"><div class="caba-log-entry info">Aguardando...</div></div></div>';document.body.appendChild(root);
 _buildPanelNav(root,'caba');
 const tab=document.createElement('button');tab.id='__caba_tab__';tab.innerHTML='<span class="tab-ico-caba"></span>';document.body.appendChild(tab);
 let isDragging=false,dx=0,dy=0;document.getElementById('caba-drag-handle').addEventListener('mousedown',e=>{if(e.target.closest('.sol-hbtn'))return;isDragging=true;const r=root.getBoundingClientRect();dx=e.clientX-r.left;dy=e.clientY-r.top;document.body.style.userSelect='none';});document.addEventListener('mousemove',e=>{if(!isDragging)return;let x=e.clientX-dx,y=e.clientY-dy;x=Math.max(0,Math.min(x,window.innerWidth-root.offsetWidth));y=Math.max(0,Math.min(y,window.innerHeight-60));root.style.left=x+'px';root.style.top=y+'px';root.style.right='auto';});document.addEventListener('mouseup',()=>{if(isDragging){isDragging=false;document.body.style.userSelect='';}});
