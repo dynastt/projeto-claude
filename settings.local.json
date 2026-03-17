@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \":*)",
+      "Bash(ls -la \"c:/Users/magalu/Downloads/projeto-claude-main \\(2\\)/projeto-claude-main/unificado\")"
+    ]
+  }
+}
