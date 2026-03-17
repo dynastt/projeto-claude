@@ -548,8 +548,8 @@ function injectAllCSS(){
 #__dsc__ ::-webkit-scrollbar-thumb{background:var(--mg-s3);border-radius:10px;}
 
 #__dsc__{
-  position:fixed;top:20px;right:20px;
-  width:380px;height:auto;max-height:calc(100vh - 40px);
+  position:fixed;top:16px;right:16px;
+  width:540px;height:auto;max-height:calc(100vh - 32px);
   background:var(--mg-panel);border:1px solid var(--mg-b1);border-radius:16px;
   font-family:var(--mg-font);color:var(--mg-t1);
   z-index:2147483646;display:flex;flex-direction:column;
@@ -821,10 +821,10 @@ function injectAllCSS(){
 
 /* ═══ PANEL ═══ */
 #__sol__{
-  position:fixed;top:20px;right:20px;
-  width:380px;
+  position:fixed;top:16px;right:16px;
+  width:540px;
   height:auto;
-  max-height:calc(100vh - 40px);
+  max-height:calc(100vh - 32px);
   background:var(--mg-panel);
   border:1px solid var(--mg-b1);border-radius:16px;
   font-family:var(--mg-font);color:var(--mg-t1);
@@ -1415,9 +1415,9 @@ function injectAllCSS(){
 
 /* ═══ PANEL ═══ */
 #__aa__{
-  position:fixed;top:20px;right:20px;
-  width:380px;height:auto;
-  max-height:calc(100vh - 40px);
+  position:fixed;top:16px;right:16px;
+  width:540px;height:auto;
+  max-height:calc(100vh - 32px);
   background:var(--mg-panel);
   border:1px solid var(--mg-b1);border-radius:16px;
   font-family:var(--mg-font);color:var(--mg-t1);
